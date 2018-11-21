@@ -85,7 +85,7 @@
                             <td>' . $row["req_status"] . '</td>
                             <td>' . $row["claimersname"] . '</td>
                             <td>' . $row["claimdate"] .'</td>
-                            <td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg">Edit</button>' . '</td>
+                            <td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg" , data-id="'.$row['emp_id'].'">Edit</button>' . '</td>
                         </tr>
                         ';
                     }
@@ -102,12 +102,60 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Process Request</h4>
       </div>
       <div class="modal-body">
-        <h4>Text in a modal</h4>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-        <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+            <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" id="_id" required="required" class="form-control col-md-7 col-xs-12">
+            </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+            </div>
+            </div>
+            <div class="form-group">
+            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name / Initial</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
+            </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div id="gender" class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                    <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
+                </label>
+                <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                    <input type="radio" name="gender" value="female"> Female
+                </label>
+                </div>
+            </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+            </div>
+            </div>
+            <div class="ln_solid"></div>
+            <div class="form-group">
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <button class="btn btn-primary" type="button">Cancel</button>
+                <button class="btn btn-primary" type="reset">Reset</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+            </div>
+        </form>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -136,5 +184,18 @@
 <script>
     $(document).ready(function() {
         $('#mydatatable').DataTable();
+    });
+    $('.bs-example-modal-lg').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var name = button.data('name')
+        var day = button.data('day')
+        var leavefileday = button.data('leavefileday')
+
+        var modal = $(this)
+        modal.find('.modal-body #_id').val(id)
+        modal.find('.modal-body #_name').val(name)
+        modal.find('.modal-body #_day').val(day)
+        modal.find('.modal-body #_leavefileday').val(leavefileday)
     });
 </script>
