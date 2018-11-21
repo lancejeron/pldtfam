@@ -172,13 +172,12 @@
               <div class="form-group">
                 <label class="control-label col-sm-2" for="req_status">Status</label>
                 <div class="col-sm-10">          
-                    <select name="cars">
+                    <select name="status" class="form-control">
                         <option value="processed">Proccesed</option>
-                        <option value="saclaimab">Claim</option>
+                        <option value="claim">Claim</option>
                         <option value="mail">Mail</option>
-                        <option value="fiat">Processed and Claimed</option>
-                        <option value="fiat">Processed and Mailed</option>
-
+                        <option value="processedclaim">Processed and Claimed</option>
+                        <option value="processedmail">Processed and Mailed</option>
                     </select>                
                 </div>
               </div>
