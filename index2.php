@@ -106,54 +106,98 @@
       </div>
       <div class="modal-body">
         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-            <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input type="text" id="_id" required="required" class="form-control col-md-7 col-xs-12">
-            </div>
-            </div>
-            <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
-            </div>
-            </div>
-            <div class="form-group">
-            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name / Initial</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input id="middle-name" class="form-control col-md-7 col-xs-12" type="text" name="middle-name">
-            </div>
-            </div>
-            <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div id="gender" class="btn-group" data-toggle="buttons">
-                <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                    <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
-                </label>
-                <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                    <input type="radio" name="gender" value="female"> Female
-                </label>
+        <div class="form-group">
+                <label class="control-label col-sm-2" for="ref_no">Reference Number</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="ref_no" placeholder="" name="ref_no">
                 </div>
-            </div>
-            </div>
-            <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
-            </div>
-            </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="emp_id">Employee ID</label>
+                <div class="col-sm-10">          
+                  <input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
+                <div class="col-sm-10">          
+                  <input type="datetime-local" class="form-control" id="date_prepared" placeholder="" name="date_prepared">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="name">Name</label>
+                <div class="col-sm-10">          
+                  <input type="text" class="form-control" id="name" placeholder="" name="name">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="purpose">Purpose</label>
+                <div class="col-sm-10">          
+                  <input type="text" class="form-control" id="purpose" placeholder="" name="purpose">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
+                <div class="col-sm-10">          
+                  <input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="cbotype">CBO Type</label>
+                <div class="col-sm-10">          
+                  <input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="control_id">Control ID</label>
+                <div class="col-sm-10">          
+                  <input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="personal">Personal</label>
+                <div class="col-sm-10">          
+                  <input type="personal" class="form-control" id="personal" placeholder="" name="personal">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="req_status">Status</label>
+                <div class="col-sm-10">          
+                    <select name="cars">
+                        <option value="processed">Proccesed</option>
+                        <option value="saclaimab">Claim</option>
+                        <option value="mail">Mail</option>
+                        <option value="fiat">Processed and Claimed</option>
+                        <option value="fiat">Processed and Mailed</option>
+
+                    </select>                
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
+                <div class="col-sm-10">          
+                  <input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="claimdate">Claim Date</label>
+                <div class="col-sm-10">          
+                  <input type="datetime-local" class="form-control" id="claimdate" placeholder="" name="claimdate">
+                </div>
+              </div>
+            
             <div class="ln_solid"></div>
-            <div class="form-group">
-            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                <button class="btn btn-primary" type="button">Cancel</button>
-                <button class="btn btn-primary" type="reset">Reset</button>
-                <button type="submit" class="btn btn-success">Submit</button>
-            </div>
-            </div>
         </form>
 
       </div>
