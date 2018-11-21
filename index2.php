@@ -116,56 +116,56 @@
               <div class="form-group">
                 <label class="control-label col-sm-2" for="emp_id">Employee ID</label>
                 <div class="col-sm-10">          
-                  <input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id">
+                  <input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" disabled>
                 </div>
               </div>
               
               <div class="form-group">
                 <label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
                 <div class="col-sm-10">          
-                  <input type="datetime-local" class="form-control" id="date_prepared" placeholder="" name="date_prepared">
+                  <input type="datetime-local" class="form-control" id="date_prepared" placeholder="" name="date_prepared" disabled>
                 </div>
               </div>
               
               <div class="form-group">
                 <label class="control-label col-sm-2" for="name">Name</label>
                 <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="name" placeholder="" name="name">
+                  <input type="text" class="form-control" id="name" placeholder="" name="name" disabled>
                 </div>
               </div>
               
               <div class="form-group">
                 <label class="control-label col-sm-2" for="purpose">Purpose</label>
                 <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="purpose" placeholder="" name="purpose">
+                  <input type="text" class="form-control" id="purpose" placeholder="" name="purpose" disabled>
                 </div>
               </div>
               
               <div class="form-group">
                 <label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
                 <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code">
+                  <input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" disabled>
                 </div>
               </div>
               
               <div class="form-group">
                 <label class="control-label col-sm-2" for="cbotype">CBO Type</label>
                 <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype">
+                  <input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype" disabled>
                 </div>
               </div>
               
               <div class="form-group">
                 <label class="control-label col-sm-2" for="control_id">Control ID</label>
                 <div class="col-sm-10">          
-                  <input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id">
+                  <input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id" disabled>
                 </div>
               </div>
               
               <div class="form-group">
                 <label class="control-label col-sm-2" for="personal">Personal</label>
                 <div class="col-sm-10">          
-                  <input type="personal" class="form-control" id="personal" placeholder="" name="personal">
+                  <input type="personal" class="form-control" id="personal" placeholder="" name="personal" disabled>
                 </div>
               </div>
               
