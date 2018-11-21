@@ -48,7 +48,6 @@
 </head>
 <body>
     <h1><center> COE Request </center></h1>
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button> -->
     <div class='container'>
         <div class='table-responsive'>
             <table id='mydatatable' class='table table-striped table-bordered'>
@@ -108,117 +107,115 @@
 <!-- MODAL -->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_update_record.php'>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Process Request</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="ref_no">Reference Number</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="emp_id">Employee ID</label>
+            <div class="col-sm-10">          
+              <input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="name">Name</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="name" placeholder="" name="name" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="purpose">Purpose</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="purpose" placeholder="" name="purpose" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="cbotype">CBO Type</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="control_id">Control ID</label>
+            <div class="col-sm-10">          
+              <input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="personal">Personal</label>
+            <div class="col-sm-10">          
+              <input type="personal" class="form-control" id="personal" placeholder="" name="personal" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="req_status">Status</label>
+            <div class="col-sm-10">          
+                <select name="req_status" class="form-control" >
+                  <option id="req_status" label="" value=""></option>
+                  <option value="Processed">Proccesed</option>
+                  <option value="Claim">Claim</option>  
+                  <option value="Mail">Mail</option>
+                  <option value="Processed and Claimed">Processed and Claimed</option>
+                  <option value="Processed and Mailed">Processed and Mailed</option>
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">Process Request</h4>
+                </select>                
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
+            <div class="col-sm-10">          
+              <input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="claimdate">Claim Date</label>
+            <div class="col-sm-10">          
+              <input type="datetime-local" class="form-control" id="claimdate" placeholder="" name="claimdate">
+            </div>
+          </div>
+              
+          <div class="ln_solid"></div>
+                
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value='Save Changes'>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-        <div class="form-group">
-                <label class="control-label col-sm-2" for="ref_no">Reference Number</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control" id="ref_no" placeholder="" name="ref_no">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="emp_id">Employee ID</label>
-                <div class="col-sm-10">          
-                  <input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" disabled>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
-                <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared">
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="name">Name</label>
-                <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="name" placeholder="" name="name" disabled>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="purpose">Purpose</label>
-                <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="purpose" placeholder="" name="purpose" disabled>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
-                <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" disabled>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="cbotype">CBO Type</label>
-                <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype" disabled>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="control_id">Control ID</label>
-                <div class="col-sm-10">          
-                  <input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id" disabled>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="personal">Personal</label>
-                <div class="col-sm-10">          
-                  <input type="personal" class="form-control" id="personal" placeholder="" name="personal" disabled>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="req_status">Status</label>
-                <div class="col-sm-10">          
-                    <select name="req_status">
-                      <option id="req_status" label="" value=""></option>
-                      <option value="Processed">Proccesed</option>
-                      <option value="Claim">Claim</option>  
-                      <option value="Mail">Mail</option>
-                      <option value="Processed and Claimed">Processed and Claimed</option>
-                      <option value="Processed and Mailed">Processed and Mailed</option>
-
-                    </select>                
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
-                <div class="col-sm-10">          
-                  <input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="claimdate">Claim Date</label>
-                <div class="col-sm-10">          
-                  <input type="datetime-local" class="form-control" id="claimdate" placeholder="" name="claimdate">
-                </div>
-              </div>
-            
-            <div class="ln_solid"></div>
-        </form>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-
-    </div>
+    </form>
   </div>
 </div>
 
