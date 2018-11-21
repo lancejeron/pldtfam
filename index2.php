@@ -85,7 +85,18 @@
                             <td>' . $row["req_status"] . '</td>
                             <td>' . $row["claimersname"] . '</td>
                             <td>' . $row["claimdate"] .'</td>
-                            <td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg" , data-id="'.$row['emp_id'].'">Edit</button>' . '</td>
+                            <td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg" , 
+                                  data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
+                                  data-date_prepared="'.$row['date_prepared'].'"
+                                  data-name="'.$row['name'].'"
+                                  data-purpose="'.$row['purpose'].'"
+                                  data-accomp_code="'.$row['accomp_code'].'"
+                                  data-cbotype="'.$row['cbotype'].'"
+                                  data-control_id="'.$row['control_id'].'"
+                                  data-personal="'.$row['personal'].'"
+                                  data-req_status="'.$row['req_status'].'"
+                                  data-claimersname="'.$row['claimersname'].'"
+                                  data-claimdate="'.$row['claimdate'].'">Edit</button>' . '</td>
                         </tr>
                         ';
                     }
@@ -123,7 +134,7 @@
               <div class="form-group">
                 <label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
                 <div class="col-sm-10">          
-                  <input type="datetime-local" class="form-control" id="date_prepared" placeholder="" name="date_prepared" disabled>
+                  <input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared">
                 </div>
               </div>
               
@@ -172,12 +183,14 @@
               <div class="form-group">
                 <label class="control-label col-sm-2" for="req_status">Status</label>
                 <div class="col-sm-10">          
-                    <select name="status" class="form-control">
-                        <option value="processed">Proccesed</option>
-                        <option value="claim">Claim</option>
-                        <option value="mail">Mail</option>
-                        <option value="processedclaim">Processed and Claimed</option>
-                        <option value="processedmail">Processed and Mailed</option>
+                    <select name="req_status">
+                      <option id="req_status" label="" value=""></option>
+                      <option value="Processed">Proccesed</option>
+                      <option value="Claim">Claim</option>  
+                      <option value="Mail">Mail</option>
+                      <option value="Processed and Claimed">Processed and Claimed</option>
+                      <option value="Processed and Mailed">Processed and Mailed</option>
+
                     </select>                
                 </div>
               </div>
@@ -230,15 +243,33 @@
     });
     $('.bs-example-modal-lg').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget)
-        var id = button.data('id')
-        var name = button.data('name')
-        var day = button.data('day')
-        var leavefileday = button.data('leavefileday')
+        var ref_no = button.data('ref_no')
+        var emp_id = button.data('emp_id')
+        var date_prepared = button.data('date_prepared')
+        var name= button.data('name')
+        var purpose= button.data('purpose')
+        var accomp_code= button.data('accomp_code')
+        var cbotype= button.data('cbotype')
+        var control_id= button.data('control_id')
+        var personal= button.data('personal')
+        var req_status= button.data('req_status')
+        var claimersname= button.data('claimersname')
+        var claimdate= button.data('claimdate')
+      
 
         var modal = $(this)
-        modal.find('.modal-body #_id').val(id)
-        modal.find('.modal-body #_name').val(name)
-        modal.find('.modal-body #_day').val(day)
-        modal.find('.modal-body #_leavefileday').val(leavefileday)
+        modal.find('.modal-body #ref_no').val(ref_no)
+        modal.find('.modal-body #emp_id').val(emp_id)
+        modal.find('.modal-body #date_prepared').val(date_prepared) 
+        modal.find('.modal-body #name').val(name)
+        modal.find('.modal-body #purpose').val(purpose)
+        modal.find('.modal-body #accomp_code').val(accomp_code)
+        modal.find('.modal-body #cbotype').val(cbotype)
+        modal.find('.modal-body #control_id').val(control_id)
+        modal.find('.modal-body #personal').val(personal)
+        modal.find('.modal-body #req_status').val(req_status)
+        modal.find('.modal-body #req_status').text(''+req_status)
+        modal.find('.modal-body #claimersname').val(claimersname)
+        modal.find('.modal-body #claimdate').val(claimdate)
     });
 </script>
