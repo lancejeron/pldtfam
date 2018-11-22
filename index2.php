@@ -94,7 +94,8 @@
 							<td>' . $row["claimdate2"] .'</td>
 							<td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg" , 
 										data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
-										data-date_prepared="'.$row['date_prepared2'].'"
+										data-date_prepared2="'.$row['date_prepared2'].'"
+										data-date_prepared="'.$row['date_prepared'].'"
 										data-name="'.$row['name'].'"
 										data-purpose="'.$row['purpose'].'"
 										data-accomp_code="'.$row['accomp_code'].'"
@@ -133,14 +134,16 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
 						<div class="col-sm-10">          
-							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" disabled>
+							<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
+							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" disabled>
+							<input type="text" class="form-control" id="date_prepared2" placeholder=""disabled>
+							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" style='display:none;'>
 						</div>
 					</div>
 					
@@ -254,6 +257,7 @@
 		var ref_no = button.data('ref_no')
 		var emp_id = button.data('emp_id')
 		var date_prepared = button.data('date_prepared')
+		var date_prepared2 = button.data('date_prepared2')
 		var name= button.data('name')
 		var purpose= button.data('purpose')
 		var accomp_code= button.data('accomp_code')
@@ -267,7 +271,8 @@
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
 		modal.find('.modal-body #emp_id').val(emp_id)
-		modal.find('.modal-body #date_prepared').val(date_prepared) 
+		modal.find('.modal-body #date_prepared').val(date_prepared)
+		modal.find('.modal-body #date_prepared2').val(date_prepared2) 
 		modal.find('.modal-body #name').val(name)
 		modal.find('.modal-body #purpose').val(purpose)
 		modal.find('.modal-body #accomp_code').val(accomp_code)
