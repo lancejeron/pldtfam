@@ -56,7 +56,7 @@
 		<a href ="index3.php"><button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button></a>
     </center>
     </div>
-	<div class='container'>
+	<div>
 		<div class='table-responsive'>
 			<table id='mydatatable' class='table table-striped table-bordered'>
 				<thead>
@@ -207,7 +207,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname">
+							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname" maxlength='75'>
 						</div>
 					</div>
 

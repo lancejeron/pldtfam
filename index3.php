@@ -56,7 +56,7 @@
         <button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button>
     </center>
     </div>
-	<div class='container'>
+	<div>
 		<div class='table-responsive'>
 			<table id='mydatatable' class='table table-striped table-bordered'>
 				<thead>

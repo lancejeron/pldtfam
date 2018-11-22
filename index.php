@@ -59,7 +59,7 @@
         <a href ="index3.php"><button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button></a>
     </center>
     </div>
-	<div class='container'>
+	<div>
 		<div class='table-responsive'>
 			<table id='mydatatable' class='table table-striped table-bordered'>
 				<thead>
@@ -78,7 +78,7 @@
 						<th>Personal</th>
 						<th>MMProv</th>
 						<th>Other Instruction</th>
-						<th>Action</th>
+						<!-- <th>Action</th> -->
 					</tr>
 				</thead>
 				<?php
@@ -99,12 +99,13 @@
 						<td>' . $row["persno"] . '</td>
 						<td>' . $row["MMProv"] . '</td>
 						<td>' . $row["other_instruction"] . '</td>
-						<td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg",
-								data-start_time="'.$row['start_time2'].'"
-								data-emp_id="'. $row["emp_id"] .'"
-								data-name="'. $row["emp_name"] .'">Process</button>' . '</td>
+						
 					 </tr>
-                    ';
+					';
+					// <td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg",
+					// 			data-start_time="'.$row['start_time2'].'"
+					// 			data-emp_id="'. $row["emp_id"] .'"
+					// 			data-name="'. $row["emp_name"] .'">Process</button>' . '</td>
 					}
 				?>
 			</table>
