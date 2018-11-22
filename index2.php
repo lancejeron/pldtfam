@@ -95,7 +95,7 @@
 										data-personal="'.$row['personal'].'"
 										data-req_status="'.$row['req_status'].'"
 										data-claimersname="'.$row['claimersname'].'"
-										data-claimdate="'.$row['claimdate'].'">Edit</button>' . '</td>
+										data-claimdate="'.$row['claimdate2'].'">Edit</button>' . '</td>
 					</tr>
 					';
 					}
@@ -202,7 +202,8 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="claimdate">Claim Date</label>
 						<div class="col-sm-10">          
-							<input type="date" class="form-control" id="claimdate" placeholder="" name="claimdate">
+							<input type="text" class="form-control" id="claimdate" placeholder="" disabled>
+							<input type="text" class="form-control" id='test1' name="claimdate" style='display: none;'>
 						</div>
 					</div>
 							
@@ -211,8 +212,8 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" value='Save Changes'>
-					<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+					<input type="submit" class="btn btn-primary" value='Save Changes' onclick='getdatetime();'>
+
 				</div>
 			</div>
 		</form>
@@ -267,5 +268,30 @@
 		modal.find('.modal-body #req_status').val(req_status)
 		modal.find('.modal-body #req_status').text(''+req_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
+		modal.find('.modal-body #claimdate').val(claimdate)
 	});
+</script>
+<script>
+	function getdatetime(){
+		var today = new Date();         
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		var hh = today.getHours();
+		var min = today.getMinutes();
+		var sec = today.getSeconds();
+		// var parsetoday = new Date(today)
+		
+		if(dd<10) {
+			dd = '0'+dd
+		} 
+
+		if(mm<10) {
+			mm = '0'+mm
+		}
+
+		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
+
+		document.getElementById("test1").value=today;
+	}
 </script>
