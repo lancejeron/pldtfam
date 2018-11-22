@@ -82,13 +82,25 @@
 				</thead>
 				<?php
 					while($row = mysqli_fetch_array($result)){
-					// 	echo '
-					// 	<tr>
-                    // 		<td>' . $row["start_time"] . '</td>
-                    //      <td>' . $row[""] . '</td>
-					// 		<td>' . '<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">Process</button>' . '</td>
-					// </tr>
-                    // ';
+					 	echo '
+					 	<tr>
+                    	<td>' . $row["start_time"] . '</td>
+						<td>' . $row["emp_id"] . '</td>
+						<td>' . $row["email"] . '</td>
+                        <td>' . $row["emp_name"] . '</td>
+						<td>' . $row["type_of_coe"] . '</td>
+						<td>' . $row["_salary"] . '</td>
+						<td>' . $row["question1"] . '</td>
+						<td>' . $row["statement"] . '</td>
+						<td>' . $row["reqt_for"] . '</td>
+						<td>' . $row["reqt_for_name"] . '</td>
+						<td>' . $row["position_title"] . '</td>
+						<td>' . $row["persno"] . '</td>
+						<td>' . $row["MMProv"] . '</td>
+						<td>' . $row["other_instruction"] . '</td>
+						<td>' . '<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">Process</button>' . '</td>
+					 </tr>
+                    ';
 					}
 				?>
 			</table>
