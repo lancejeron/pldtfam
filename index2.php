@@ -19,7 +19,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<title>COE Request</title>
+		<title>COE Prepared Certificates</title>
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 		<!-- Bootstrap -->
@@ -47,7 +47,14 @@
 		
 </head>
 <body>
-	<h1><center> COE Request </center></h1>
+	<h1><center> COE Prepared Certificates </center></h1>
+	<div class='container'>
+    <center>
+        
+		<a href ="index.php"><button type="button" class="btn btn-primary btn-lg">COE Requests</button></a>
+        <button type="button" class="btn btn-primary btn-lg">COE Prepared Certificates</button>
+    </center>
+    </div>
 	<div class='container'>
 		<div class='table-responsive'>
 			<table id='mydatatable' class='table table-striped table-bordered'>
