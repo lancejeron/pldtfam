@@ -11,7 +11,7 @@
     $ref_no = $_POST['ref_no'];
     $claimersname = $_POST['claimersname'];
     $claimdate = $_POST['claimdate'];
-
+    
     $update_sql = "UPDATE tblpreparedcert SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate' WHERE ref_no ='$ref_no'";
     $update_sql_result = mysqli_query($conn, $update_sql);
     if (!mysqli_query($conn, $update_sql)) {
