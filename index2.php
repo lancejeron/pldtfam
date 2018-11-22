@@ -183,7 +183,7 @@
               <div class="form-group">
                 <label class="control-label col-sm-2" for="req_status">Status</label>
                 <div class="col-sm-10">          
-                    <select name="req_status">
+                    <select name="req_status" class="form-control">
                       <option id="req_status" label="" value=""></option>
                       <option value="Processed">Proccesed</option>
                       <option value="Claim">Claim</option>  
