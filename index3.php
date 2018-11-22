@@ -6,10 +6,7 @@
 	
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM tblcoereques AS tbl1
-            WHERE EXISTS
-                (SELECT * FROM tblpreparedcert as tbl2
-                 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
+    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2 FROM tblcoereques AS tbl1 INNER JOIN tblpreparedcert ON tblpreparedcert.emp_id = tbl1.emp_id AND tblpreparedcert.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM tblpreparedcert as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
 	$result = mysqli_query($conn, $sql);
 	if (!$result) {
 		echo "Error:". mysqli_error($conn);
@@ -99,7 +96,18 @@
 						<td>' . $row["persno"] . '</td>
 						<td>' . $row["MMProv"] . '</td>
 						<td>' . $row["other_instruction"] . '</td>
-						<td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">View Certificate</button>' . '</td>
+						<td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg", 
+								data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
+								data-date_prepared="'.$row['date_prepared2'].'"
+								data-name="'.$row['name'].'"
+								data-purpose="'.$row['purpose'].'"
+								data-accomp_code="'.$row['accomp_code'].'"
+								data-cbotype="'.$row['cbotype'].'"
+								data-control_id="'.$row['control_id'].'"
+								data-personal="'.$row['personal'].'"
+								data-req_status="'.$row['req_status'].'"
+								data-claimersname="'.$row['claimersname'].'"
+								data-claimdate="'.$row['claimdate2'].'"">View Certificate</button>' . '</td>
 					 </tr>
                     ';
 					}
@@ -116,13 +124,13 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Process Request</h4>
+					<h4 class="modal-title" id="myModalLabel">Certificate</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="ref_no">Reference Number</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no">
+							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no" disabled>
 						</div>
 					</div>
 					<div class="form-group">
@@ -182,24 +190,16 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="req_status">Status</label>
+						<label class="control-label col-sm-2" for="status">Status</label>
 						<div class="col-sm-10">          
-								<select name="req_status" class="form-control" >
-									<option id="req_status" label="" value=""></option>
-									<option value="Processed">Proccesed</option>
-									<option value="Claim">Claim</option>  
-									<option value="Mail">Mail</option>
-									<option value="Processed and Claimed">Processed and Claimed</option>
-									<option value="Processed and Mailed">Processed and Mailed</option>
-
-								</select>                
+							<input type="status" class="form-control" id="req_status" placeholder="" name="status" disabled>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname">
+							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname" disabled>
 						</div>
 					</div>
 
@@ -216,8 +216,6 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" value='Save Changes' onclick='getdatetime();'>
-
 				</div>
 			</div>
 		</form>
@@ -270,7 +268,6 @@
 		modal.find('.modal-body #control_id').val(control_id)
 		modal.find('.modal-body #personal').val(personal)
 		modal.find('.modal-body #req_status').val(req_status)
-		modal.find('.modal-body #req_status').text(''+req_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
 	});

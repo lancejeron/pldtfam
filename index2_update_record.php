@@ -19,7 +19,7 @@
         echo "error:". $php_errormsg;
     }
     else{
-        echo "Record Updated.";
+        echo "Processed Request Updated.";
     }
     header("refresh:1; url=index2.php");
 

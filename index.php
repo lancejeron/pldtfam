@@ -99,7 +99,10 @@
 						<td>' . $row["persno"] . '</td>
 						<td>' . $row["MMProv"] . '</td>
 						<td>' . $row["other_instruction"] . '</td>
-						<td>' . '<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">Process</button>' . '</td>
+						<td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg",
+								data-start_time="'.$row['start_time2'].'"
+								data-emp_id="'. $row["emp_id"] .'"
+								data-name="'. $row["emp_name"] .'">Process</button>' . '</td>
 					 </tr>
                     ';
 					}
@@ -111,7 +114,7 @@
 <!-- MODAL -->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_update_record.php'>
+		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_insert_record.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -126,18 +129,18 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
+						<div class="col-sm-10">          
+							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" disabled>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
 						<div class="col-sm-10">          
 							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" disabled>
 						</div>
 					</div>
 					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" disabled>
-						</div>
-					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="name">Name</label>
@@ -146,7 +149,7 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="control-label col-sm-2" for="purpose">Purpose</label>
 						<div class="col-sm-10">          
 							<input type="text" class="form-control" id="purpose" placeholder="" name="purpose" disabled>
@@ -179,16 +182,16 @@
 						<div class="col-sm-10">          
 							<input type="personal" class="form-control" id="personal" placeholder="" name="personal" disabled>
 						</div>
-					</div>
+					</div> -->
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="req_status">Status</label>
 						<div class="col-sm-10">          
 								<select name="req_status" class="form-control" >
-									<option id="req_status" label="" value=""></option>
-									<option value="Processed">Proccesed</option>
-									<option value="Claim">Claim</option>  
-									<option value="Mail">Mail</option>
+									<!-- <option id="req_status" label="" value=""></option> -->
+									<option value="Processed">Processed</option>
+									<!-- <option value="Claim">Claim</option>  
+									<option value="Mail">Mail</option> -->
 									<option value="Processed and Claimed">Processed and Claimed</option>
 									<option value="Processed and Mailed">Processed and Mailed</option>
 
@@ -216,7 +219,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" value='Save Changes' onclick='getdatetime();'>
+					<input type="submit" class="btn btn-success" value='Process' onclick='getdatetime();'>
 
 				</div>
 			</div>
@@ -248,7 +251,7 @@
 		var button = $(event.relatedTarget)
 		var ref_no = button.data('ref_no')
 		var emp_id = button.data('emp_id')
-		var date_prepared = button.data('date_prepared')
+		var date_prepared = button.data('start_time')
 		var name= button.data('name')
 		var purpose= button.data('purpose')
 		var accomp_code= button.data('accomp_code')

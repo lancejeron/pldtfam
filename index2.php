@@ -115,7 +115,7 @@
 <!-- MODAL -->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_update_record.php'>
+		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index2_update_record.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -126,7 +126,8 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="ref_no">Reference Number</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no">
+							<input type="text" class="form-control" id="ref_no" placeholder="" disabled>
+							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no" style="display:none;">
 						</div>
 					</div>
 					<div class="form-group">
@@ -190,9 +191,9 @@
 						<div class="col-sm-10">          
 								<select name="req_status" class="form-control" >
 									<option id="req_status" label="" value=""></option>
-									<option value="Processed">Proccesed</option>
-									<option value="Claim">Claim</option>  
-									<option value="Mail">Mail</option>
+									<option value="Processed">Processed</option>
+									<!-- <option value="Claim">Claim</option>  
+									<option value="Mail">Mail</option> -->
 									<option value="Processed and Claimed">Processed and Claimed</option>
 									<option value="Processed and Mailed">Processed and Mailed</option>
 
