@@ -7,7 +7,7 @@
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 
     $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM tblcoereques AS tbl1
-            WHERE NOT EXISTS
+            WHERE EXISTS
                 (SELECT * FROM tblpreparedcert as tbl2
                  WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
 	$result = mysqli_query($conn, $sql);
@@ -55,8 +55,8 @@
     <center>
         
         <a href ="index.php"><button type="button" class="btn btn-primary btn-lg">COE Requests</button></a>
-        <button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button>
         <a href ="index2.php"><button type="button" class="btn btn-primary btn-lg">COE Prepared Certificates</button></a>
+        <button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button>
     </center>
     </div>
 	<div class='container'>
@@ -99,7 +99,7 @@
 						<td>' . $row["persno"] . '</td>
 						<td>' . $row["MMProv"] . '</td>
 						<td>' . $row["other_instruction"] . '</td>
-						<td>' . '<button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">Process</button>' . '</td>
+						<td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">View Certificate</button>' . '</td>
 					 </tr>
                     ';
 					}

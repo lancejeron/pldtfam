@@ -55,8 +55,8 @@
     <center>
         
         <button type="button" class="btn btn-primary btn-lg">COE Requests</button>
-        <a href ="index3.php"><button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button></a>
         <a href ="index2.php"><button type="button" class="btn btn-primary btn-lg">COE Prepared Certificates</button></a>
+        <a href ="index3.php"><button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button></a>
     </center>
     </div>
 	<div class='container'>
