@@ -6,7 +6,7 @@
 	
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2 FROM tblcoereques AS tbl1 INNER JOIN tblpreparedcert ON tblpreparedcert.emp_id = tbl1.emp_id AND tblpreparedcert.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM tblpreparedcert as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
+    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2 FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.emp_id AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
 	$result = mysqli_query($conn, $sql);
 	if (!$result) {
 		echo "Error:". mysqli_error($conn);
@@ -52,8 +52,7 @@
     <center>
         
         <a href ="index.php"><button type="button" class="btn btn-primary btn-lg">COE Requests</button></a>
-        <a href ="index2.php"><button type="button" class="btn btn-primary btn-lg">COE Prepared Certificates</button></a>
-        <button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button>
+        <a href ="index3.php"><button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button></a>
     </center>
     </div>
 	<div>
@@ -75,6 +74,8 @@
 						<th>Personal</th>
 						<th>MMProv</th>
 						<th>Other Instruction</th>
+						<th>Reference Number</th>
+						<th>Claimdate</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -82,7 +83,7 @@
 					while($row = mysqli_fetch_array($result)){
 					 	echo '
 					 	<tr>
-                    	<td>' . $row["start_time2"] . '</td>
+                    	<td>' . $row["start_time"] . '</td>
 						<td>' . $row["emp_id"] . '</td>
 						<td>' . $row["email"] . '</td>
                         <td>' . $row["emp_name"] . '</td>
@@ -96,9 +97,12 @@
 						<td>' . $row["persno"] . '</td>
 						<td>' . $row["MMProv"] . '</td>
 						<td>' . $row["other_instruction"] . '</td>
-						<td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg", 
+						<td>' . $row["ref_no"] . '</td>
+						<td>' . $row["claimdate"] . '</td>
+						<td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
 								data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
-								data-date_prepared="'.$row['date_prepared2'].'"
+								data-date_prepared2="'.$row['date_prepared2'].'"
+								data-date_prepared="'.$row['date_prepared'].'"
 								data-name="'.$row['name'].'"
 								data-purpose="'.$row['purpose'].'"
 								data-accomp_code="'.$row['accomp_code'].'"
@@ -107,7 +111,7 @@
 								data-personal="'.$row['personal'].'"
 								data-req_status="'.$row['req_status'].'"
 								data-claimersname="'.$row['claimersname'].'"
-								data-claimdate="'.$row['claimdate2'].'"">View Certificate</button>' . '</td>
+								data-claimdate="'.$row['claimdate2'].'"">Edit</button>' . '</td>
 					 </tr>
                     ';
 					}
@@ -119,31 +123,34 @@
 <!-- MODAL -->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_update_record.php'>
+	<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index3_update_record.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Certificate</h4>
+					<h4 class="modal-title" id="myModalLabel">Process Request</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="ref_no">Reference Number</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no" disabled>
+							<input type="text" class="form-control" id="ref_no" placeholder="" disabled>
+							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no" style="display:none;">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
 						<div class="col-sm-10">          
-							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" disabled>
+							<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
+							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" disabled>
+							<input type="text" class="form-control" id="date_prepared2" placeholder=""disabled>
+							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" style='display: none;'>
 						</div>
 					</div>
 					
@@ -190,16 +197,22 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="status">Status</label>
+						<label class="control-label col-sm-2" for="req_status">Status</label>
 						<div class="col-sm-10">          
-							<input type="status" class="form-control" id="req_status" placeholder="" name="status" disabled>
+								<select name="req_status" class="form-control" >
+									<option id="req_status" label="" value=""></option>
+									<option value="Processed">Processed</option>
+									<option value="Claimed">Claimed</option>
+									<option value="Mailed">Mailed</option>
+
+								</select>                
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname" disabled>
+							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname" maxlength='75'>
 						</div>
 					</div>
 
@@ -216,6 +229,8 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-success" value='Save Changes' onclick='getdatetime();'>
+
 				</div>
 			</div>
 		</form>
@@ -247,6 +262,7 @@
 		var ref_no = button.data('ref_no')
 		var emp_id = button.data('emp_id')
 		var date_prepared = button.data('date_prepared')
+		var date_prepared2 = button.data('date_prepared2')
 		var name= button.data('name')
 		var purpose= button.data('purpose')
 		var accomp_code= button.data('accomp_code')
@@ -260,7 +276,8 @@
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
 		modal.find('.modal-body #emp_id').val(emp_id)
-		modal.find('.modal-body #date_prepared').val(date_prepared) 
+		modal.find('.modal-body #date_prepared').val(date_prepared)
+		modal.find('.modal-body #date_prepared2').val(date_prepared2) 
 		modal.find('.modal-body #name').val(name)
 		modal.find('.modal-body #purpose').val(purpose)
 		modal.find('.modal-body #accomp_code').val(accomp_code)
@@ -268,6 +285,7 @@
 		modal.find('.modal-body #control_id').val(control_id)
 		modal.find('.modal-body #personal').val(personal)
 		modal.find('.modal-body #req_status').val(req_status)
+		modal.find('.modal-body #req_status').text(''+req_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
 	});

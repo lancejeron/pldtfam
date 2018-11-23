@@ -52,7 +52,6 @@
     <center>
         
 		<a href ="index.php"><button type="button" class="btn btn-primary btn-lg">COE Requests</button></a>
-        <button type="button" class="btn btn-primary btn-lg">COE Prepared Certificates</button>
 		<a href ="index3.php"><button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button></a>
     </center>
     </div>

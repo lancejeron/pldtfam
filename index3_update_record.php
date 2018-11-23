@@ -14,15 +14,14 @@
     $claimersname = $_POST['claimersname'];
     $claimdate = $_POST['claimdate'];
     
-    $update_sql = "UPDATE tblpreparedcert SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
-    $update_sql_result = mysqli_query($conn, $update_sql);
+    $update_sql = "UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
     if (!mysqli_query($conn, $update_sql)) {
         echo "Record not updated." . "<br>";
-        echo "error:". $php_errormsg;
+        echo("Error description: " . mysqli_error($conn)); 
     }
     else{
-        echo "Processed Request Updated.";
+        echo "Record Updated.";
     }
-    header("refresh:1; url=index2.php");
+    header("refresh:1; url=index3.php");
 
 ?>

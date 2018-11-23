@@ -7,20 +7,32 @@
     $conn = mysqli_connect($servername, $username, $password, $dbname);
 
     // ----- insert record
-    $req_status = $_POST['req_status'];
     $ref_no = $_POST['ref_no'];
+    $emp_id = $_POST['emp_id'];
+    $date_prepared = $_POST['start_time'];
+    $name = $_POST['name'];
+    $purpose = $_POST['purpose'];
+    $accomp_code= $_POST['accomp_code'];
+    $cbotype = $_POST['type_of_coe'];
+    $control_id = $_POST['control_id'];
+    $personal = $_POST['personal'];
+    $req_status= $_POST['req_status'];
     $claimersname = $_POST['claimersname'];
-    $claimdate = $_POST['claimdate'];
+    $claimdate= $_POST['claimdate'];
+
     
-    $insert_sql = "";
-    $insert_sql_result = mysqli_query($conn, $insert_sql);
+    $insert_sql = "INSERT INTO prepared_certificates VALUES
+                    ('$ref_no', '$emp_id', '$date_prepared', '$name', '$purpose', '$accomp_code',
+                     '$cbotype', '$control_id', '$personal', '$req_status', '$claimersname',
+                      '$claimdate')";
     if (!mysqli_query($conn, $insert_sql)) {
-        echo "Record not updated." . "<br>";
-        echo "error:". $php_errormsg;
+        echo "Unable to Process." . "<br>";
+        echo("Error description: " . mysqli_error($conn)); 
     }
     else{
-        echo "Record Updated.";
+        echo "Request Processed.";
     }
-    header("refresh:1; url=index2.php");
+    mysqli_close($conn);
+    header("refresh:1; url=index.php");
 
 ?>

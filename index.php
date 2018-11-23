@@ -6,9 +6,9 @@
 	
 	$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM tblcoereques AS tbl1
+    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
             WHERE NOT EXISTS
-                (SELECT * FROM tblpreparedcert as tbl2
+                (SELECT * FROM prepared_certificates as tbl2
                  WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
 	$result = mysqli_query($conn, $sql);
 	if (!$result) {
@@ -54,8 +54,7 @@
     <div class='container'>
     <center>
         
-        <button type="button" class="btn btn-primary btn-lg">COE Requests</button>
-        <a href ="index2.php"><button type="button" class="btn btn-primary btn-lg">COE Prepared Certificates</button></a>
+		<a href ="index.php"><button type="button" class="btn btn-primary btn-lg">COE Requests</button></a>
         <a href ="index3.php"><button type="button" class="btn btn-primary btn-lg">COE (Finished) Requests</button></a>
     </center>
     </div>
@@ -75,17 +74,17 @@
                         <th>Request for</th>
 						<th>Request for Name</th>
 						<th>Positon Title</th>
-						<th>Personal</th>
+						<th>Persno</th>
 						<th>MMProv</th>
 						<th>Other Instruction</th>
-						<!-- <th>Action</th> -->
+						<th>Action</th>
 					</tr>
 				</thead>
 				<?php
 					while($row = mysqli_fetch_array($result)){
 					 	echo '
 					 	<tr>
-                    	<td>' . $row["start_time2"] . '</td>
+                    	<td>' . $row["start_time"] . '</td>
 						<td>' . $row["emp_id"] . '</td>
 						<td>' . $row["email"] . '</td>
                         <td>' . $row["emp_name"] . '</td>
@@ -99,13 +98,16 @@
 						<td>' . $row["persno"] . '</td>
 						<td>' . $row["MMProv"] . '</td>
 						<td>' . $row["other_instruction"] . '</td>
+						<td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg",
+									data-start_time2="'.$row['start_time2'].'"
+									data-start_time="'.$row['start_time'].'"
+									data-emp_id="'. $row["emp_id"] .'"
+									data-name="'. $row["emp_name"] .'"
+									data-purpose="' . $row["purpose"] .'"
+									data-type_of_coe="' . $row["type_of_coe"] .'">Process</button>' . '</td>
 						
 					 </tr>
 					';
-					// <td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg",
-					// 			data-start_time="'.$row['start_time2'].'"
-					// 			data-emp_id="'. $row["emp_id"] .'"
-					// 			data-name="'. $row["emp_name"] .'">Process</button>' . '</td>
 					}
 				?>
 			</table>
@@ -130,15 +132,17 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
+						<label class="control-label col-sm-2" for="start_time">Date Prepared</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" disabled>
+							<input type="text" class="form-control" id="start_time2" placeholder=""disabled>
+							<input type="text" class="form-control" id="start_time" placeholder="" name="start_time" style='display: none;'>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
 						<div class="col-sm-10">          
-							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" disabled>
+							<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
+							<input type="text" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display: none;'>
 						</div>
 					</div>
 					
@@ -146,44 +150,47 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="name">Name</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="name" placeholder="" name="name" disabled>
+							<input type="text" class="form-control" id="name" placeholder="" disabled>
+							<input type="text" class="form-control" id="name" placeholder="" name="name" style='display: none;'>
 						</div>
 					</div>
 					
-					<!-- <div class="form-group">
+					<div class="form-group">
 						<label class="control-label col-sm-2" for="purpose">Purpose</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="purpose" placeholder="" name="purpose" disabled>
+							<input type="text" class="form-control" id="purpose" placeholder="" disabled>
+							<input type="text" class="form-control" id="purpose" placeholder="" name="purpose" style='display: none;'>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" disabled>
+							<input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" >
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="cbotype">CBO Type</label>
+						<label class="control-label col-sm-2" for="type_of_coe">CBO Type</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype" disabled>
+							<input type="text" class="form-control" id="type_of_coe" placeholder="" disabled>
+							<input type="text" class="form-control" id="type_of_coe" placeholder="" name="type_of_coe" style='display: none;'>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="control_id">Control ID</label>
 						<div class="col-sm-10">          
-							<input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id" disabled>
+							<input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id">
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="personal">Personal</label>
 						<div class="col-sm-10">          
-							<input type="personal" class="form-control" id="personal" placeholder="" name="personal" disabled>
+							<input type="personal" class="form-control" id="personal" placeholder="" name="personal">
 						</div>
-					</div> -->
+					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="req_status">Status</label>
@@ -193,8 +200,8 @@
 									<option value="Processed">Processed</option>
 									<!-- <option value="Claim">Claim</option>  
 									<option value="Mail">Mail</option> -->
-									<option value="Processed and Claimed">Processed and Claimed</option>
-									<option value="Processed and Mailed">Processed and Mailed</option>
+									<option value="Claimed">Claimed</option>
+									<option value="Mailed">Mailed</option>
 
 								</select>                
 						</div>
@@ -252,13 +259,13 @@
 		var button = $(event.relatedTarget)
 		var ref_no = button.data('ref_no')
 		var emp_id = button.data('emp_id')
-		var date_prepared = button.data('start_time')
+		var start_time = button.data('start_time')
+		var start_time2 = button.data('start_time2')
 		var name= button.data('name')
 		var purpose= button.data('purpose')
 		var accomp_code= button.data('accomp_code')
-		var cbotype= button.data('cbotype')
+		var type_of_coe= button.data('type_of_coe')
 		var control_id= button.data('control_id')
-		var personal= button.data('personal')
 		var req_status= button.data('req_status')
 		var claimersname= button.data('claimersname')
 		var claimdate= button.data('claimdate')
@@ -266,13 +273,13 @@
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
 		modal.find('.modal-body #emp_id').val(emp_id)
-		modal.find('.modal-body #date_prepared').val(date_prepared) 
+		modal.find('.modal-body #start_time').val(start_time)
+		modal.find('.modal-body #start_time2').val(start_time2) 
 		modal.find('.modal-body #name').val(name)
 		modal.find('.modal-body #purpose').val(purpose)
 		modal.find('.modal-body #accomp_code').val(accomp_code)
-		modal.find('.modal-body #cbotype').val(cbotype)
+		modal.find('.modal-body #type_of_coe').val(type_of_coe)
 		modal.find('.modal-body #control_id').val(control_id)
-		modal.find('.modal-body #personal').val(personal)
 		modal.find('.modal-body #req_status').val(req_status)
 		modal.find('.modal-body #req_status').text(''+req_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
