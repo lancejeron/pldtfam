@@ -52,7 +52,7 @@
         <div class="animate form login_form">
           <section class="login_content">
             <form method='POST' action='login.php'>
-              <h1>Login</h1>
+              <h1>Log in</h1>
               <div>
                 <input type="text" class="form-control" placeholder="Username" name='username' required/>
               </div>
@@ -60,7 +60,7 @@
                 <input type="password" class="form-control" placeholder="Password" name='password' required/>
               </div>
               <div>
-                <input type="submit" class="btn btn-default submit" name="login" id="login" value="login">
+                <button type="submit" class="btn btn-submit btn-md" name="login" id="login" value="login">Log in</button>
               </div>
             </form>
           </section>

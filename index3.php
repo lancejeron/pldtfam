@@ -13,7 +13,7 @@
 	
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2 FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.emp_id AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
+		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2 FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.emp_id AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC';
 		$result = mysqli_query($conn, $sql);
 		if (!$result) {
 			echo "Error:". mysqli_error($conn);
@@ -54,7 +54,9 @@
 		
 </head>
 <body>
-	<a href ="logout.php"><button type="button" class="btn btn-danger btn-md">Log-out</button></a>
+	<div class="pull-right">
+		<a href ="logout.php"><button type="button" class="btn btn-danger btn-md">Log-out</button></a>
+  	</div>
 	<h1><center> COE (Finished) Requests </center></h1>
     <div class='container'>
     <center>

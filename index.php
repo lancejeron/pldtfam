@@ -57,7 +57,9 @@
 		
 </head>
 <body>
+	<div class="pull-right">
 		<a href ="logout.php"><button type="button" class="btn btn-danger btn-md">Log-out</button></a>
+  	</div>
 		<h1><center> COE Requests </center></h1>
 		
     <div class='container'>
