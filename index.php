@@ -1,19 +1,26 @@
 <?php
+	session_start();
+
 	$servername = 'localhost';
 	$username = 'root';
 	$password = '';
 	$dbname = 'dbpldt';
-	
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
-            WHERE NOT EXISTS
-                (SELECT * FROM prepared_certificates as tbl2
-                 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
-	$result = mysqli_query($conn, $sql);
-	if (!$result) {
-		echo "Error:". mysqli_error($conn);
+	if(!isset($_SESSION['username'])){
+		header("Location:login.php");
 	}
+	else{
+
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
+				WHERE NOT EXISTS
+					(SELECT * FROM prepared_certificates as tbl2
+					WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
+		$result = mysqli_query($conn, $sql);
+		if (!$result) {
+			echo "Error:". mysqli_error($conn);
+		}
 		
 ?>
 <!DOCTYPE html>
@@ -50,7 +57,9 @@
 		
 </head>
 <body>
-	<h1><center> COE Requests </center></h1>
+		<a href ="logout.php"><button type="button" class="btn btn-danger btn-md">Log-out</button></a>
+		<h1><center> COE Requests </center></h1>
+		
     <div class='container'>
     <center>
         
@@ -310,3 +319,6 @@
 		document.getElementById("test1").value=today;
 	}
 </script>
+<?php
+	}
+?>

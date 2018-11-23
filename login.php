@@ -1,3 +1,36 @@
+<?php
+  session_start();
+
+  $servername = 'localhost';
+  $username = 'root';
+  $password = '';
+  $dbname = 'dbpldt';
+  
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+  if(isSet($_POST['login'])) {
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $query = mysqli_query($conn,"SELECT * FROM tblaccounts WHERE username='$username' AND password='$password'");
+    $res = mysqli_num_rows($query);
+
+    if ($res == 1) {
+        $_SESSION['username'] = $username;
+        $_SESSION['password'] = $password;
+        $_SESSION['userobj'] = mysqli_fetch_assoc($query);
+
+        header('Location: http://localhost/pldt/pldtfam/index.php');
+        exit;
+    } else {
+        echo 'Data does not match <br /> RE-Enter Username and Password';
+        header("refresh:2; url=login.php");
+    }
+} else {
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,22 +48,19 @@
 </head>
 <body class="login">
     <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
-
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form>
+            <form method='POST' action='login.php'>
               <h1>Login</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" placeholder="Username" name='username' required/>
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" placeholder="Password" name='password' required/>
               </div>
               <div>
-                <a class="btn btn-default submit" href="index.html">Log in</a>
+                <input type="submit" class="btn btn-default submit" name="login" id="login" value="login">
               </div>
             </form>
           </section>
@@ -39,3 +69,6 @@
     </div>
   </body>
 </html>
+<?php
+    }
+?>

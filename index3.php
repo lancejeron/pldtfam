@@ -1,16 +1,23 @@
 <?php
+	session_start();
+
 	$servername = 'localhost';
 	$username = 'root';
 	$password = '';
 	$dbname = 'dbpldt';
-	
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2 FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.emp_id AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
-	$result = mysqli_query($conn, $sql);
-	if (!$result) {
-		echo "Error:". mysqli_error($conn);
+	if(!isset($_SESSION['username'])){
+        header("Location:login.php");
 	}
+	else{
+	
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2 FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.emp_id AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
+		$result = mysqli_query($conn, $sql);
+		if (!$result) {
+			echo "Error:". mysqli_error($conn);
+		}
 		
 ?>
 <!DOCTYPE html>
@@ -47,6 +54,7 @@
 		
 </head>
 <body>
+	<a href ="logout.php"><button type="button" class="btn btn-danger btn-md">Log-out</button></a>
 	<h1><center> COE (Finished) Requests </center></h1>
     <div class='container'>
     <center>
@@ -314,3 +322,6 @@
 		document.getElementById("test1").value=today;
 	}
 </script>
+<?php
+	}
+?>
