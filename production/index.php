@@ -135,7 +135,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>COE Requests</h2>
-                    <button type='button' class='btn btn-success pull-right btn-md'><i class="fa fa-plus"></i> Create Request</button>
+                    <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#walkin'><i class="fa fa-plus"></i> Create Request</button>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -320,7 +320,7 @@
 </div>
 
 <!--Walk in Modal -->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id='walkin' tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_insert_record.php'>
       <div class="modal-content">
