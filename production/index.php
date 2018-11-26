@@ -330,12 +330,12 @@
           <h4 class="modal-title" id="myModalLabel">Request for Certificate of Emplyment</h4>
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date_prepared">Date Prepared</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" id="first-name" class="form-control col-md-7 col-xs-12">
-            </div>
-          </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date_prepared">Date Prepared</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" id="first-name" class="form-control col-md-7 col-xs-12">
+                </div>
+              </div>
 
               <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="emp_no">Employee Number</label>
@@ -382,123 +382,124 @@
                           </div>
                   </div>  
                   
-              <div class="form-group">
-                  <h4>Select purpose:</h4>
-                  <div class="row">
-                      <div class='col-sm-4'>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Car Loan
-                              </label>
-                          </div>
+                <div class="form-group">
+                    <h4>Select purpose:</h4>
+                    <div class="row">
+                        <div class='col-sm-4'>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Car Loan
+                                </label>
+                            </div>
 
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Loan Application 
-                              </label>
-                          </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Loan Application 
+                                </label>
+                            </div>
 
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Housing Loan (Bank/HDMF0) 
-                              </label>
-                          </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Housing Loan (Bank/HDMF0) 
+                                </label>
+                            </div>
 
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Credit Card
-                              </label>
-                          </div>
-                          
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Cellphone Application
-                              </label>
-                          </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Credit Card
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Cellphone Application
+                                </label>
+                            </div>
 
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Firearms License
-                              </label>
-                          </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Firearms License
+                                </label>
+                            </div>
 
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">School
-                              </label>
-                          </div>
-                      </div>    
-                  
-                      <div class='col-sm-4'>
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Visa/Travel Abroad
-                              </label>
-                          </div>
-                          
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Migration
-                              </label>
-                          </div>
-                              
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Employment (local/abroad)
-                              </label>
-                          </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">School
+                                </label>
+                            </div>
+                        </div>    
+                    
+                        <div class='col-sm-4'>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Visa/Travel Abroad
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Migration
+                                </label>
+                            </div>
+                                
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Employment (local/abroad)
+                                </label>
+                            </div>
 
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">HDMF (Loan/Maturity)
-                              </label>
-                          </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">HDMF (Loan/Maturity)
+                                </label>
+                            </div>
 
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">SSS Claim/Pension
-                              </label>
-                          </div>
-                          
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">PhilHealth
-                              </label>
-                          </div>
-                              
-                          <div class="checkbox">
-                              <label>
-                                  <input type="checkbox" value="">Reference/Others
-                              </label>
-                          </div>
-                      </div>    
-                  </div>                                       
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">SSS Claim/Pension
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">PhilHealth
+                                </label>
+                            </div>
+                                
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Reference/Others
+                                </label>
+                            </div>
+                        </div>    
+                    </div>                                       
+                </div>
               </div>
-
-          <div class="form-group">
-              <label for="claimersname" class="control-label col-md-3 col-sm-3 col-xs-12">Received by</label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="claimersname" class="form-control col-md-7 col-xs-12" type="text" name="claimersname">
-              </div>
-          </div>
-          
-          <div class="form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="claimdate">Claim Date</label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="claimdate" id="claimdate" class="form-control col-md-7 col-xs-12">
-              </div>
-          </div> 
-    
-          <div class="ln_solid"></div>
-                  
-          <div class="form-group">
-              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                <button class="btn btn-primary" type="button">Cancel</button>
-                <button class="btn btn-primary" type="reset">Reset</button>
-                <button type="submit" class="btn btn-success">Submit</button>
-              </div>
-          </div>
-        </div> 
+            <div class="form-group">
+                <label for="claimersname" class="control-label col-md-3 col-sm-3 col-xs-12">Received by</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                <input id="claimersname" class="form-control col-md-7 col-xs-12" type="text" name="claimersname">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="claimdate">Claim Date</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="claimdate" id="claimdate" class="form-control col-md-7 col-xs-12">
+                </div>
+            </div> 
+      
+            <div class="ln_solid"></div>
+                    
+            <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <button class="btn btn-primary" type="button">Cancel</button>
+                  <button class="btn btn-primary" type="reset">Reset</button>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+          </div>  
+        </div>  
       </div>  
     </form>
   </div>
