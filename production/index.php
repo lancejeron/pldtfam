@@ -326,114 +326,177 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
-          <h4 class="modal-title" id="myModalLabel">Process Request</h4>
+          <h4 class="modal-title" id="myModalLabel">Request for Certificate of Emplyment</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label class="control-label col-sm-2" for="ref_no">Reference Number</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="start_time">Date Prepared</label>
-            <div class="col-sm-10">          
-              <input type="text" class="form-control" id="start_time2" placeholder=""disabled>
-              <input type="text" class="form-control" id="start_time" placeholder="" name="start_time" style='display: none;'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="emp_id">Employee ID</label>
-            <div class="col-sm-10">          
-              <input type="number" class="form-control" id="emp_id" placeholder="" disabled>
-              <input type="text" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display: none;'>
-            </div>
-          </div>
-          
-          
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="name">Name</label>
-            <div class="col-sm-10">          
-              <input type="text" class="form-control" id="name" placeholder="" disabled>
-              <input type="text" class="form-control" id="name" placeholder="" name="name" style='display: none;'>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="purpose">Purpose</label>
-            <div class="col-sm-10">          
-              <input type="text" class="form-control" id="purpose" placeholder="" disabled>
-              <input type="text" class="form-control" id="purpose" placeholder="" name="purpose" style='display: none;'>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
-            <div class="col-sm-10">          
-              <input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" >
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="type_of_coe">CBO Type</label>
-            <div class="col-sm-10">          
-              <input type="text" class="form-control" id="type_of_coe" placeholder="" disabled>
-              <input type="text" class="form-control" id="type_of_coe" placeholder="" name="type_of_coe" style='display: none;'>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="control_id">Control ID</label>
-            <div class="col-sm-10">          
-              <input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date_prepared">Date Prepared</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="text" id="first-name" class="form-control col-md-7 col-xs-12">
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="personal">Personal</label>
-            <div class="col-sm-10">          
-              <input type="personal" class="form-control" id="personal" placeholder="" name="personal">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="req_status">Status</label>
-            <div class="col-sm-10">          
-                <select name="req_status" class="form-control" >
-                  <!-- <option id="req_status" label="" value=""></option> -->
-                  <option value="Processed">Processed</option>
-                  <!-- <option value="Claim">Claim</option>  
-                  <option value="Mail">Mail</option> -->
-                  <option value="Claimed">Claimed</option>
-                  <option value="Mailed">Mailed</option>
+              <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="emp_no">Employee Number</label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="number" id="emp_no" name="emp_no" class="form-control col-md-7 col-xs-12">
+                  </div>
+              </div>
 
-                </select>                
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
-            <div class="col-sm-10">          
-              <input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label col-sm-2" for="claimdate">Claim Date</label>
-            <div class="col-sm-10">          
-              <input type="text" class="form-control" id="claimdate" placeholder="" disabled>
-              <input type="text" class="form-control" id='test1' name="claimdate" style='display: none;'>
-            </div>
-          </div>
+              <div class="form-group">
+                  <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name</label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="name">
+                  </div>
+              </div>
               
-          <div class="ln_solid"></div>
-                
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" class="btn btn-success" value='Process' onclick='getdatetime();'>
+              <div class="form-group">
+                  <label for="division" class="control-label col-md-3 col-sm-3 col-xs-12">Division</label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="division" class="form-control col-md-7 col-xs-12" type="text" name="division">
+                  </div>
+              </div>
 
-        </div>
+              <div class="form-group">
+                  <label for="tel_no" class="control-label col-md-3 col-sm-3 col-xs-12">Telephone Number</label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input id="tel_no" class="form-control col-md-7 col-xs-12" type="number" name="tel_no">
+                  </div>
+              </div>
+              
+              <div class="col-md-8 center-margin">
+                  <div class="form-group">
+                      <h4>Select type of certificate:</h4>
+                          <div class="form-group">
+                              <div class="radio">
+                                  <label>
+                                    <input type="radio" checked="" value="option1" id="optionsRadios1" name="optionsRadios">Certificate of Employment
+                                  </label>
+                              </div>
+                              <div class="radio">
+                                  <label>
+                                    <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">Certificate of Employment and Compensation
+                                  </label>
+                              </div>
+                          </div>
+                  </div>  
+                  
+              <div class="form-group">
+                  <h4>Select purpose:</h4>
+                  <div class="row">
+                      <div class='col-sm-4'>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Car Loan
+                              </label>
+                          </div>
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Loan Application 
+                              </label>
+                          </div>
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Housing Loan (Bank/HDMF0) 
+                              </label>
+                          </div>
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Credit Card
+                              </label>
+                          </div>
+                          
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Cellphone Application
+                              </label>
+                          </div>
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Firearms License
+                              </label>
+                          </div>
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">School
+                              </label>
+                          </div>
+                      </div>    
+                  
+                      <div class='col-sm-4'>
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Visa/Travel Abroad
+                              </label>
+                          </div>
+                          
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Migration
+                              </label>
+                          </div>
+                              
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Employment (local/abroad)
+                              </label>
+                          </div>
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">HDMF (Loan/Maturity)
+                              </label>
+                          </div>
+
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">SSS Claim/Pension
+                              </label>
+                          </div>
+                          
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">PhilHealth
+                              </label>
+                          </div>
+                              
+                          <div class="checkbox">
+                              <label>
+                                  <input type="checkbox" value="">Reference/Others
+                              </label>
+                          </div>
+                      </div>    
+                  </div>                                       
+              </div>
+      </div>
+
+      <div class="form-group">
+          <label for="claimersname" class="control-label col-md-3 col-sm-3 col-xs-12">Received by</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+          <input id="claimersname" class="form-control col-md-7 col-xs-12" type="text" name="claimersname">
+          </div>
+      </div>
+      
+      <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="claimdate">Claim Date</label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+          <input type="claimdate" id="claimdate" class="form-control col-md-7 col-xs-12">
+          </div>
+      </div> 
+ 
+      <div class="ln_solid"></div>
+              
+      <div class="form-group">
+          <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+          <button class="btn btn-primary" type="button">Cancel</button>
+          <button class="btn btn-primary" type="reset">Reset</button>
+          <button type="submit" class="btn btn-success">Submit</button>
+          </div>
       </div>
     </form>
   </div>
