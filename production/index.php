@@ -60,7 +60,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a class="site_title"><i class="fa fa-paw"></i> <span>PLDT-HRIS </span></a>
+              <a class="site_title"><i class="fa fa-user"></i> <span>PLDT-HRIS </span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -135,6 +135,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>COE Requests</h2>
+                    <button type='button' class='btn btn-success pull-right btn-md'><i class="fa fa-plus"></i> Create Request</button>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
