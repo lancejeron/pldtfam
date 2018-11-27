@@ -189,6 +189,7 @@
                                             data-personal="'.$row['personal'].'"
                                             data-req_status="'.$row['req_status'].'"
                                             data-claimersname="'.$row['claimersname'].'"
+                                            data-returned_status="'.$row['returned_status'].'"
                                             data-claimdate="'.$row['claimdate2'].'"">Edit</button>' . '</td>
                                 </tr>
                                 ';
@@ -307,17 +308,17 @@
 					</div>
 
           <div class="form-group">
-						<label class="control-label col-sm-2" for="claimdate">Returned</label>
-						<div class="col-sm-10">          
-							<input type="checkbox"  class="form-control" id="returntosender" >
+						<label class="control-label col-sm-2">Returned</label>
+						<div class="col-sm-10">
+							<input type="checkbox" id='returncb' class="form-control" name='returned_status' value='yes'>
+              <input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
 						</div>
 					</div>
 
           <div class="form-group">
-						<label class="control-label col-sm-2" for="claimdate">Return Date</label>
+						<label class="control-label col-sm-2">Date Returned</label>
 						<div class="col-sm-10">          
-							<input type="datetime" class="form-control" id="returndate" placeholder="">
-							<input type="datetime" class="form-control" id='test1' name="returndate" style='display: none;'>
+							<input type="datetime-local" class="form-control" placeholder="" name='date_returned'>  
 						</div>
 					</div>
 
@@ -371,9 +372,20 @@
   </body>
 </html>
 <script>
+
 	$(document).ready(function() {
 		$('#mydatatable').DataTable();
 	});
+
+  $("#returncb").change(function() {
+    if(this.checked) {
+      $("#returncb2").prop('checked', false);
+    }
+    else if(!this.checked){
+      $("#returncb2").prop('checked', true);
+    }
+  });
+  
 	$('.bs-example-modal-lg').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget)
 		var ref_no = button.data('ref_no')
@@ -389,6 +401,7 @@
 		var req_status= button.data('req_status')
 		var claimersname= button.data('claimersname')
 		var claimdate= button.data('claimdate')
+    // var returned_status= button.data('returned_status')
 	
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
@@ -405,7 +418,11 @@
 		modal.find('.modal-body #req_status').text(''+req_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
+    // modal.find('.modal-body #returned_status').val(returned_status)
+    
 	});
+
+  
 </script>
 <script>
 	function getdatetime(){
