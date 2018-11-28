@@ -306,7 +306,6 @@
 						</div>
 					</div>
 
-          
           <div class="form-group">
 						<label class="control-label col-sm-2" for="claimdate">Returned</label>
 						<div class="col-sm-10">          
