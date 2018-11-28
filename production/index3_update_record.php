@@ -4,7 +4,7 @@
 	$servername = 'localhost';
 	$username = 'root';
 	$password = '';
-	$dbname = 'dbpldt';
+	$dbname = 'certificate';
 
 	if(!isset($_SESSION['username'])){
         header("Location:login.php");

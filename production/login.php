@@ -4,7 +4,7 @@
   $servername = 'localhost';
   $username = 'root';
   $password = '';
-  $dbname = 'dbpldt';
+  $dbname = 'certificate';
   
   $conn = mysqli_connect($servername, $username, $password, $dbname);
 

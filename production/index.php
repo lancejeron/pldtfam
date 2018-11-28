@@ -4,7 +4,7 @@
 	$servername = 'localhost';
 	$username = 'root';
 	$password = '';
-	$dbname = 'dbpldt';
+	$dbname = 'certificate';
 
 	if(!isset($_SESSION['username'])){
 		header("Location:login.php");
@@ -135,7 +135,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>COE Requests</h2>
-                    <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#walkin'><i class="fa fa-plus"></i> Create Request</button>
+                    <!-- <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#walkin'><i class="fa fa-plus"></i> Create Request</button> -->
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
