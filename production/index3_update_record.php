@@ -35,7 +35,7 @@
         $returned_status =$_POST['returned_status'];
         $date_returned = $_POST['date_returned'];
             if($returned_status == 'yes'){
-                $update_sql = "UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
+                $update_sql = "UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned', req_status = '$req_status', claimersname='$claimersname' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
                 return $update_sql;
             }
             else{

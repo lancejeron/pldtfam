@@ -266,12 +266,12 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="control-label col-sm-2" for="control_id">Control ID</label>
 						<div class="col-sm-10">          
 							<input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id" disabled>
 						</div>
-					</div>
+					</div> -->
 					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="personal">Personal</label>
@@ -311,7 +311,7 @@
           <div class="form-group">
 						<label class="control-label col-sm-2">Returned</label>
 						<div class="col-sm-10">
-							<input type="checkbox" id='returncb' class="form-control" name='returned_status' value='yes'>
+							<input type="checkbox" id='returncb' name='returned_status' value='yes'>
               <input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
 						</div>
 					</div>
@@ -319,8 +319,10 @@
           <div class="form-group">
 						<label class="control-label col-sm-2">Date Returned</label>
 						<div class="col-sm-10">          
-							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" disabled>
-              <input type="text" id='date_returned2' class="form-control" placeholder="" name='date_returned'>  
+              <input type="text" id='date_returned' class="form-control" placeholder="" disabled>
+							<input type="datetime-local" id='date_returned2' class="form-control" placeholder="" disabled required>
+              <input type="text" id='date_returned3' class="form-control" placeholder="" name='date_returned' style='display:none;'>
+              <input type="text" id='date_returned4' class="form-control" placeholder="" style='display:none;'>  
 						</div>
 					</div>
 
@@ -330,9 +332,6 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<input type="submit" class="btn btn-success" value='Save Changes' onclick='getdatetime();'>
-          <button type="button" class="btn btn-warning" onclick='getdatetime();'>test</button>
-
-
 				</div>
 			</div>
 		</form>
@@ -384,12 +383,12 @@
   $("#returncb").change(function() {
     if(this.checked) {
       $("#returncb2").prop('checked', false);
-      $('#date_returned').prop('disabled', false);
+      $('#date_returned2').prop('disabled', false);
       
     }
     else if(!this.checked){
       $("#returncb2").prop('checked', true);
-      $('#date_returned').prop('disabled', true);
+      $('#date_returned2').prop('disabled', true);
     }
   });
   
@@ -410,6 +409,7 @@
 		var claimdate= button.data('claimdate')
     var returned_status= button.data('returned_status')
     var date_returned= button.data('date_returned')
+    var date_returned4= button.data('date_returned')
 	
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
@@ -427,17 +427,19 @@
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
     modal.find('.modal-body #date_returned').val(date_returned)
+    modal.find('.modal-body #date_returned4').val(date_returned4)
+
 
     if (returned_status == 'yes'){
       modal.find('.modal-body #returncb').prop('checked', true);
       modal.find('.modal-body #returncb2').prop('checked', false);
-      modal.find('.modal-body #date_returned').prop('disabled', false);
+      modal.find('.modal-body #date_returned2').prop('disabled', false);
 
     }
     else{
       modal.find('.modal-body #returncb').prop('checked', false);
       modal.find('.modal-body #returncb2').prop('checked', true);
-      modal.find('.modal-body #date_returned').prop('disabled', true);
+      modal.find('.modal-body #date_returned2').prop('disabled', true);
     }
     
 	});
@@ -466,7 +468,8 @@
 		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
 
 		document.getElementById("test1").value=today;
-    document.getElementById("date_returned2").value=document.getElementById("date_returned").value
+    document.getElementById("date_returned4").value=document.getElementById("date_returned2").value
+    document.getElementById("date_returned3").value=document.getElementById("date_returned4").value
 	}
 </script>
 <?php

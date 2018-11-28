@@ -29,7 +29,7 @@
         $insert_sql = "INSERT INTO prepared_certificates VALUES
                         ('$ref_no', '$emp_id', '$date_prepared', '$name', '$purpose', '$accomp_code',
                         '$cbotype', '$control_id', '$personal', '$req_status', '$claimersname',
-                        '$claimdate')";
+                        '$claimdate', NULL, 'no')";
         if (!mysqli_query($conn, $insert_sql)) {
             echo "Unable to Process." . "<br>";
             echo("Error description: " . mysqli_error($conn)); 

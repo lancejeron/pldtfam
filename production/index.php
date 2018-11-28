@@ -150,14 +150,14 @@
                             <th>Type of COE</th>
                             <th>Salary</th>
                             <th>Question</th>
-                                        <th>Statement</th>
-                                        <th>Request for</th>
+                            <th>Statement</th>
+                            <th>Request for</th>
                             <th>Request for Name</th>
                             <th>Positon Title</th>
                             <th>Persno</th>
                             <th>MMProv</th>
                             <th>Other Instruction</th>
-                            <th>Action</th>
+                            <!-- <th>Action</th> -->
                           </tr>
                         </thead>
                         <?php
@@ -178,13 +178,7 @@
                             <td>' . $row["persno"] . '</td>
                             <td>' . $row["MMProv"] . '</td>
                             <td>' . $row["other_instruction"] . '</td>
-                            <td>' . '<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg",
-                                  data-start_time2="'.$row['start_time2'].'"
-                                  data-start_time="'.$row['start_time'].'"
-                                  data-emp_id="'. $row["emp_id"] .'"
-                                  data-name="'. $row["emp_name"] .'"
-                                  data-purpose="' . $row["purpose"] .'"
-                                  data-type_of_coe="' . $row["type_of_coe"] .'">Process</button>' . '</td>
+
                             
                           </tr>
                           ';
