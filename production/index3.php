@@ -305,7 +305,23 @@
 							<input type="text" class="form-control" id='test1' name="claimdate" style='display: none;'>
 						</div>
 					</div>
-							
+
+          
+          <div class="form-group">
+						<label class="control-label col-sm-2" for="claimdate">Returned</label>
+						<div class="col-sm-10">          
+							<input type="checkbox"  class="form-control" id="returntosender" >
+						</div>
+					</div>
+
+          <div class="form-group">
+						<label class="control-label col-sm-2" for="claimdate">Return Date</label>
+						<div class="col-sm-10">          
+							<input type="datetime" class="form-control" id="returndate" placeholder="">
+							<input type="datetime" class="form-control" id='test1' name="returndate" style='display: none;'>
+						</div>
+					</div>
+
 					<div class="ln_solid"></div>
 								
 				</div>
