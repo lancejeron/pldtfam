@@ -51,7 +51,7 @@
         else{
             echo "Record Updated.";
         }
-        header("refresh:30; url=index3.php");
+        header("refresh:1; url=index3.php");
     }
 
 ?>

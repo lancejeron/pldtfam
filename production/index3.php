@@ -190,6 +190,7 @@
                                             data-req_status="'.$row['req_status'].'"
                                             data-claimersname="'.$row['claimersname'].'"
                                             data-returned_status="'.$row['returned_status'].'"
+                                            data-date_returned="'.$row['date_returned'].'"
                                             data-claimdate="'.$row['claimdate2'].'"">Edit</button>' . '</td>
                                 </tr>
                                 ';
@@ -318,7 +319,8 @@
           <div class="form-group">
 						<label class="control-label col-sm-2">Date Returned</label>
 						<div class="col-sm-10">          
-							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" name='date_returned' disabled>  
+							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" disabled>
+              <input type="text" id='date_returned2' class="form-control" placeholder="" name='date_returned'>  
 						</div>
 					</div>
 
@@ -328,6 +330,8 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<input type="submit" class="btn btn-success" value='Save Changes' onclick='getdatetime();'>
+          <button type="button" class="btn btn-warning" onclick='getdatetime();'>test</button>
+
 
 				</div>
 			</div>
@@ -386,7 +390,6 @@
     else if(!this.checked){
       $("#returncb2").prop('checked', true);
       $('#date_returned').prop('disabled', true);
-      $('#date_returned').val(null);
     }
   });
   
@@ -406,6 +409,7 @@
 		var claimersname= button.data('claimersname')
 		var claimdate= button.data('claimdate')
     var returned_status= button.data('returned_status')
+    var date_returned= button.data('date_returned')
 	
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
@@ -422,6 +426,8 @@
 		modal.find('.modal-body #req_status').text(''+req_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
+    modal.find('.modal-body #date_returned').val(date_returned)
+
     if (returned_status == 'yes'){
       modal.find('.modal-body #returncb').prop('checked', true);
       modal.find('.modal-body #returncb2').prop('checked', false);
@@ -460,6 +466,7 @@
 		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
 
 		document.getElementById("test1").value=today;
+    document.getElementById("date_returned2").value=document.getElementById("date_returned").value
 	}
 </script>
 <?php
