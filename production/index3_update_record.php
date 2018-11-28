@@ -39,7 +39,7 @@
                 return $update_sql;
             }
             else{
-                $update_sql = "UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
+                $update_sql = "UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate', returned_status = '$returned_status' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
                 return $update_sql;
             }
         }
@@ -51,7 +51,7 @@
         else{
             echo "Record Updated.";
         }
-        header("refresh:1; url=index3.php");
+        header("refresh:30; url=index3.php");
     }
 
 ?>

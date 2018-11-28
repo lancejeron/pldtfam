@@ -318,7 +318,7 @@
           <div class="form-group">
 						<label class="control-label col-sm-2">Date Returned</label>
 						<div class="col-sm-10">          
-							<input type="datetime-local" class="form-control" placeholder="" name='date_returned'>  
+							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" name='date_returned' disabled>  
 						</div>
 					</div>
 
@@ -380,9 +380,13 @@
   $("#returncb").change(function() {
     if(this.checked) {
       $("#returncb2").prop('checked', false);
+      $('#date_returned').prop('disabled', false);
+      
     }
     else if(!this.checked){
       $("#returncb2").prop('checked', true);
+      $('#date_returned').prop('disabled', true);
+      $('#date_returned').val(null);
     }
   });
   
@@ -401,7 +405,7 @@
 		var req_status= button.data('req_status')
 		var claimersname= button.data('claimersname')
 		var claimdate= button.data('claimdate')
-    // var returned_status= button.data('returned_status')
+    var returned_status= button.data('returned_status')
 	
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
@@ -418,7 +422,17 @@
 		modal.find('.modal-body #req_status').text(''+req_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
-    // modal.find('.modal-body #returned_status').val(returned_status)
+    if (returned_status == 'yes'){
+      modal.find('.modal-body #returncb').prop('checked', true);
+      modal.find('.modal-body #returncb2').prop('checked', false);
+      modal.find('.modal-body #date_returned').prop('disabled', false);
+
+    }
+    else{
+      modal.find('.modal-body #returncb').prop('checked', false);
+      modal.find('.modal-body #returncb2').prop('checked', true);
+      modal.find('.modal-body #date_returned').prop('disabled', true);
+    }
     
 	});
 
