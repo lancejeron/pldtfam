@@ -375,17 +375,6 @@
                                     swal("Oops...", "Something went wrong :(", "error");
                                 }
                             });
-                            // swal({
-                            //     title: "Request will be submitted!",
-                            //     text: "Please inform us that you already submitted your request. Thank you.",
-                            //     icon: "success",
-                            //     // showConfirmButton: true,
-                            //     buttons: false,
-                            // });
-                            // setTimeout( function () { 
-                            //     form.submit();
-                            // }, 6000);
-
                         }
                         else{
                         }

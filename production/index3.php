@@ -377,7 +377,10 @@
 <script>
 
 	$(document).ready(function() {
-		$('#mydatatable').DataTable();
+		$('#mydatatable').DataTable({
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      order: [0, 'desc']
+    });
 	});
 
   $("#returncb").change(function() {
