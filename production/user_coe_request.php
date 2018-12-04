@@ -30,7 +30,7 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
   </head>
 
-  <body class="nav-md">
+  <body class="nav-sm">
     <div class="container body">
       <div class="main_container">
         <!-- page content -->
@@ -257,37 +257,58 @@
 		document.getElementById("start_time").value=today;
 	}
 </script>
-<script>
+<!-- <script>
     $(document).ready(function () {
-        // $('#req_coebt').click(function() {
-        //     checked = $("input[type=checkbox]:checked").length;
-        //     if(!checked) {
-        //         swal("You must pick at least one purpose.","","info");
-        //         return false;
-        //     }
-        //     else{
-        //         // var emp_id = $('#emp_id').val();
-        //         // var emp_name = $('#emp_name').val();
-        //         // if(emp_id=='' || emp_name==''){
-        //         //     $("form").on('submit', function(e){
-        //         //         // alert('submit intercepted');
-        //         //         e.preventDefault();
-        //         //         return false;
-        //         //     });
-        //         // }
-        //     }
-        // });
-        var emp_id = $('#emp_id').val();
-        var emp_name = $('#emp_name').val();
-        if(emp_id=='' || emp_name==''){
-            $("form").on('submit', function(e){
-                alert('submit intercepted');
-                e.preventDefault();
+        $('#req_coebt').click(function(e) {
+            checked = $("input[type=checkbox]:checked").length;
+            if(!checked) {
+                swal("You must pick at least one purpose.","","info");
                 return false;
-            });
-        }
+            }
+            else{
+                var emp_id = $('#emp_id').val();
+                var emp_name = $('#emp_name').val();
+                if(emp_id=='' || emp_name==''){
+                    swal("Please fill the required(*) fields.","","info");
+                    e.preventDefault();
+                }
+                else{
+                    var form = $('#req_coe');   
+                    swal({
+                        title: "Are you sure you want to submit your request?",
+                        text: "Clicking ok will certify that you fully reviewed your request.",
+                        icon: "warning",
+                        buttons: {
+                            cancel: true,
+                            ok: {
+                                text: "Ok",
+                                value: "willsubmit",
+                            }
+                        },
+                    })
+                    .then((willsubmit)=>{
+                        if (willsubmit){
+                            swal({
+                                title: "Request will be submitted!",
+                                text: "Please inform us that you already submitted your request. Thank you.",
+                                icon: "success",
+                                // showConfirmButton: true,
+                                buttons: false,
+                            });
+                            setTimeout( function () { 
+                                form.submit();
+                            }, 6000);
+
+                        }
+                        else{
+                        }
+                    });
+                    e.preventDefault();
+                }
+            }
+        });
     });
-</script>
+</script> -->
 <script>
     $(".checkbox2").change(function() {
         var newval = $(this).val();
@@ -303,76 +324,75 @@
     });
 </script>
 <script>
-    // function testme(){
-    //     swal("Are you sure you want to submit your request?", {
-    //         buttons: {
-    //             cancel: true,
-    //             ok: {
-    //                 text: "Ok",
-    //                 value: "willsubmit",
-    //             }
-    //         },
-    //     })
-    //     .then((willsubmit)=>{
-    //         if (willsubmit){
-    //             swal("Request Submitted!", "Please inform us that you already submitted your request. Thank you.", "success");
-    //             form.submit();
-    //         }
-    //         else{
-    //         }
-    //     });
-    // }
-    // $(document).ready(function(){
-    //     $('#req_coe').on('submit', function(e){
-    //         $.ajax({
-    //             url: 'user_coe_request_insert_record.php',
-    //             data: $('#req_coe').serialize(),
-    //             type: 'POST',
-    //             success: function(data){
-    //                 console.log(data);
-    //                 swal({
-    //                         type: 'success',
-    //                         title: 'List Created',
-    //                         text: 'List successfully created',
-    //                         showConfirmButton: false,
-    //                         },setTimeout(function() {
-    //                             location.reload();
-    //                         }, 1500)
-    //                     );
-    //             },
-    //             error: function(data){
-    //                 console.log(data);
-    //                 swal("¡not Success!", "Message not sent!", "error");
-    //             }
-    //         })
-    //         e.preventDefault();
-    //     });
-    // });
-    // $('#req_coebt').on('click', function(e){
-    //     e.preventDefault();
-    //     var form = $('#req_coe');   
-    //     swal("Are you sure you want to submit your request?", {
-    //         buttons: {
-    //             cancel: true,
-    //             ok: {
-    //                 text: "Ok",
-    //                 value: "willsubmit",
-    //             }
-    //         },
-    //     })
-    //     .then((willsubmit)=>{
-    //         if (willsubmit){
-    //             // swal("Request Submitted!", "Please inform us that you already submitted your request. Thank you.", "success");
-    //             swal({
-    //                 title: "Red Alert!",
-    //                 text: "I will close in 4 seconds.",
-    //                 timer: 4000,
-    //                 showConfirmButton: false,
-    //             });
-    //             form.submit();
-    //         }
-    //         else{
-    //         }
-    //     });
-    // });
+    $(document).ready(function () {
+        $('#req_coebt').click(function(e) {
+            checked = $("input[type=checkbox]:checked").length;
+            if(!checked) {
+                swal("You must pick at least one purpose.","","info");
+                return false;
+            }
+            else{
+                var emp_id = $('#emp_id').val();
+                var emp_name = $('#emp_name').val();
+                if(emp_id=='' || emp_name==''){
+                    swal("Please fill the required(*) fields.","","info");
+                    e.preventDefault();
+                }
+                else{
+                    var form = $('#req_coe');   
+                    swal({
+                        title: "Are you sure you want to submit your request?",
+                        text: "Clicking ok will certify that you fully reviewed your request.",
+                        icon: "warning",
+                        buttons: {
+                            cancel: true,
+                            ok: {
+                                text: "Ok",
+                                value: "willsubmit",
+                            }
+                        },
+                    })
+                    .then((willsubmit)=>{
+                        if (willsubmit){
+                            $.ajax({
+                                url: 'user_coe_request_insert_record.php',
+                                method: 'POST',
+                                data: $('#req_coe').serialize(),
+                                success: function(data){
+                                    console.log(data);
+                                    swal({
+                                        title: "Request submitted!",
+                                        text: "Please inform us that you already submitted your request. Thank you.",
+                                        icon: "success",
+                                        // showConfirmButton: true,
+                                        buttons: false,
+                                    });
+                                    setTimeout( function () {
+                                        location.reload(); 
+                                    }, 6000);
+                                },
+                                error: function(data){
+                                    swal("Oops...", "Something went wrong :(", "error");
+                                }
+                            });
+                            // swal({
+                            //     title: "Request will be submitted!",
+                            //     text: "Please inform us that you already submitted your request. Thank you.",
+                            //     icon: "success",
+                            //     // showConfirmButton: true,
+                            //     buttons: false,
+                            // });
+                            // setTimeout( function () { 
+                            //     form.submit();
+                            // }, 6000);
+
+                        }
+                        else{
+                        }
+                    });
+                    e.preventDefault();
+                }
+            }
+        });
+    });
 </script>

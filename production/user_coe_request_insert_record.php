@@ -30,6 +30,6 @@
         // $response_array['status'] = 'success'; 
         // header("refresh:5; url=user_coe_request.php");
     }
-    // header("refresh:5; url=user_coe_request.php");
+    header("refresh:0; url=user_coe_request.php");
 
 ?>

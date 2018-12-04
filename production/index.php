@@ -91,6 +91,11 @@
                       <li><a href="index3.php">Finished</a></li>
                     </ul>
                   </li>
+                  <li><a><i class="fa fa-wrench"></i> Maintenance <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="">Purpose</a></li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -348,13 +353,31 @@
     <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
     <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
     <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="../vendors/jszip/dist/jszip.min.js"></script>
+    <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
     <!-- Momentjs -->
     <script src="../vendors/momentjs/moment.min.js"></script>
   </body>
 </html>
 <script>
 	$(document).ready(function() {
-		$('#mydatatable').DataTable();
+    // $('#mydatatable').DataTable();
+    $('#mydatatable').DataTable( {
+        // dom: 'Bfrtip',
+        // buttons: [
+        //     'copy', 'csv', 'print'
+        // ],
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        // buttons: [
+        //     'copy', 'csv', 'print'
+        // ],
+    } );
 	});
 	$('.bs-example-modal-lg').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget)
