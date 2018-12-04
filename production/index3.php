@@ -67,7 +67,7 @@
                 <!-- <img src="images/img.jpg" alt="..." class="img-circle profile_img"> -->
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
+              <span>Welcome <?php echo $_SESSION['username'];?>!</</span>
                 <!-- <h2>John Doe</h2> -->
               </div>
               <div class="clearfix"></div>
@@ -81,10 +81,15 @@
               <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-edit"></i> COE <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> Certificate of Employment <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.php">Requests</a></li>
                       <li><a href="index3.php">Finished</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-wrench"></i> Maintenance <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="">Purpose</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -119,7 +124,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>COE Requests (Finished)</h3>
+                <h3>Certificate of Employment</h3>
               </div>
 
             </div>
@@ -130,7 +135,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>COE Requests (Finished)</h2>
+                    <h2>Finished</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
