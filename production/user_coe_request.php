@@ -50,24 +50,25 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Request for Certificate</h2>
+                    
              
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 
-                    <form class="form-horizontal form-label-left" method="POST" action='user_coe_request_insert_record.php'>
-                      <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="emp_no">Employee ID</label>
+                    <form id='req_coe' class="form-horizontal form-label-left" method="POST" action='user_coe_request_insert_record.php'>
+                      <div class="form-group is_req">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID *:</label>
                           <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="emp_no" name="emp_id" class="form-control col-md-7 col-xs-12" required>
+                            <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12">
                             <input type="text" id="start_time" name='start_time' class="form-control col-md-7 col-xs-12" style='display: none;'>
                           </div>
                       </div>
         
-                      <div class="form-group">
-                          <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name</label>
+                      <div class="form-group is_req">
+                          <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name *:</label>
                           <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" required>
+                            <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name">
                           </div>
                       </div>
                       
@@ -77,19 +78,19 @@
                                   <div class="form-group">
                                       <div class="radio">
                                           <label>
-                                            <input type="radio" checked="" value="option1" id="optionsRadios1" name="type_of_coe" value='Cert of Employment'>Certificate of Employment
+                                            <input type="radio" id="optionsRadios1" name="type_of_coe" value='Cert of Employment' checked>Certificate of Employment
                                           </label>
                                       </div>
                                       <div class="radio">
                                           <label>
-                                            <input type="radio" value="option2" id="optionsRadios2" name="type_of_coe" value='Cert of Compensation'>Certificate of Employment and Compensation
+                                            <input type="radio"  id="optionsRadios2" name="type_of_coe" value='Cert of Compensation'>Certificate of Employment and Compensation
                                           </label>
                                       </div>
                                   </div>
                           </div>  
                           
                         <div class="form-group">
-                            <h4>Select purpose:</h4>
+                            <h4>Select purpose *:</h4>
                             <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
                             <!-- <textarea id='purpose' class='addpurpose' name='purpose'> 
                             </textarea> -->
@@ -189,7 +190,7 @@
                     
                     <div class="form-group">
                         <!-- <div class="pull-right"> -->
-                          <center><button type="submit" class="btn btn-success" onclick='getdatetime();'>Submit</button></center>
+                          <center><button id='req_coebt' type="submit" class="btn btn-success" onclick='getdatetime();'>Submit</button></center>
                         </div>
                     </form>
                   </div>
@@ -221,9 +222,14 @@
     <script src="../vendors/nprogress/nprogress.js"></script>
     <!-- validator -->
     <script src="../vendors/validator/validator.js"></script>
+    <!-- sweetalert -->
+    <script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>   
+
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+
+
 	
   </body>
 </html>
@@ -252,16 +258,121 @@
 	}
 </script>
 <script>
-$(".checkbox2").change(function() {
-    var newval = $(this).val();
-    var currval = $('#purpose').val();
-    if(!this.checked){
-        var removeval= $('#purpose').val().replace(''+newval+' ', '');
-        $('#purpose').val(removeval);
-        // alert(removeval);
-    }
-    else{
-        $('#purpose').val(currval + ''+ $(this).val() + ' ');
-    }
-});
+    $(document).ready(function () {
+        // $('#req_coebt').click(function() {
+        //     checked = $("input[type=checkbox]:checked").length;
+        //     if(!checked) {
+        //         swal("You must pick at least one purpose.","","info");
+        //         return false;
+        //     }
+        //     else{
+        //         // var emp_id = $('#emp_id').val();
+        //         // var emp_name = $('#emp_name').val();
+        //         // if(emp_id=='' || emp_name==''){
+        //         //     $("form").on('submit', function(e){
+        //         //         // alert('submit intercepted');
+        //         //         e.preventDefault();
+        //         //         return false;
+        //         //     });
+        //         // }
+        //     }
+        // });
+        var emp_id = $('#emp_id').val();
+        var emp_name = $('#emp_name').val();
+        if(emp_id=='' || emp_name==''){
+            $("form").on('submit', function(e){
+                alert('submit intercepted');
+                e.preventDefault();
+                return false;
+            });
+        }
+    });
+</script>
+<script>
+    $(".checkbox2").change(function() {
+        var newval = $(this).val();
+        var currval = $('#purpose').val();
+        if(!this.checked){
+            var removeval= $('#purpose').val().replace(''+newval+' ', '');
+            $('#purpose').val(removeval);
+            // alert(removeval);
+        }
+        else{
+            $('#purpose').val(currval + ''+ $(this).val() + ' ');
+        }
+    });
+</script>
+<script>
+    // function testme(){
+    //     swal("Are you sure you want to submit your request?", {
+    //         buttons: {
+    //             cancel: true,
+    //             ok: {
+    //                 text: "Ok",
+    //                 value: "willsubmit",
+    //             }
+    //         },
+    //     })
+    //     .then((willsubmit)=>{
+    //         if (willsubmit){
+    //             swal("Request Submitted!", "Please inform us that you already submitted your request. Thank you.", "success");
+    //             form.submit();
+    //         }
+    //         else{
+    //         }
+    //     });
+    // }
+    // $(document).ready(function(){
+    //     $('#req_coe').on('submit', function(e){
+    //         $.ajax({
+    //             url: 'user_coe_request_insert_record.php',
+    //             data: $('#req_coe').serialize(),
+    //             type: 'POST',
+    //             success: function(data){
+    //                 console.log(data);
+    //                 swal({
+    //                         type: 'success',
+    //                         title: 'List Created',
+    //                         text: 'List successfully created',
+    //                         showConfirmButton: false,
+    //                         },setTimeout(function() {
+    //                             location.reload();
+    //                         }, 1500)
+    //                     );
+    //             },
+    //             error: function(data){
+    //                 console.log(data);
+    //                 swal("¡not Success!", "Message not sent!", "error");
+    //             }
+    //         })
+    //         e.preventDefault();
+    //     });
+    // });
+    // $('#req_coebt').on('click', function(e){
+    //     e.preventDefault();
+    //     var form = $('#req_coe');   
+    //     swal("Are you sure you want to submit your request?", {
+    //         buttons: {
+    //             cancel: true,
+    //             ok: {
+    //                 text: "Ok",
+    //                 value: "willsubmit",
+    //             }
+    //         },
+    //     })
+    //     .then((willsubmit)=>{
+    //         if (willsubmit){
+    //             // swal("Request Submitted!", "Please inform us that you already submitted your request. Thank you.", "success");
+    //             swal({
+    //                 title: "Red Alert!",
+    //                 text: "I will close in 4 seconds.",
+    //                 timer: 4000,
+    //                 showConfirmButton: false,
+    //             });
+    //             form.submit();
+    //         }
+    //         else{
+    //         }
+    //     });
+    // });
 </script>
