@@ -157,8 +157,14 @@
                             <td>' . $row["purpose_name"] . '</td>
                             <td>' . $row["purpose_status"] . '</td>
                             <td>
-                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose"><i class="glyphicon glyphicon-edit"></i> Edit
-                                <button type="button" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i> Delete
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose", 
+                                        data-id="'.$row["purpose_ID"].'"
+                                        data-name="'.$row["purpose_name"].'"
+										data-status="'.$row["purpose_status"].'"><i class="glyphicon glyphicon-edit"></i> Edit
+								<form method="POST" action="maintenance_purpose_routes.php">
+									<input type="text" class="form-control" name="purpose_ID" value="'.$row["purpose_ID"].'" style="display:none;">
+									<button type="submit" class="btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete
+								</form>
                             </td>                        
                           </tr>
                           ';
@@ -176,7 +182,7 @@
 <!-- ADD PURPSOE MODAL -->
 <div class="modal fade bs-example-modal-sm" id="add_purpose" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
-		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_insert_record.php'>
+		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='maintenance_purpose_routes.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -187,13 +193,13 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="purpose_name">Purpose Name</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="purpose_name" placeholder="" name="purpose_name">
+							<input type="text" class="form-control" id="purpose_name" placeholder="" name="purpose_name" maxlength='75' required>
 						</div>
 					</div>
         </div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-success" value='Add' onclick='getpurpose_name();'>
+					<input type="submit" class="btn btn-success" value='Add' name='btn1'>
 				</div>
 			</div>
 		</form>
@@ -203,7 +209,7 @@
 <!-- EDIT PURPOSE MODAL -->
 <div class="modal fade bs-example-modal-sm" id="edit_purpose" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
-		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_insert_record.php'>
+		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='maintenance_purpose_routes.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -212,15 +218,26 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="purpose_name">Purpose Name</label>
+						<label class="control-label col-sm-2" for="purpose_name">Purpose Name:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="purpose_name" placeholder="" name="purpose_name">
+              				<input type="text" class="form-control" id="id" placeholder="" name="purpose_id" style='display: none;'>
+							<input type="text" class="form-control" id="name" placeholder="" name="purpose_name" >
 						</div>
 					</div>
-        </div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">Status:</label>
+							<div class="col-sm-10">
+								<select name="purpose_status" class="form-control" >
+									<option id="status" label="" value=""></option>
+									<option value="active">active</option>
+									<option value="inactive">inactive</option>
+								</select>            
+							</div>
+						</div>
+					</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-success" value='Edit' onclick='getpurpose_name();'>
+					<input type="submit" class="btn btn-success" value='Edit' name='btn1'>
 				</div>
 			</div>
 		</form>
@@ -273,47 +290,22 @@
 </html>
 <script>
 	$(document).ready(function() {
-    // $('#mydatatable').DataTable();
     $('#mydatatable').DataTable( {
-        // dom: 'Bfrtip',
-        // buttons: [
-        //     'copy', 'csv', 'print'
-        // ],
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        // buttons: [
-        //     'copy', 'csv', 'print'
-        // ],
     } );
 	});
-	$('.bs-example-modal-lg').on('show.bs.modal', function (event) {
-		var button = $(event.relatedTarget)
-		var ref_no = button.data('ref_no')
-		var emp_id = button.data('emp_id')
-		var start_time = button.data('start_time')
-		var start_time2 = button.data('start_time2')
-		var name= button.data('name')
-		var purpose= button.data('purpose')
-		var accomp_code= button.data('accomp_code')
-		var type_of_coe= button.data('type_of_coe')
-		var control_id= button.data('control_id')
-		var req_status= button.data('req_status')
-		var claimersname= button.data('claimersname')
-		var claimdate= button.data('claimdate')
+  $('#edit_purpose').on('show.bs.modal', function (event) {
+	var button = $(event.relatedTarget)
+	var id = button.data('id')
+    var name = button.data('name')
+    var status = button.data('status')
+		
 	
-		var modal = $(this)
-		modal.find('.modal-body #ref_no').val(ref_no)
-		modal.find('.modal-body #emp_id').val(emp_id)
-		modal.find('.modal-body #start_time').val(start_time)
-		modal.find('.modal-body #start_time2').val(start_time2) 
-		modal.find('.modal-body #name').val(name)
-		modal.find('.modal-body #purpose').val(purpose)
-		modal.find('.modal-body #accomp_code').val(accomp_code)
-		modal.find('.modal-body #type_of_coe').val(type_of_coe)
-		modal.find('.modal-body #control_id').val(control_id)
-		modal.find('.modal-body #req_status').val(req_status)
-		modal.find('.modal-body #req_status').text(''+req_status)
-		modal.find('.modal-body #claimersname').val(claimersname)
-		modal.find('.modal-body #claimdate').val(claimdate)
+	var modal = $(this)
+	modal.find('.modal-body #id').val(id)
+	modal.find('.modal-body #name').val(name)
+    modal.find('.modal-body #status').val(status)
+    modal.find('.modal-body #status').text(''+status)
 	});
 </script>
 <?php
