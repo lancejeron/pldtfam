@@ -88,7 +88,7 @@
                                             <input type="checkbox" class='typeofcoe' value='Cert of Employment'>Certificate of Employment
                                           </label>
                                       </div>
-                                      <div class="radio">
+                                      <div class="checkbox">
                                           <label>
                                             <input type="checkbox" class='typeofcoe' value='Cert of Compensation'>Certificate of Employment and Compensation
                                           </label>
