@@ -71,7 +71,7 @@
                 <!-- <img src="images/img.jpg" alt="..." class="img-circle profile_img"> -->
               </div>
               <div class="profile_info">
-                <span>Welcome <?php echo $_SESSION['username'];?>!</</span>
+              <span>Welcome <?php echo $_SESSION['username'];?>!</</span>
                 <!-- <h2>John Doe</h2> -->
               </div>
               <div class="clearfix"></div>
@@ -85,7 +85,7 @@
               <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-edit"></i> COE <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> Certificate of Employment <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.php">Requests</a></li>
                       <li><a href="index3.php">Finished</a></li>
@@ -93,7 +93,7 @@
                   </li>
                   <li><a><i class="fa fa-wrench"></i> Maintenance <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="">Purpose</a></li>
+                      <li><a href="maintenance_purpose.php">Purpose</a></li>
                     </ul>
                   </li>
                 </ul>

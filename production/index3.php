@@ -89,7 +89,7 @@
                   </li>
                   <li><a><i class="fa fa-wrench"></i> Maintenance <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="">Purpose</a></li>
+                      <li><a href="maintenance_purpose.php">Purpose</a></li>
                     </ul>
                   </li>
                 </ul>
