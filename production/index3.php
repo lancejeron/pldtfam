@@ -196,7 +196,7 @@
                                             data-claimersname="'.$row['claimersname'].'"
                                             data-returned_status="'.$row['returned_status'].'"
                                             data-date_returned="'.$row['date_returned'].'"
-                                            data-claimdate="'.$row['claimdate2'].'"">Edit</button>' . '</td>
+                                            data-claimdate="'.$row['claimdate2'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
                                 </tr>
                                 ';
                                 }
