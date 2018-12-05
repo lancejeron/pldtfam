@@ -13,10 +13,7 @@
 
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
-				WHERE NOT EXISTS
-					(SELECT * FROM tblmpurpose as tbl2
-					WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
+		$sql = 'SELECT * FROM tblmpurpose';
 		$result = mysqli_query($conn, $sql);
 		if (!$result) {
 			echo "Error:". mysqli_error($conn);
@@ -140,7 +137,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Purpose</h2>
-                    <!-- <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#walkin'><i class="fa fa-plus"></i> Create Request</button> -->
+                    <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#'><i class="fa fa-plus"></i> Add Purpose</button>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -157,8 +154,12 @@
                           while($row = mysqli_fetch_array($result)){
                             echo '
                             <tr>
-                            <td>' . $row["start_time"] . '</td>
-                            <td>' . $row["emp_id"] . '</td>                           
+                            <td>' . $row["purpose_name"] . '</td>
+                            <td>' . $row["purpose_status"] . '</td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#">Edit
+                                <button type="button" class="btn btn-danger btn-sm">Delete
+                            </td>                        
                           </tr>
                           ';
                           }
