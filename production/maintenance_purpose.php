@@ -137,7 +137,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Purpose</h2>
-                    <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#'><i class="fa fa-plus"></i> Add Purpose</button>
+                    <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#add_purpose'><i class="fa fa-plus"></i> Add Purpose</button>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -173,6 +173,33 @@
           </div>
         </div>
 
+<!-- MODAL -->
+<div class="modal fade bs-example-modal-sm" id="add_purpose" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_insert_record.php'>
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Add Purpose</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="purpose_name">Purpose Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="purpose_name" placeholder="" name="purpose_name">
+						</div>
+					</div>
+        </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-success" value='Add' onclick='getpurpose_name();'>
+				</div>
+			</div>
+		</form>
+	</div>
+</div> 
+			
         <!-- /page content -->
 
         <!-- footer content -->
