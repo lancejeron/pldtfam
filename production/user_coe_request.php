@@ -76,14 +76,14 @@
                           <div class="form-group">
                               <h4>Select type of certificate:</h4>
                                   <div class="form-group">
-                                      <div class="radio">
+                                      <div class="checkbox">
                                           <label>
-                                            <input type="radio" id="optionsRadios1" name="type_of_coe" value='Cert of Employment' checked>Certificate of Employment
+                                            <input type="checkbox" id="checkbox2" name="type_of_coe" value='Cert of Employment' checked>Certificate of Employment
                                           </label>
                                       </div>
-                                      <div class="radio">
+                                      <div class="checkbox">
                                           <label>
-                                            <input type="radio"  id="optionsRadios2" name="type_of_coe" value='Cert of Compensation'>Certificate of Employment and Compensation
+                                            <input type="checkbox"  id="checkbox2" name="type_of_coe" value='Cert of Compensation'>Certificate of Employment and Compensation
                                           </label>
                                       </div>
                                   </div>

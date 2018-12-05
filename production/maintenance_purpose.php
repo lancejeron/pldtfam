@@ -157,7 +157,7 @@
                             <td>' . $row["purpose_name"] . '</td>
                             <td>' . $row["purpose_status"] . '</td>
                             <td>
-                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#">Edit
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose">Edit
                                 <button type="button" class="btn btn-danger btn-sm">Delete
                             </td>                        
                           </tr>
@@ -173,7 +173,7 @@
           </div>
         </div>
 
-<!-- MODAL -->
+<!-- ADD PURPSOE MODAL -->
 <div class="modal fade bs-example-modal-sm" id="add_purpose" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
 		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_insert_record.php'>
@@ -199,7 +199,33 @@
 		</form>
 	</div>
 </div> 
-			
+
+<!-- EDIT PURPOSE MODAL -->
+<div class="modal fade bs-example-modal-sm" id="edit_purpose" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_insert_record.php'>
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Edit Purpose</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="purpose_name">Purpose Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="purpose_name" placeholder="" name="purpose_name">
+						</div>
+					</div>
+        </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-success" value='Edit' onclick='getpurpose_name();'>
+				</div>
+			</div>
+		</form>
+	</div>
+</div> 			
         <!-- /page content -->
 
         <!-- footer content -->
