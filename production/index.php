@@ -71,7 +71,7 @@
                 <!-- <img src="images/img.jpg" alt="..." class="img-circle profile_img"> -->
               </div>
               <div class="profile_info">
-                <span>Welcome!</span>
+                <span>Welcome <?php echo $_SESSION['username'];?>!</</span>
                 <!-- <h2>John Doe</h2> -->
               </div>
               <div class="clearfix"></div>
