@@ -374,9 +374,7 @@
         //     'copy', 'csv', 'print'
         // ],
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        // buttons: [
-        //     'copy', 'csv', 'print'
-        // ],
+        order: [0, 'desc']
     } );
 	});
 	$('.bs-example-modal-lg').on('show.bs.modal', function (event) {
