@@ -137,7 +137,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Purpose</h2>
-                    <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#add_purpose'><i class="fa fa-plus"></i> Add Purpose</button>
+                    <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#add_purpose'><i class="glyphicon glyphicon-plus-sign"></i></i> Add Purpose</button>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -157,8 +157,8 @@
                             <td>' . $row["purpose_name"] . '</td>
                             <td>' . $row["purpose_status"] . '</td>
                             <td>
-                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose">Edit
-                                <button type="button" class="btn btn-danger btn-sm">Delete
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose"><i class="glyphicon glyphicon-edit"></i> Edit
+                                <button type="button" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i> Delete
                             </td>                        
                           </tr>
                           ';
