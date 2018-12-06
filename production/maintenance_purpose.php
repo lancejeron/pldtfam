@@ -157,14 +157,14 @@
                             <td>' . $row["purpose_name"] . '</td>
                             <td>' . $row["purpose_status"] . '</td>
                             <td>
+                            <form id="deleteform'.$row["purpose_ID"].'" method="POST" action="maintenance_purpose_routes.php">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose", 
                                         data-id="'.$row["purpose_ID"].'"
                                         data-name="'.$row["purpose_name"].'"
-										data-status="'.$row["purpose_status"].'"><i class="glyphicon glyphicon-edit"></i> Edit
-								<form method="POST" action="maintenance_purpose_routes.php">
-									<input type="text" class="form-control" name="purpose_ID" value="'.$row["purpose_ID"].'" style="display:none;">
-									<button type="submit" class="btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete
-								</form>
+                              data-status="'.$row["purpose_status"].'"><i class="glyphicon glyphicon-edit"></i> Edit</button>
+                            <input type="text" id="inp'.$row["purpose_ID"].'" class="form-control" name="purpose_ID2" value="'.$row["purpose_ID"].'" style="display:none;">
+                            <button type="submit" id="btn'.$row["purpose_ID"].'" class="btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                          </form>
                             </td>                        
                           </tr>
                           ';
@@ -286,6 +286,8 @@
     <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
     <!-- Momentjs -->
     <script src="../vendors/momentjs/moment.min.js"></script>
+	<!-- sweetalert -->
+    <script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>   
   </body>
 </html>
 <script>
@@ -306,6 +308,59 @@
 	modal.find('.modal-body #name').val(name)
     modal.find('.modal-body #status').val(status)
     modal.find('.modal-body #status').text(''+status)
+	});
+</script>
+<script>
+	$(document).ready(function () {
+		$("button[type=submit]").click(function(e){
+      var id = $(this).parent('form').find('input[name="purpose_ID2"]').val();
+
+      console.log(id);
+			swal({
+				title: "Delete Record",
+				text: "Are you sure you want to delete this record?",
+				icon: "warning",
+				buttons: {
+					cancel: true,
+					ok: {
+						text: "Ok",
+						value: "willsubmit",
+					}
+				},
+			})
+			.then((willsubmit)=>{
+				if (willsubmit){
+					$.ajax({
+						url: 'maintenance_purpose_routes.php',
+						method: 'POST',
+						data: {
+              purpose_ID2: id,
+              btn1: 'Delete'
+
+            },
+						success: function(data){
+							console.log(data);
+							swal({
+								title: "Record successfully deleted.",
+                text:" ",
+								icon: "success",
+								buttons: false,
+							});
+							setTimeout( function () {
+								location.reload(); 
+							}, 1000);
+						},
+						error: function(data){
+							swal("Oops...", "Something went wrong :(", "error");
+						}
+					});
+				}
+				else{
+				}
+				e.preventDefault();
+			});
+			e.preventDefault();
+		});
 	});
 </script>
 <?php

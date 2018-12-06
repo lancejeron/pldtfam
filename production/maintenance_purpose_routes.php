@@ -47,7 +47,7 @@
         }
     }
     else if($btn1 == 'Delete') {
-        $purpose_id = $_POST['purpose_ID'];
+        $purpose_id = $_POST['purpose_ID2'];
 
         $delete_purpose = "DELETE FROM tblmpurpose WHERE purpose_id='$purpose_id'";
         if (!mysqli_query($conn, $delete_purpose)) {
