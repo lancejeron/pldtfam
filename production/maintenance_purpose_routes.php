@@ -17,16 +17,16 @@
         $result = mysqli_query($conn,$check_purpose);
         $row = mysqli_fetch_assoc($result);
         if($row['x']>0){
-            echo 'record already exists';
+            // echo 'record already exists';
+            echo 'already exists';
         }
         else{
             if (!mysqli_query($conn, $add_purpose)) {
-                echo("Error description: " . mysqli_error($conn));
-                header("refresh:1.5; url=maintenance_purpose.php");
+                // echo("Error description: " . mysqli_error($conn));
+                // header("refresh:1.5; url=maintenance_purpose.php");
             }
             else{
-                echo "Record inserted.";
-                header("refresh:1.5; url=maintenance_purpose.php");
+                echo 'success';
             }
         }
         
@@ -51,11 +51,11 @@
 
         $delete_purpose = "DELETE FROM tblmpurpose WHERE purpose_id='$purpose_id'";
         if (!mysqli_query($conn, $delete_purpose)) {
-            echo("Error description: " . mysqli_error($conn));
+            // echo("Error description: " . mysqli_error($conn));
             // header("refresh:1.5; url=maintenance_purpose.php");
         }
         else{
-            echo "Record deleted.";
+            // echo "Record deleted.";
             // header("url=maintenance_purpose.php");
         }
     }

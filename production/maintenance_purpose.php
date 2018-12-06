@@ -182,7 +182,7 @@
 <!-- ADD PURPSOE MODAL -->
 <div class="modal fade bs-example-modal-sm" id="add_purpose" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
-		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='maintenance_purpose_routes.php'>
+		<form id="addform" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='maintenance_purpose_routes.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -191,15 +191,15 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="purpose_name">Purpose Name</label>
+						<label class="control-label col-sm-2" for="purpose_name">Purpose Name *:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="purpose_name" placeholder="" name="purpose_name" maxlength='75' required>
+							<input type="text" class="form-control" id="name3" placeholder="" name="purpose_name" maxlength='75' required>
 						</div>
 					</div>
         </div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-success" value='Add' name='btn1'>
+					<button type="submit" id='addformbtn' class="btn btn-success" value='Add' name='btn1'>Add</button>
 				</div>
 			</div>
 		</form>
@@ -396,6 +396,50 @@
               }, 1500);
           },
           error: function(data){
+              swal("Oops...", "Something went wrong.", "error");
+          }
+        });
+      }
+    });
+
+    // add swal
+    $('#addformbtn').click(function(e){
+      var purpose_name =  $('#name3').val();
+      if(purpose_name == ''){
+        swal("Please fill the required(*) fields.","","info");
+        e.preventDefault();
+      }
+      else{
+        $.ajax({
+          url: 'maintenance_purpose_routes.php',
+          method: 'POST',
+          data: {
+            purpose_name: purpose_name,
+            btn1: 'Add'
+
+          },
+          success: function(response){
+              console.log(response);
+              if (response == 'success'){
+                swal({
+                  title: "Record Added.",
+                  text: " ",
+                  icon: "success",
+                  buttons: false,
+                });
+                setTimeout( function () {
+                    location.reload(); 
+                }, 1500);
+              }
+              else if (response == 'already exists'){
+                swal({
+                  title: "Record already exists.",
+                  text: "Record did not add.",
+                  icon: "error",
+                });
+              }
+          },
+          error: function(response){
               swal("Oops...", "Something went wrong.", "error");
           }
         });
