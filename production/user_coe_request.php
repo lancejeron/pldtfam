@@ -69,7 +69,7 @@
                       <div class="form-group is_req">
                           <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID *:</label>
                           <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12">
+                            <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12" autocomplete="off">
                             <input type="text" id="start_time" name='start_time' class="form-control col-md-7 col-xs-12" style='display: none;'>
                           </div>
                       </div>
@@ -77,7 +77,7 @@
                       <div class="form-group is_req">
                           <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name *:</label>
                           <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name">
+                            <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" autocomplete="off">
                           </div>
                       </div>
                       
@@ -222,12 +222,12 @@
             checked = $(".checkbox2:checkbox:checked").length;
             checked2 = $(".typeofcoe:checkbox:checked").length;
             if(!checked) {
-                swal("You must pick at least one purpose.","","info");
+                swal("Please pick at least one purpose.","","info");
                 return false;
             }
             else{
                 if(!checked2) {
-                    swal("You must pick at least one type of certificate.","","info");
+                    swal("Please pick at least one type of certificate.","","info");
                     return false;
                 }
                 else{

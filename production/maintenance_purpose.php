@@ -51,7 +51,6 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
     <link href="../production/images/icons/favicon.ico" rel="icon"/>
-
   </head>
 
   <body class="nav-md">
@@ -231,9 +230,9 @@
 						<label class="control-label col-sm-2">Status:</label>
 							<div class="col-sm-10">
 								<select id="status3" name="purpose_status" class="form-control" >
-									<option id="status2" label="" value=""></option>
-									<option value="active">active</option>
-									<option value="inactive">inactive</option>
+									<!-- <option id="status2" label="" value=""></option> -->
+									<option id='opt_active' value="active">active</option>
+									<option id='opt_inactive' value="inactive">inactive</option>
 								</select>            
 							</div>
 						</div>
@@ -309,8 +308,16 @@
 	var modal = $(this)
 	modal.find('.modal-body #id2').val(id)
 	modal.find('.modal-body #name2').val(name)
-  modal.find('.modal-body #status2').val(status)
-  modal.find('.modal-body #status2').text(''+status)
+  // modal.find('.modal-body #status2').val(status)
+  // modal.find('.modal-body #status2').text(''+status)
+  if(status=='active'){
+    $('#opt_active').prop('selected', true);
+  }
+  else{
+    $('#opt_inactive').prop('selected', true);
+  }
+
+
 	});
 </script>
 <script>
