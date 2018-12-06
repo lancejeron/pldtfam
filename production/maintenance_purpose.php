@@ -240,7 +240,7 @@
 					</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" id='editformbtn' class="btn btn-success" value='Edit' name='btn1'>Edit</button>
+					<button type="submit" id='editformbtn' class="btn btn-success" value='Edit' name='btn1'>Save</button>
 				</div>
 			</div>
 		</form>
@@ -389,7 +389,7 @@
           success: function(data){
               console.log(data);
               swal({
-                  title: "Record Updated.",
+                  title: "Purpose Updated.",
                   text: " ",
                   icon: "success",
                   buttons: false,
@@ -425,7 +425,7 @@
               console.log(response);
               if (response == 'success'){
                 swal({
-                  title: "Record Added.",
+                  title: "Purpose Added.",
                   text: " ",
                   icon: "success",
                   buttons: false,
