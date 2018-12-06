@@ -215,7 +215,7 @@
 <!-- MODAL -->
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-	<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index3_update_record.php'>
+	<form id="editform" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index3_update_record.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -292,10 +292,10 @@
 						<label class="control-label col-sm-2" for="req_status">Status</label>
 						<div class="col-sm-10">          
 								<select name="req_status" class="form-control" >
-									<option id="req_status" label="" value=""></option>
-									<option value="Processed">Processed</option>
-									<option value="Claimed">Claimed</option>
-									<option value="Mailed">Mailed</option>
+									<!-- <option id="req_status" label="" value=""></option> -->
+									<option id="Processed" value="Processed">Processed</option>
+									<option id="Claimed" value="Claimed">Claimed</option>
+									<option id="Mailed" value="Mailed">Mailed</option>
 
 								</select>                
 						</div>
@@ -339,7 +339,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-success" value='Save Changes' onclick='getdatetime();'>
+					<button type="submit" id="editformbtn" class="btn btn-success" value='Edit' onclick='getdatetime();'>Save Changes</button>
 				</div>
 			</div>
 		</form>
@@ -380,6 +380,9 @@
     <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
     <!-- Momentjs -->
     <script src="../vendors/momentjs/moment.min.js"></script>
+	<!-- sweetalert -->
+	<script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>
+
   </body>
 </html>
 <script>
@@ -418,10 +421,10 @@
 		var req_status= button.data('req_status')
 		var claimersname= button.data('claimersname')
 		var claimdate= button.data('claimdate')
-    var returned_status= button.data('returned_status')
-    var date_returned= button.data('date_returned')
-    var date_returned4= button.data('date_returned')
-	
+		var returned_status= button.data('returned_status')
+		var date_returned= button.data('date_returned')
+		var date_returned4= button.data('date_returned')
+		
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
 		modal.find('.modal-body #emp_id').val(emp_id)
@@ -437,21 +440,29 @@
 		modal.find('.modal-body #req_status').text(''+req_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
-    modal.find('.modal-body #date_returned').val(date_returned)
-    modal.find('.modal-body #date_returned4').val(date_returned4)
+		modal.find('.modal-body #date_returned').val(date_returned)
+		modal.find('.modal-body #date_returned4').val(date_returned4)
 
 
-    if (returned_status == 'yes'){
-      modal.find('.modal-body #returncb').prop('checked', true);
-      modal.find('.modal-body #returncb2').prop('checked', false);
-      modal.find('.modal-body #date_returned2').prop('disabled', false);
+		if (returned_status == 'yes'){
+			modal.find('.modal-body #returncb').prop('checked', true);
+			modal.find('.modal-body #returncb2').prop('checked', false);
+			modal.find('.modal-body #date_returned2').prop('disabled', false);
 
-    }
-    else{
-      modal.find('.modal-body #returncb').prop('checked', false);
-      modal.find('.modal-body #returncb2').prop('checked', true);
-      modal.find('.modal-body #date_returned2').prop('disabled', true);
-    }
+		}
+		else{
+			modal.find('.modal-body #returncb').prop('checked', false);
+			modal.find('.modal-body #returncb2').prop('checked', true);
+			modal.find('.modal-body #date_returned2').prop('disabled', true);
+		}
+
+		if(req_status == 'Processed'){
+			$('#Processed').prop('selected', true);
+
+		}
+		else{
+			$('#'+req_status).prop('selected', true);
+		}
     
 	});
 
@@ -482,6 +493,51 @@
     document.getElementById("date_returned4").value=document.getElementById("date_returned2").value
     document.getElementById("date_returned3").value=document.getElementById("date_returned4").value
 	}
+</script>
+<script>
+	$(document).ready(function(){
+		$('#editformbtn').click(function(e){
+			swal({
+				title: "Record will be updated.",
+				text: "Are you sure you want to update this record?",
+				icon: "warning",
+				buttons: {
+					cancel: true,
+					ok: {
+						text: "Update",
+						value: "willsubmit",
+					}
+				},
+			})
+			.then((willsubmit)=>{
+				if (willsubmit){
+					$.ajax({
+						url: 'index3_update_record.php',
+						method: 'POST',
+						data: $('#editform').serialize(),
+						success: function(data){
+							console.log(data);
+							swal({
+								title: "Record updated.",
+								text: " ",
+								icon: "success",
+								buttons: false,
+							});
+							setTimeout( function () {
+								location.reload(); 
+							}, 1500);
+						},
+						error: function(data){
+							swal("Oops...", "Something went wrong.", "error");
+						}
+					});
+				}
+				else{
+				}
+			});
+			e.preventDefault();
+	});
+  });
 </script>
 <?php
 	}
