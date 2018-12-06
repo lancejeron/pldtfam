@@ -49,6 +49,8 @@
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+
+    <link href="../production/images/icons/favicon.ico" rel="icon"/>
   </head>
 
   <body class="nav-md">

@@ -73,7 +73,7 @@
 
 					<div class="wrap-input100 validate-input" data-validate = "You have entered an invalid username or password">
 						<div>
-							<input type="text" class="input100" placeholder="Username" name='username' required/>
+							<input type="text" class="input100" placeholder="Username" name='username' autocomplete="off" required/>
 							<span class="focus-input100-1"></span>
 							<span class="focus-input100-2"></span>
 						  </div>
