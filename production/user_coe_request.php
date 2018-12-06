@@ -83,7 +83,7 @@
                               <h4>Select type of certificate:</h4>
                                   <div class="form-group">
                                     <input type="text" id='typeofcoe' name='type_of_coe' style='display: none;'>
-                                      <div class="radio">
+                                      <div class="checkbox">
                                           <label>
                                             <input type="checkbox" class='typeofcoe' value='Cert of Employment'>Certificate of Employment
                                           </label>
