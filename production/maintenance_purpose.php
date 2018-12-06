@@ -209,7 +209,7 @@
 <!-- EDIT PURPOSE MODAL -->
 <div class="modal fade bs-example-modal-sm" id="edit_purpose" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
-		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='maintenance_purpose_routes.php'>
+		<form id="editform" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='maintenance_purpose_routes.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -218,17 +218,17 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="purpose_name">Purpose Name:</label>
+						<label class="control-label col-sm-2" for="purpose_name">Purpose Name *:</label>
 						<div class="col-sm-10">
-              				<input type="text" class="form-control" id="id" placeholder="" name="purpose_id" style='display: none;'>
-							<input type="text" class="form-control" id="name" placeholder="" name="purpose_name" >
+              				<input type="text" class="form-control" id="id2" placeholder="" name="purpose_id" style='display: none;'>
+							<input type="text" class="form-control" id="name2" placeholder="" name="purpose_name" >
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2">Status:</label>
 							<div class="col-sm-10">
-								<select name="purpose_status" class="form-control" >
-									<option id="status" label="" value=""></option>
+								<select id="status3" name="purpose_status" class="form-control" >
+									<option id="status2" label="" value=""></option>
 									<option value="active">active</option>
 									<option value="inactive">inactive</option>
 								</select>            
@@ -237,7 +237,7 @@
 					</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-success" value='Edit' name='btn1'>
+					<button type="submit" id='editformbtn' class="btn btn-success" value='Edit' name='btn1'>Edit</button>
 				</div>
 			</div>
 		</form>
@@ -299,19 +299,20 @@
   $('#edit_purpose').on('show.bs.modal', function (event) {
 	var button = $(event.relatedTarget)
 	var id = button.data('id')
-    var name = button.data('name')
-    var status = button.data('status')
+  var name = button.data('name')
+  var status = button.data('status')
 		
 	
 	var modal = $(this)
-	modal.find('.modal-body #id').val(id)
-	modal.find('.modal-body #name').val(name)
-    modal.find('.modal-body #status').val(status)
-    modal.find('.modal-body #status').text(''+status)
+	modal.find('.modal-body #id2').val(id)
+	modal.find('.modal-body #name2').val(name)
+  modal.find('.modal-body #status2').val(status)
+  modal.find('.modal-body #status2').text(''+status)
 	});
 </script>
 <script>
 	$(document).ready(function () {
+    // delete swal
 		$("button[type=submit]").click(function(e){
       var id = $(this).parent('form').find('input[name="purpose_ID2"]').val();
 
@@ -361,6 +362,45 @@
 			});
 			e.preventDefault();
 		});
+
+    // edit swal
+    $('#editformbtn').click(function(e){
+      var purpose_ID =  $('#id2').val();
+      var purpose_name =  $('#name2').val();
+      var purpose_status =  $('#status3').val();
+      if(purpose_name == ''){
+        swal("Please fill the required(*) fields.","","info");
+        e.preventDefault();
+      }
+      else{
+        $.ajax({
+          url: 'maintenance_purpose_routes.php',
+          method: 'POST',
+          data: {
+            purpose_id: purpose_ID,
+            purpose_name: purpose_name,
+            purpose_status: purpose_status,
+            btn1: 'Edit'
+
+          },
+          success: function(data){
+              console.log(data);
+              swal({
+                  title: "Record Updated.",
+                  text: " ",
+                  icon: "success",
+                  buttons: false,
+              });
+              setTimeout( function () {
+                  location.reload(); 
+              }, 1500);
+          },
+          error: function(data){
+              swal("Oops...", "Something went wrong.", "error");
+          }
+        });
+      }
+    })
 	});
 </script>
 <?php

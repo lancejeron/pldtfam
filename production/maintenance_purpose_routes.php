@@ -38,12 +38,12 @@
 
         $edit_purpose= "UPDATE tblmpurpose SET purpose_name='$purpose_name', purpose_status='$purpose_status' WHERE purpose_id = '$purpose_id'";
         if (!mysqli_query($conn, $edit_purpose)) {
-            echo("Error description: " . mysqli_error($conn));
-            header("refresh:1.5; url=maintenance_purpose.php");
+            // echo("Error description: " . mysqli_error($conn));
+            // header("refresh:1.5; url=maintenance_purpose.php");
         }
         else{
-            echo "Record updated.";
-            header("refresh:1.5; url=maintenance_purpose.php");
+            // echo "Record updated.";
+            // header("refresh:0; url=maintenance_purpose.php");
         }
     }
     else if($btn1 == 'Delete') {
@@ -52,11 +52,11 @@
         $delete_purpose = "DELETE FROM tblmpurpose WHERE purpose_id='$purpose_id'";
         if (!mysqli_query($conn, $delete_purpose)) {
             echo("Error description: " . mysqli_error($conn));
-            header("refresh:1.5; url=maintenance_purpose.php");
+            // header("refresh:1.5; url=maintenance_purpose.php");
         }
         else{
             echo "Record deleted.";
-            header("refresh:1.5; url=maintenance_purpose.php");
+            // header("url=maintenance_purpose.php");
         }
     }
     // header("refresh:0; url=maintenance_purpose.php");

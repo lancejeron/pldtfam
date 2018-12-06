@@ -268,7 +268,7 @@
                                         }, 6000);
                                     },
                                     error: function(data){
-                                        swal("Oops...", "Something went wrong :(", "error");
+                                        swal("Oops...", "Something went wrong.", "error");
                                     }
                                 });
                             }
