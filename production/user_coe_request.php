@@ -98,48 +98,51 @@
                                       </div>
                                   </div>
                           </div>  
-                          
-                        <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: scroll;' hidden>
-                        <h4>Select purpose (COE) *:</h4>
-                            <input type="text" id="purpose" class='addpurpose' name='purpose'  style='display: none;'>
-                            <!-- <div class="row"> -->
-                                <div class='col-sm-8'>
-                                    <?php
-                                        while($row = mysqli_fetch_array($purpose_result_coe)){
-                                            echo '
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox" class="checkbox2" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
-                                                    </label>
-                                                </div>
-                                            ';
 
-                                        }
-                                    ?>
-                                </div>    
-                            <!-- </div> -->
-                        </div>
-                        <div id='cec_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: scroll;' hidden>
-                        <h4>Select purpose (CEC) *:</h4>
-                            <input type="text" id="purpose" class='addpurpose' name='purpose'  style='display: none;'>
-                            <!-- <div class="row"> -->
-                                <div class='col-sm-8'>
-                                    <?php
-                                        while($row = mysqli_fetch_array($purpose_result_coe)){
-                                            echo '
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox" class="checkbox2" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
-                                                    </label>
-                                                </div>
-                                            ';
+                        <div class="row">  
+                            <div class="col-sm-4">
+                                <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
+                                    <h4>Select purpose (COE) *:</h4>
+                                    <input type="text" id="purpose" class='addpurpose' name='purpose'  style='display: none;'>
+                                     <div class='col-sm-8'>
+                                        <?php
+                                            while($row = mysqli_fetch_array($purpose_result_coe)){
+                                                echo '
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="checkbox2" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
+                                                        </label>
+                                                    </div>
+                                                ';
 
-                                        }
-                                    ?>
-                                </div>    
-                            <!-- </div> -->
-                        </div>
-                      </div>
+                                            }
+                                        ?>
+                                    </div>    
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">    
+                                <div id='cec_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
+                                    <h4>Select purpose (CEC) *:</h4>
+                                    <input type="text" id="purpose" class='addpurpose' name='purpose'  style='display: none;'>
+                                    <div class='col-sm-8'>
+                                        <?php
+                                            while($row = mysqli_fetch_array($purpose_result_coe)){
+                                                echo '
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="checkbox2" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
+                                                        </label>
+                                                    </div>
+                                                ';
+
+                                            }
+                                        ?>
+                                    </div> 
+                                </div>       
+                            </div>
+                        </div>    
+                    </div>
                     
                     <div class="ln_solid"></div>
                     
