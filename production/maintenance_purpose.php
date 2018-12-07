@@ -148,6 +148,7 @@
                         <thead>
                           <tr>
                             <th>Name</th>
+                            <th>Type</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
@@ -157,12 +158,14 @@
                             echo '
                             <tr>
                             <td>' . $row["purpose_name"] . '</td>
+                            <td>' . $row["purpose_type"] . '</td>
                             <td>' . $row["purpose_status"] . '</td>
                             <td>
                             <form id="deleteform'.$row["purpose_ID"].'" method="POST" action="maintenance_purpose_routes.php">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose", 
                                         data-id="'.$row["purpose_ID"].'"
-                                        data-name="'.$row["purpose_name"].'"
+										data-name="'.$row["purpose_name"].'"
+										data-type="'.$row["purpose_type"].'"
                               data-status="'.$row["purpose_status"].'"><i class="glyphicon glyphicon-edit"></i> Edit</button>
                             <input type="text" id="inp'.$row["purpose_ID"].'" class="form-control" name="purpose_ID2" value="'.$row["purpose_ID"].'" style="display:none;">
                             <button type="submit" id="btn'.$row["purpose_ID"].'" class="btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
@@ -193,11 +196,23 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="purpose_name">Purpose Name *:</label>
+						<label class="control-label col-sm-2" for="purpose_name">Name*:</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="name3" placeholder="" name="purpose_name" maxlength='75' required>
 						</div>
 					</div>
+          <div class="form-group">
+						<label class="control-label col-sm-2">Type:</label>
+							<div class="col-sm-10">
+								<select id="purpose_type3" name="purpose_type" class="form-control" >
+									<!-- <option id="status2" label="" value=""></option> -->
+                  <option id='' value="Both">Both</option>
+									<option id='' value="COE">COE</option>
+									<option id='' value="CEC">CEC</option>
+
+								</select>            
+							</div>
+          </div>
         </div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -227,16 +242,25 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="control-label col-sm-2">Type:</label>
+							<div class="col-sm-10">
+								<select id="purpose_type2" name="purpose_type" class="form-control" >
+									<option id='Both' value="Both">Both</option>
+									<option id='COE' value="COE">COE</option>
+									<option id='CEC' value="CEC">CEC</option>
+								</select>            
+							</div>
+          			</div>
+					<div class="form-group">
 						<label class="control-label col-sm-2">Status:</label>
 							<div class="col-sm-10">
 								<select id="status3" name="purpose_status" class="form-control" >
-									<!-- <option id="status2" label="" value=""></option> -->
 									<option id='opt_active' value="active">active</option>
 									<option id='opt_inactive' value="inactive">inactive</option>
 								</select>            
 							</div>
-						</div>
-					</div>
+          			</div>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="submit" id='editformbtn' class="btn btn-success" value='Edit' name='btn1'>Save</button>
@@ -301,32 +325,39 @@
   $('#edit_purpose').on('show.bs.modal', function (event) {
 	var button = $(event.relatedTarget)
 	var id = button.data('id')
-  var name = button.data('name')
-  var status = button.data('status')
+	var name = button.data('name')
+	var type = button.data('type')
+	var status = button.data('status')
 		
 	
 	var modal = $(this)
 	modal.find('.modal-body #id2').val(id)
 	modal.find('.modal-body #name2').val(name)
-  // modal.find('.modal-body #status2').val(status)
-  // modal.find('.modal-body #status2').text(''+status)
-  if(status=='active'){
-    $('#opt_active').prop('selected', true);
-  }
-  else{
-    $('#opt_inactive').prop('selected', true);
-  }
+	// modal.find('.modal-body #status2').val(status)
+	// modal.find('.modal-body #status2').text(''+status)
+	if(status=='active'){
+		$('#opt_active').prop('selected', true);
+	}
+	else{
+		$('#opt_inactive').prop('selected', true);
+	}
+	if(type=='Both'){
+		$('#'+type).prop('selected', true);
+	}
+	else{
+		$('#'+type).prop('selected', true);
+	}
 
 
 	});
 </script>
 <script>
 	$(document).ready(function () {
-    // delete swal
+    	// delete swal
 		$("button[type=submit]").click(function(e){
-      var id = $(this).parent('form').find('input[name="purpose_ID2"]').val();
+			var id = $(this).parent('form').find('input[name="purpose_ID2"]').val();
 
-      console.log(id);
+			console.log(id);
 			swal({
 				title: "Delete Record",
 				text: "Are you sure you want to delete this record?",
@@ -345,15 +376,15 @@
 						url: 'maintenance_purpose_routes.php',
 						method: 'POST',
 						data: {
-              purpose_ID2: id,
-              btn1: 'Delete'
+							purpose_ID2: id,
+							btn1: 'Delete'
 
-            },
+							},
 						success: function(data){
 							console.log(data);
 							swal({
 								title: "Record successfully deleted.",
-                text:" ",
+								text:" ",
 								icon: "success",
 								buttons: false,
 							});
@@ -373,88 +404,92 @@
 			e.preventDefault();
 		});
 
-    // edit swal
-    $('#editformbtn').click(function(e){
-      var purpose_ID =  $('#id2').val();
-      var purpose_name =  $('#name2').val();
-      var purpose_status =  $('#status3').val();
-      if(purpose_name == ''){
-        swal("Please fill the required(*) fields.","","info");
-        e.preventDefault();
-      }
-      else{
-        $.ajax({
-          url: 'maintenance_purpose_routes.php',
-          method: 'POST',
-          data: {
-            purpose_id: purpose_ID,
-            purpose_name: purpose_name,
-            purpose_status: purpose_status,
-            btn1: 'Edit'
+		// edit swal
+		$('#editformbtn').click(function(e){
+			var purpose_ID =  $('#id2').val();
+			var purpose_name =  $('#name2').val();
+			var purpose_type =  $('#purpose_type2').val();
+			var purpose_status =  $('#status3').val();
+			if(purpose_name == ''){
+				swal("Please fill the required(*) fields.","","info");
+				e.preventDefault();
+			}
+			else{
+				$.ajax({
+				url: 'maintenance_purpose_routes.php',
+				method: 'POST',
+				data: {
+					purpose_id: purpose_ID,
+					purpose_name: purpose_name,
+					purpose_type: purpose_type,
+					purpose_status: purpose_status,
+					btn1: 'Edit'
 
-          },
-          success: function(data){
-              console.log(data);
-              swal({
-                  title: "Purpose Updated.",
-                  text: " ",
-                  icon: "success",
-                  buttons: false,
-              });
-              setTimeout( function () {
-                  location.reload(); 
-              }, 1500);
-          },
-          error: function(data){
-              swal("Oops...", "Something went wrong.", "error");
-          }
-        });
-      }
-    });
+				},
+				success: function(data){
+					console.log(data);
+					swal({
+						title: "Purpose Updated.",
+						text: " ",
+						icon: "success",
+						buttons: false,
+					});
+					setTimeout( function () {
+						location.reload(); 
+					}, 1500);
+				},
+				error: function(data){
+					swal("Oops...", "Something went wrong.", "error");
+				}
+				});
+			}
+		});
 
-    // add swal
-    $('#addformbtn').click(function(e){
-      var purpose_name =  $('#name3').val();
-      if(purpose_name == ''){
-        swal("Please fill the required(*) fields.","","info");
-        e.preventDefault();
-      }
-      else{
-        $.ajax({
-          url: 'maintenance_purpose_routes.php',
-          method: 'POST',
-          data: {
-            purpose_name: purpose_name,
-            btn1: 'Add'
+		// add swal
+		$('#addformbtn').click(function(e){
+			var purpose_name =  $('#name3').val();
+			var purpose_type =  $('#purpose_type3').val();
+			if(purpose_name == ''){
+				swal("Please fill the required(*) fields.","","info");
+				e.preventDefault();
+			}
+			else{
+				$.ajax({
+				url: 'maintenance_purpose_routes.php',
+				method: 'POST',
+				data: {
+					purpose_name: purpose_name,
+					purpose_type: purpose_type,
+					btn1: 'Add'
 
-          },
-          success: function(response){
-              console.log(response);
-              if (response == 'success'){
-                swal({
-                  title: "Purpose Added.",
-                  text: " ",
-                  icon: "success",
-                  buttons: false,
-                });
-                setTimeout( function () {
-                    location.reload(); 
-                }, 1500);
-              }
-              else if (response == 'already exists'){
-                swal({
-                  title: "Record already exists.",
-                  text: "Record did not add.",
-                  icon: "error",
-                });
-              }
-          },
-          error: function(response){
-              swal("Oops...", "Something went wrong.", "error");
-          }
-        });
-      }
-    })
+				},
+				success: function(response){
+					console.log(response);
+					if (response == 'success'){
+						swal({
+						title: "Purpose Added.",
+						text: " ",
+						icon: "success",
+						buttons: false,
+						});
+						setTimeout( function () {
+							location.reload(); 
+						}, 1500);
+					}
+					else if (response == 'already exists'){
+						swal({
+						title: "Record already exists.",
+						text: "Record did not add.",
+						icon: "error",
+						});
+					}
+				},
+				error: function(response){
+					swal("Oops...", "Something went wrong.", "error");
+				}
+				});
+			}
+		})
 	});
 </script>
 <?php
