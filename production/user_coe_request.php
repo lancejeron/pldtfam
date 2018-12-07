@@ -119,7 +119,7 @@
                                                                 
                                                                 <div class="radio">
                                                                     <label>
-                                                                        <input type="radio" checked="" value="option1" id="optionsRadios1" name="optionsRadios">Exposed 
+                                                                        <input type="radio" value="option1" id="optionsRadios1" name="optionsRadios">Exposed 
                                                                     </label>
                                                       
                                                                     <label>
