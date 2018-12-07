@@ -16,7 +16,7 @@
     $type_of_coe = $_POST['type_of_coe'];
     $purpose = $_POST['purpose'];
 
-    $insert_sql="INSERT INTO view_coe_request VALUES ('$start_time', '', '$emp_name', '$type_of_coe', '$purpose', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$emp_id')";
+    $insert_sql="INSERT INTO view_coe_request VALUES ('$start_time', '', '$emp_name', '$type_of_coe', '$purpose', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$emp_id', 'Walk-in')";
     if (!mysqli_query($conn, $insert_sql)) {
 
         // echo("Error description: " . mysqli_error($conn));

@@ -24,8 +24,8 @@
         header('Location: http://localhost/pldt/pldtfam/production/index.php');
         exit;
     } else {
-        echo 'Data does not match <br /> RE-Enter Username and Password';
-        header("refresh:2; url=login.php");
+        echo 'not valid';
+        // header("refresh:2; url=login.php");
     }
 } else {
 
@@ -66,7 +66,7 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
-				<form class="login100-form validate-form" method='POST' action='login.php'>
+				<form id='loginform' class="login100-form validate-form" method='POST' action='login.php'>
 					<span class="login100-form-title p-b-33">
 						Log in to your account.
 					</span>
@@ -86,7 +86,7 @@
 					</div>
 
 					<div class="container-login100-form-btn m-t-20">
-						<button type="submit" class="login100-form-btn" name="login" id="login" value="login">Log in</button>
+						<button type="submit" id="loginformbtn" class="login100-form-btn" name="login" value="login">Log in</button>
 				    </div>
 				</form>
 			</div>
@@ -111,9 +111,41 @@
 	<script src="vendors/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+	<!-- sweetalert -->
+	<script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 </html>
+<script>
+	$(document).ready(function () {
+        $('#loginformbtn').click(function(e) {
+			$.ajax({
+				url: 'login.php',
+				method: 'POST',
+				data: $('#loginform').serialize(),
+				success: function(response){
+					console.log(response);
+					if (response=='not valid'){
+						swal({
+							title: "Error.",
+							text: "Username and password is invalid.",
+							icon: "error",
+							showConfirmButton: true,
+						});
+						e.preventDefault();
+					}
+					else{
+
+					}
+				},
+				error: function(response){
+					swal("Oops...", "Something went wrong.", "error");
+				}
+			});
+        });
+    });
+
+</script>
 <?php
     }
 ?>
