@@ -108,7 +108,7 @@
                         <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
                         <input type="text" id="purpose_coe" class='addpurpose' style='display: none;'> 
                         <input type="text" id="purpose_cec" class='addpurpose' style='display: none;'>
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
                                     <h4>Select purpose (COE) *:</h4>
                                      <div class='col-sm-8'>
@@ -118,6 +118,16 @@
                                                     <div class="checkbox">
                                                         <label>
                                                             <input type="checkbox" class="checkbox2" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
+                                                                
+                                                                <div class="radio">
+                                                                    <label>
+                                                                        <input type="radio" value="option1" id="optionsRadios1" name="optionsRadios">Exposed 
+                                                                    </label>
+                                                      
+                                                                    <label>
+                                                                        <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">Confidential
+                                                                        </label>
+                                                                </div>
                                                         </label>
                                                     </div>
                                                 ';
@@ -128,7 +138,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">    
+                            <div class="col-sm-6">    
                                 <div id='cec_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
                                     <h4>Select purpose (CEC) *:</h4>
                                     <div class='col-sm-8'>

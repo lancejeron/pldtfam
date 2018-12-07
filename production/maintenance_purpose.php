@@ -359,8 +359,8 @@
 
 			console.log(id);
 			swal({
-				title: "Delete Record",
-				text: "Are you sure you want to delete this record?",
+				title: "Delete Purpose",
+				text: "Are you sure you want to delete this purpose?",
 				icon: "warning",
 				buttons: {
 					cancel: true,
@@ -383,7 +383,7 @@
 						success: function(data){
 							console.log(data);
 							swal({
-								title: "Record successfully deleted.",
+								title: "Purpose successfully deleted.",
 								text:" ",
 								icon: "success",
 								buttons: false,
@@ -478,8 +478,8 @@
 					}
 					else if (response == 'already exists'){
 						swal({
-						title: "Record already exists.",
-						text: "Record did not add.",
+						title: "Purpose already exists.",
+						text: "Purpose did not add.",
 						icon: "error",
 						});
 					}
