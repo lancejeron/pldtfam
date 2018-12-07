@@ -8,8 +8,8 @@
     $conn = mysqli_connect($servername, $username, $password, $dbname);
 
     $purpose_query = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active')";
-    $purpose_result = mysqli_query($conn, $purpose_query);
-		if (!$purpose_result) {
+    $purpose_result_coe = mysqli_query($conn, $purpose_query);
+		if (!$purpose_result_coe) {
 			echo "Error:". mysqli_error($conn);
 		}	
 ?>
@@ -93,19 +93,39 @@
                                       </div>
                                       <div class="checkbox">
                                           <label>
-                                            <input type="checkbox" class='typeofcoe' value='Cert of Compensation'>Certificate of Employment and Compensation
+                                            <input type="checkbox" class='typeofcec' value='Cert of Compensation'>Certificate of Employment and Compensation
                                           </label>
                                       </div>
                                   </div>
                           </div>  
                           
-                        <h4>Select purpose *:</h4>
-                        <div class="form-group" style='height: 200px; width: auto; overflow-y: scroll;'>
+                        <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: scroll;' hidden>
+                        <h4>Select purpose (COE) *:</h4>
                             <input type="text" id="purpose" class='addpurpose' name='purpose'  style='display: none;'>
                             <!-- <div class="row"> -->
                                 <div class='col-sm-8'>
                                     <?php
-                                        while($row = mysqli_fetch_array($purpose_result)){
+                                        while($row = mysqli_fetch_array($purpose_result_coe)){
+                                            echo '
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" class="checkbox2" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
+                                                    </label>
+                                                </div>
+                                            ';
+
+                                        }
+                                    ?>
+                                </div>    
+                            <!-- </div> -->
+                        </div>
+                        <div id='cec_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: scroll;' hidden>
+                        <h4>Select purpose (CEC) *:</h4>
+                            <input type="text" id="purpose" class='addpurpose' name='purpose'  style='display: none;'>
+                            <!-- <div class="row"> -->
+                                <div class='col-sm-8'>
+                                    <?php
+                                        while($row = mysqli_fetch_array($purpose_result_coe)){
                                             echo '
                                                 <div class="checkbox">
                                                     <label>
@@ -210,11 +230,27 @@
         if(!this.checked){
             var removeval= $('#typeofcoe').val().replace(''+newval+'; ', '');
             $('#typeofcoe').val(removeval);
+            $("#coe_purpose").attr('hidden', true);
         }
         else{
             $('#typeofcoe').val(currval + ''+ $(this).val() + '; ');
+            $("#coe_purpose").attr('hidden', false);
         }
     });
+    $(".typeofcec").change(function() {
+        var newval = $(this).val();
+        var currval = $('#typeofcoe').val();
+        if(!this.checked){
+            var removeval= $('#typeofcoe').val().replace(''+newval+'; ', '');
+            $('#typeofcoe').val(removeval);
+            $("#cec_purpose").attr('hidden', true);
+        }
+        else{
+            $('#typeofcoe').val(currval + ''+ $(this).val() + '; ');
+            $("#cec_purpose").attr('hidden', false);
+        }
+    });
+
 </script>
 <script>
     $(document).ready(function () {
