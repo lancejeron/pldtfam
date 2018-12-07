@@ -61,7 +61,7 @@
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
+            <div class="navbar nav_title">
               <a class="site_title"><i class="fa fa-user"></i> <span>PLDT-HRIS </span></a>
             </div>
 
