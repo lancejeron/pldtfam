@@ -7,11 +7,16 @@
 
     $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-    $purpose_query = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active')";
-    $purpose_result_coe = mysqli_query($conn, $purpose_query);
+    $purpose_query_coe = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'COE')";
+    $purpose_result_coe = mysqli_query($conn, $purpose_query_coe);
 		if (!$purpose_result_coe) {
 			echo "Error:". mysqli_error($conn);
-		}	
+        }
+    $purpose_query_cec = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'CEC')";
+    $purpose_result_cec = mysqli_query($conn, $purpose_query_cec);
+		if (!$purpose_result_cec) {
+			echo "Error:". mysqli_error($conn);
+        }
 ?>
 
 <!DOCTYPE html>
@@ -125,7 +130,7 @@
                             <!-- <div class="row"> -->
                                 <div class='col-sm-8'>
                                     <?php
-                                        while($row = mysqli_fetch_array($purpose_result_coe)){
+                                        while($row = mysqli_fetch_array($purpose_result_cec)){
                                             echo '
                                                 <div class="checkbox">
                                                     <label>
@@ -228,12 +233,12 @@
         var newval = $(this).val();
         var currval = $('#typeofcoe').val();
         if(!this.checked){
-            var removeval= $('#typeofcoe').val().replace(''+newval+'; ', '');
+            var removeval= $('#typeofcoe').val().replace(''+newval+'(COE); ', '');
             $('#typeofcoe').val(removeval);
             $("#coe_purpose").attr('hidden', true);
         }
         else{
-            $('#typeofcoe').val(currval + ''+ $(this).val() + '; ');
+            $('#typeofcoe').val(currval + ''+ $(this).val() + '(COE); ');
             $("#coe_purpose").attr('hidden', false);
         }
     });
@@ -241,12 +246,12 @@
         var newval = $(this).val();
         var currval = $('#typeofcoe').val();
         if(!this.checked){
-            var removeval= $('#typeofcoe').val().replace(''+newval+'; ', '');
+            var removeval= $('#typeofcoe').val().replace(''+newval+'(CEC); ', '');
             $('#typeofcoe').val(removeval);
             $("#cec_purpose").attr('hidden', true);
         }
         else{
-            $('#typeofcoe').val(currval + ''+ $(this).val() + '; ');
+            $('#typeofcoe').val(currval + ''+ $(this).val() + '(CEC); ');
             $("#cec_purpose").attr('hidden', false);
         }
     });
@@ -257,13 +262,14 @@
         $('#req_coebt').click(function(e) {
             checked = $(".checkbox2:checkbox:checked").length;
             checked2 = $(".typeofcoe:checkbox:checked").length;
-            if(!checked) {
-                swal("Please pick at least one purpose.","","info");
+            checked3 = $(".typeofcec:checkbox:checked").length;
+            if(!checked2  && !checked3 ) {
+                swal("Please pick at least one type of certificate.","","info");
                 return false;
             }
             else{
-                if(!checked2) {
-                    swal("Please pick at least one type of certificate.","","info");
+                if(!checked) {
+                    swal("Please pick at least one purpose.","","info");
                     return false;
                 }
                 else{
