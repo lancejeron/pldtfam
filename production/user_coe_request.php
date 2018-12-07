@@ -93,22 +93,24 @@
                                     <input type="text" id='typeofcoe' name='type_of_coe' style='display: none;'>
                                       <div class="checkbox">
                                           <label>
-                                            <input type="checkbox" class='typeofcoe' value='Cert of Employment'>Certificate of Employment
+                                            <input type="checkbox" class='typeofcoe' value='Cert of Employment'>Certificate of Employment (COE)
                                           </label>
                                       </div>
                                       <div class="checkbox">
                                           <label>
-                                            <input type="checkbox" class='typeofcec' value='Cert of Compensation'>Certificate of Employment and Compensation
+                                            <input type="checkbox" class='typeofcec' value='Cert of Compensation'>Certificate of Employment and Compensation (CEC)
                                           </label>
                                       </div>
                                   </div>
                           </div>  
 
                         <div class="row">  
+                        <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
+                        <input type="text" id="purpose_coe" class='addpurpose' style='display: none;'> 
+                        <input type="text" id="purpose_cec" class='addpurpose' style='display: none;'>
                             <div class="col-sm-4">
                                 <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
                                     <h4>Select purpose (COE) *:</h4>
-                                    <input type="text" id="purpose" class='addpurpose' name='purpose'  style='display: none;'>
                                      <div class='col-sm-8'>
                                         <?php
                                             while($row = mysqli_fetch_array($purpose_result_coe)){
@@ -129,14 +131,13 @@
                             <div class="col-sm-4">    
                                 <div id='cec_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
                                     <h4>Select purpose (CEC) *:</h4>
-                                    <input type="text" id="purpose" class='addpurpose' name='purpose'  style='display: none;'>
                                     <div class='col-sm-8'>
                                         <?php
-                                            while($row = mysqli_fetch_array($purpose_result_coe)){
+                                            while($row = mysqli_fetch_array($purpose_result_cec)){
                                                 echo '
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input type="checkbox" class="checkbox2" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
+                                                            <input type="checkbox" class="checkbox3" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
                                                         </label>
                                                     </div>
                                                 ';
@@ -218,30 +219,49 @@
 		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
 
 		document.getElementById("start_time").value=today;
+
+        // var x=document.getElementById("purpose").value;
+        // var y=document.getElementById("purpose_cec").value;
+        // var xy = x+' '+y;
+        // document.getElementById("purpose").value=xy;
+        // alert(xy);
 	}
 </script>
 <script>
     $(".checkbox2").change(function() {
         var newval = $(this).val();
-        var currval = $('#purpose').val();
+        var currval = $('#purpose_coe').val();
         if(!this.checked){
-            var removeval= $('#purpose').val().replace(''+newval+'; ', '');
-            $('#purpose').val(removeval);
+            var removeval= $('#purpose_coe').val().replace(''+newval+'(COE); ', '');
+            $('#purpose_coe').val(removeval);
         }
         else{
-            $('#purpose').val(currval + ''+ $(this).val() + '; ');
+            $('#purpose_coe').val(currval + ''+ $(this).val() + '(COE); ');
+        }
+    });
+    $(".checkbox3").change(function() {
+        var newval = $(this).val();
+        var currval = $('#purpose_cec').val();
+        if(!this.checked){
+            var removeval= $('#purpose_cec').val().replace(''+newval+'(CEC); ', '');
+            $('#purpose_cec').val(removeval);
+        }
+        else{
+            $('#purpose_cec').val(currval + ''+ $(this).val() + '(CEC); ');
         }
     });
     $(".typeofcoe").change(function() {
         var newval = $(this).val();
         var currval = $('#typeofcoe').val();
         if(!this.checked){
-            var removeval= $('#typeofcoe').val().replace(''+newval+'(COE); ', '');
+            var removeval= $('#typeofcoe').val().replace(''+newval+'; ', '');
             $('#typeofcoe').val(removeval);
             $("#coe_purpose").attr('hidden', true);
+            $('#purpose_coe').val('');
+            $('.checkbox2').prop('checked', false);
         }
         else{
-            $('#typeofcoe').val(currval + ''+ $(this).val() + '(COE); ');
+            $('#typeofcoe').val(currval + ''+ $(this).val() + '; ');
             $("#coe_purpose").attr('hidden', false);
         }
     });
@@ -249,12 +269,14 @@
         var newval = $(this).val();
         var currval = $('#typeofcoe').val();
         if(!this.checked){
-            var removeval= $('#typeofcoe').val().replace(''+newval+'(CEC); ', '');
+            var removeval= $('#typeofcoe').val().replace(''+newval+'; ', '');
             $('#typeofcoe').val(removeval);
             $("#cec_purpose").attr('hidden', true);
+            $('#purpose_cec').val('');
+            $('.checkbox3').prop('checked', false);
         }
         else{
-            $('#typeofcoe').val(currval + ''+ $(this).val() + '(CEC); ');
+            $('#typeofcoe').val(currval + ''+ $(this).val() + '; ');
             $("#cec_purpose").attr('hidden', false);
         }
     });
@@ -297,6 +319,10 @@
                             },
                         })
                         .then((willsubmit)=>{
+                            var purpose_coe = $('#purpose_coe').val();
+                            var purpose_cec = $('#purpose_cec').val();
+                            $('#purpose').val(purpose_coe+' '+purpose_cec);
+
                             if (willsubmit){
                                 $.ajax({
                                     url: 'user_coe_request_insert_record.php',
