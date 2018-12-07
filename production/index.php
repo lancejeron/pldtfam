@@ -49,11 +49,12 @@
     <link href="../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
     <link href="../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-    <link href="../production/images/icons/favicon.ico" rel="icon"/>
-
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+
+    <link href="../production/images/icons/favicon.ico" rel="icon"/>
+
   </head>
 
   <body class="nav-md">
@@ -151,15 +152,14 @@
                         <thead>
                           <tr>
                             <th>Start Time</th>
-                            <th>Method of Request</th>
                             <th>Employee ID</th>
                             <th>Email</th>
                             <th>Employee Name</th>
                             <th>Type of COE</th>
                             <th>Purpose</th>
                             <th>Salary</th>
-                            <!-- <th>Question</th>
-                            <th>Statement</th> -->
+                            <th>Question</th>
+                            <th>Statement</th>
                             <th>Request for</th>
                             <th>Request for Name</th>
                             <th>Positon Title</th>
@@ -174,15 +174,14 @@
                             echo '
                             <tr>
                             <td>' . $row["start_time"] . '</td>
-                            <td>' . $row["req_type"] . '</td>
                             <td>' . $row["emp_id"] . '</td>
                             <td>' . $row["email"] . '</td>
                             <td>' . $row["emp_name"] . '</td>
                             <td>' . $row["type_of_coe"] . '</td>
                             <td>' . $row["purpose"] . '</td>
                             <td>' . $row["_salary"] . '</td>
-                            <!-- <td>' . $row["question1"] . '</td>
-                            <td>' . $row["statement"] . '</td> -->
+                            <td>' . $row["question1"] . '</td>
+                            <td>' . $row["statement"] . '</td>
                             <td>' . $row["reqt_for"] . '</td>
                             <td>' . $row["reqt_for_name"] . '</td>
                             <td>' . $row["position_title"] . '</td>
