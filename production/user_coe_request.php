@@ -106,9 +106,11 @@
 
                         <div class="row">  
                         <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
-                        <input type="text" id="purpose_coe" class='addpurpose' style='display: none;'> 
+                        <input type="text" id="purpose_coe" class='addpurpose' style='display: none;' > 
                         <input type="text" id="purpose_cec" class='addpurpose' style='display: none;'>
-                        <input type="text" id="purpose_salary_coe" class='' name='' style=''>
+                        <input type="text" id="purpose_salary_coe" class='' name='' style='display: none;' >
+                        <input type="text" id="purpose_salary_cec" class='' name='' style='display: none;' >
+                        <input type="text" id="purpose_salary" class='' name='salary' style='display: none;' >
                             <div class="col-sm-6">
                                 <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
                                     <h4>Select purpose (COE) *:</h4>
@@ -242,29 +244,48 @@
     $(".checkbox2").change(function() {
         var newval = $(this).val();
         var currval = $('#purpose_coe').val();
+        var currval_salary = $('#purpose_salary_coe').val();
+        var a = newval+'(Exposed); ';
         if(!this.checked){
             var removeval= $('#purpose_coe').val().replace(''+newval+'(COE); ', '');
-            var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(Exposed); ', '');
-            var removeval_salary_coe2= $('#purpose_salary_coe').val().replace(''+newval+'(Confidential); ', '');
+            
+            
             $('#purpose_coe').val(removeval);
-            $('#purpose_salary_coe').val(removeval_salary_coe1);
-            // $('#purpose_salary_coe').val(removeval_salary_coe2);
+            // $('#purpose_salary_coe').val(removeval_salary_coe1);
+            var n = $('#purpose_salary_coe').val().search("Confidential");
+            if(n>=0){
+                alert('meron');
+                var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(Confidential); ', '');
+                $('#purpose_salary_coe').val(removeval_salary_coe1);
+            }
+            else{
+                alert('wala');
+                var r= $('#purpose_salary_coe').val().replace(''+newval+'(Exposed); ', '');
+                $('#purpose_salary_coe').val(r);
+            }
+            $("[value='"+newval+"(Exposed);']").prop('checked', false)
+            $("[value='"+newval+"(Confidential);']").prop('checked', false)
             
         }
         else{
             $('#purpose_coe').val(currval + ''+ $(this).val() + '(COE); ');
-            $('#purpose_salary_coe').val(currval + ''+ $(this).val() + '(Exposed); ');
+            $('#purpose_salary_coe').val(currval_salary+ newval + '(Exposed); ');
+            $("[value='"+newval+"(Exposed);']").prop('checked', true)
         }
     });
     $(".checkbox3").change(function() {
         var newval = $(this).val();
         var currval = $('#purpose_cec').val();
+        var currval_salary = $('#purpose_salary_cec').val();
         if(!this.checked){
             var removeval= $('#purpose_cec').val().replace(''+newval+'(CEC); ', '');
             $('#purpose_cec').val(removeval);
+            var removeval_salary_cec1= $('#purpose_salary_cec').val().replace(''+newval+'(Confidential); ', '');
+            $('#purpose_salary_cec').val(removeval_salary_cec1);
         }
         else{
             $('#purpose_cec').val(currval + ''+ $(this).val() + '(CEC); ');
+            $('#purpose_salary_cec').val(currval_salary+ newval + '(Confidential); ');
         }
     });
     $(".typeofcoe").change(function() {
@@ -276,13 +297,17 @@
             $("#coe_purpose").attr('hidden', true);
             $('#purpose_coe').val('');
             $('.checkbox2').prop('checked', false);
+            $('#purpose_salary_coe').val('');
+            $(".purpose_salary").prop("checked", false);
+
         }
         else{
             $('#typeofcoe').val(currval + ''+ $(this).val() + '; ');
             $("#coe_purpose").attr('hidden', false);
+
         }
     });
-    $(".typeofcec").change(function() {d
+    $(".typeofcec").change(function() {
         var newval = $(this).val();
         var currval = $('#typeofcoe').val();
         if(!this.checked){
@@ -291,6 +316,7 @@
             $("#cec_purpose").attr('hidden', true);
             $('#purpose_cec').val('');
             $('.checkbox3').prop('checked', false);
+            $('#purpose_salary_cec').val('');
         }
         else{
             $('#typeofcoe').val(currval + ''+ $(this).val() + '; ');
@@ -298,23 +324,41 @@
         }
     });
     // purpose salary
-    // $(".purpose_salary").change(function() {
-    //     var newval = $(this).val();
-    //     var currval = $('#purpose_salary_coe').val();
-    //     if(!this.checked){
-    //         var removeval= $('#purpose_salary_coe').val().replace(''+newval+'; ', '');
-    //         $('#purpose_salary_coe').val(removeval);
-    //     }
-    //     else{
-    //         $('#purpose_salary_coe').val(currval + ''+ $(this).val() + '; ');
-    //     }
-    // });
+    $(".purpose_salary").change(function() {
+        var newval = $(this).val();
+        var currval = $('#purpose_salary_coe').val();
+        var n = newval.search('Exposed');
+        var x = newval.replace('Exposed', 'Confidential');
+        var y = newval.replace('Confidential', 'Exposed');
+        var a = y;
+        var b = x;
+
+        // alert('newval=='+ newval+'y=='+y);
+        // alert(a);
+        // alert(x);
+        // var mm = newval.replace('Exposed', 'Confidential');
+        if(newval == y){
+            // alert('clinick ay exp');
+            // var y = newval.replace('Confidential', 'Exposed');
+            var makeitexposed=$('#purpose_salary_coe').val().replace(''+b, ''+a);
+            $('#purpose_salary_coe').val(makeitexposed);
+        }
+        else{
+            // alert('clinick ay Conf');
+            // var x = newval.replace('Exposed', 'Confidential');
+            var makeitconf = $('#purpose_salary_coe').val().replace(''+a, ''+b);
+            $('#purpose_salary_coe').val(makeitconf);
+            
+        }
+
+    });
 
 </script>
 <script>
     $(document).ready(function () {
         $('#req_coebt').click(function(e) {
             checked = $(".checkbox2:checkbox:checked").length;
+            checked_ = $(".checkbox3:checkbox:checked").length;
             checked2 = $(".typeofcoe:checkbox:checked").length;
             checked3 = $(".typeofcec:checkbox:checked").length;
             if(!checked2  && !checked3 ) {
@@ -322,7 +366,7 @@
                 return false;
             }
             else{
-                if(!checked) {
+                if((checked==0) && (checked_==0) ) {
                     swal("Please pick at least one purpose.","","info");
                     return false;
                 }
@@ -351,6 +395,10 @@
                             var purpose_coe = $('#purpose_coe').val();
                             var purpose_cec = $('#purpose_cec').val();
                             $('#purpose').val(purpose_coe+' '+purpose_cec);
+
+                            var purpose_salary_coe = $('#purpose_salary_coe').val();
+                            var purpose_salary_cec = $('#purpose_salary_cec').val();
+                            $('#purpose_salary').val(purpose_salary_coe+' '+purpose_salary_cec);
 
                             if (willsubmit){
                                 $.ajax({
