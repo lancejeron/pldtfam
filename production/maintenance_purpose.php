@@ -147,6 +147,7 @@
                       <table id='mydatatable' class='table table-striped table-bordered'>
                         <thead>
                           <tr>
+														<th>ID</th>
                             <th>Name</th>
                             <th>Type</th>
 														<th>Salary</th>
@@ -157,7 +158,8 @@
                         <?php
                           while($row = mysqli_fetch_array($result)){
                             echo '
-                            <tr>
+														<tr>
+														<td>' . $row["purpose_ID"] . '</td>
                             <td>' . $row["purpose_name"] . '</td>
 														<td>' . $row["purpose_type"] . '</td>
 														<td>' . $row["purpose_salary"] . '</td>
