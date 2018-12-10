@@ -108,6 +108,7 @@
                         <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
                         <input type="text" id="purpose_coe" class='addpurpose' style='display: none;'> 
                         <input type="text" id="purpose_cec" class='addpurpose' style='display: none;'>
+                        <input type="text" id="purpose_salary_coe" class='' name='' style=''>
                             <div class="col-sm-6">
                                 <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
                                     <h4>Select purpose (COE) *:</h4>
@@ -121,11 +122,11 @@
                                                                 
                                                                 <div class="radio">
                                                                     <label>
-                                                                        <input type="radio" value="option1" id="optionsRadios1" name="optionsRadios">Exposed 
+                                                                        <input type="radio" value="'. $row["purpose_name"] .'(Exposed);" class="purpose_salary" name="'. $row["purpose_name"] .'">Exposed 
                                                                     </label>
                                                       
                                                                     <label>
-                                                                        <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios">Confidential
+                                                                        <input type="radio" value="'. $row["purpose_name"] .'(Confidential);" class="purpose_salary" name="'. $row["purpose_name"] .'">Confidential
                                                                         </label>
                                                                 </div>
                                                         </label>
@@ -243,10 +244,16 @@
         var currval = $('#purpose_coe').val();
         if(!this.checked){
             var removeval= $('#purpose_coe').val().replace(''+newval+'(COE); ', '');
+            var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(Exposed); ', '');
+            var removeval_salary_coe2= $('#purpose_salary_coe').val().replace(''+newval+'(Confidential); ', '');
             $('#purpose_coe').val(removeval);
+            $('#purpose_salary_coe').val(removeval_salary_coe1);
+            // $('#purpose_salary_coe').val(removeval_salary_coe2);
+            
         }
         else{
             $('#purpose_coe').val(currval + ''+ $(this).val() + '(COE); ');
+            $('#purpose_salary_coe').val(currval + ''+ $(this).val() + '(Exposed); ');
         }
     });
     $(".checkbox3").change(function() {
@@ -275,7 +282,7 @@
             $("#coe_purpose").attr('hidden', false);
         }
     });
-    $(".typeofcec").change(function() {
+    $(".typeofcec").change(function() {d
         var newval = $(this).val();
         var currval = $('#typeofcoe').val();
         if(!this.checked){
@@ -290,6 +297,18 @@
             $("#cec_purpose").attr('hidden', false);
         }
     });
+    // purpose salary
+    // $(".purpose_salary").change(function() {
+    //     var newval = $(this).val();
+    //     var currval = $('#purpose_salary_coe').val();
+    //     if(!this.checked){
+    //         var removeval= $('#purpose_salary_coe').val().replace(''+newval+'; ', '');
+    //         $('#purpose_salary_coe').val(removeval);
+    //     }
+    //     else{
+    //         $('#purpose_salary_coe').val(currval + ''+ $(this).val() + '; ');
+    //     }
+    // });
 
 </script>
 <script>
