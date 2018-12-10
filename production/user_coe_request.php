@@ -254,12 +254,10 @@
             // $('#purpose_salary_coe').val(removeval_salary_coe1);
             var n = $('#purpose_salary_coe').val().search("Confidential");
             if(n>=0){
-                alert('meron');
                 var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(Confidential); ', '');
                 $('#purpose_salary_coe').val(removeval_salary_coe1);
             }
             else{
-                alert('wala');
                 var r= $('#purpose_salary_coe').val().replace(''+newval+'(Exposed); ', '');
                 $('#purpose_salary_coe').val(r);
             }
