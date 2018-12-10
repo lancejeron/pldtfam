@@ -278,12 +278,12 @@
         if(!this.checked){
             var removeval= $('#purpose_cec').val().replace(''+newval+'(CEC); ', '');
             $('#purpose_cec').val(removeval);
-            var removeval_salary_cec1= $('#purpose_salary_cec').val().replace(''+newval+'(Confidential); ', '');
+            var removeval_salary_cec1= $('#purpose_salary_cec').val().replace(''+newval+'(Exposed); ', '');
             $('#purpose_salary_cec').val(removeval_salary_cec1);
         }
         else{
             $('#purpose_cec').val(currval + ''+ $(this).val() + '(CEC); ');
-            $('#purpose_salary_cec').val(currval_salary+ newval + '(Confidential); ');
+            $('#purpose_salary_cec').val(currval_salary+ newval + '(Exposed); ');
         }
     });
     $(".typeofcoe").change(function() {

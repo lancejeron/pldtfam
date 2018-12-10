@@ -152,6 +152,7 @@
                         <thead>
                           <tr>
                             <th>Start Time</th>
+                            <th>Method</th>
                             <th>Employee ID</th>
                             <th>Email</th>
                             <th>Employee Name</th>
@@ -174,6 +175,7 @@
                             echo '
                             <tr>
                             <td>' . $row["start_time"] . '</td>
+                            <td>' . $row["req_type"] . '</td>
                             <td>' . $row["emp_id"] . '</td>
                             <td>' . $row["email"] . '</td>
                             <td>' . $row["emp_name"] . '</td>
