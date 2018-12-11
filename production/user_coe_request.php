@@ -106,10 +106,10 @@
 
                         <div class="row">  
                         <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
-                        <input type="text" id="purpose_coe" class='addpurpose' style='display: none;' > 
+                        <input type="text" id="purpose_coe" class='addpurpose' style='display: none;'> 
                         <input type="text" id="purpose_cec" class='addpurpose' style='display: none;'>
-                        <input type="text" id="purpose_salary_coe" class='' name='' style='display: none;' >
-                        <input type="text" id="purpose_salary_cec" class='' name='' style='display: none;' >
+                        <input type="text" id="purpose_salary_coe" class='' name='' style='display: none;'>
+                        <!-- <input type="text" id="purpose_salary_cec" class='' name='' style='display: none;' > -->
                         <input type="text" id="purpose_salary" class='' name='salary' style='display: none;' >
                             <div class="col-sm-6">
                                 <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
@@ -120,15 +120,15 @@
                                                 echo '
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input type="checkbox" class="checkbox2" value="'. $row["purpose_name"] .'" >'. $row["purpose_name"] . '
+                                                            <input type="checkbox" class="checkbox2" value="'.'['. $row["purpose_ID"].']" name="'. $row["purpose_name"] .'">'. $row["purpose_name"] . '
                                                                 
                                                                 <div class="radio">
                                                                     <label>
-                                                                        <input type="radio" value="'. $row["purpose_name"] .'(Exposed);" class="purpose_salary" name="'. $row["purpose_name"] .'">Exposed 
+                                                                        <input type="radio" value="'.'['. $row["purpose_ID"].'](1);" class="purpose_salary" name="'. $row["purpose_name"] .'">Exposed 
                                                                     </label>
                                                       
                                                                     <label>
-                                                                        <input type="radio" value="'. $row["purpose_name"] .'(Confidential);" class="purpose_salary" name="'. $row["purpose_name"] .'">Confidential
+                                                                        <input type="radio" value="'.'['. $row["purpose_ID"].'](0);" class="purpose_salary" name="'. $row["purpose_name"] .'">Confidential
                                                                         </label>
                                                                 </div>
                                                         </label>
@@ -243,47 +243,49 @@
 <script>
     $(".checkbox2").change(function() {
         var newval = $(this).val();
+        var x = $(this).attr('name');
         var currval = $('#purpose_coe').val();
         var currval_salary = $('#purpose_salary_coe').val();
-        var a = newval+'(Exposed); ';
+        var a = newval+'(1); ';
         if(!this.checked){
-            var removeval= $('#purpose_coe').val().replace(''+newval+'(COE); ', '');
+            var removeval= $('#purpose_coe').val().replace(''+newval+x+'(COE); ', '');
             
             
             $('#purpose_coe').val(removeval);
             // $('#purpose_salary_coe').val(removeval_salary_coe1);
-            var n = $('#purpose_salary_coe').val().search("Confidential");
+            var n = $('#purpose_salary_coe').val().search("(0)");
             if(n>=0){
-                var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(Confidential); ', '');
+                var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(0); ', '');
                 $('#purpose_salary_coe').val(removeval_salary_coe1);
             }
             else{
-                var r= $('#purpose_salary_coe').val().replace(''+newval+'(Exposed); ', '');
+                var r= $('#purpose_salary_coe').val().replace(''+newval+'(1); ', '');
                 $('#purpose_salary_coe').val(r);
             }
-            $("[value='"+newval+"(Exposed);']").prop('checked', false)
-            $("[value='"+newval+"(Confidential);']").prop('checked', false)
+            $("[value='"+newval+"(1);']").prop('checked', false)
+            $("[value='"+newval+"(0);']").prop('checked', false)
             
         }
         else{
-            $('#purpose_coe').val(currval + ''+ $(this).val() + '(COE); ');
-            $('#purpose_salary_coe').val(currval_salary+ newval + '(Exposed); ');
-            $("[value='"+newval+"(Exposed);']").prop('checked', true)
+            
+            $('#purpose_coe').val(currval + ''+ $(this).val() + x +'(COE); ');
+            $('#purpose_salary_coe').val(currval_salary+ newval + '(1); ');
+            $("[value='"+newval+"(1);']").prop('checked', true)
         }
     });
     $(".checkbox3").change(function() {
         var newval = $(this).val();
         var currval = $('#purpose_cec').val();
-        var currval_salary = $('#purpose_salary_cec').val();
+        // var currval_salary = $('#purpose_salary_cec').val();
         if(!this.checked){
             var removeval= $('#purpose_cec').val().replace(''+newval+'(CEC); ', '');
             $('#purpose_cec').val(removeval);
-            var removeval_salary_cec1= $('#purpose_salary_cec').val().replace(''+newval+'(Exposed); ', '');
-            $('#purpose_salary_cec').val(removeval_salary_cec1);
+            // var removeval_salary_cec1= $('#purpose_salary_cec').val().replace(''+newval+'(Exposed); ', '');
+            // $('#purpose_salary_cec').val(removeval_salary_cec1);
         }
         else{
             $('#purpose_cec').val(currval + ''+ $(this).val() + '(CEC); ');
-            $('#purpose_salary_cec').val(currval_salary+ newval + '(Exposed); ');
+            // $('#purpose_salary_cec').val(currval_salary+ newval + '(Exposed); ');
         }
     });
     $(".typeofcoe").change(function() {
@@ -325,9 +327,9 @@
     $(".purpose_salary").change(function() {
         var newval = $(this).val();
         var currval = $('#purpose_salary_coe').val();
-        var n = newval.search('Exposed');
-        var x = newval.replace('Exposed', 'Confidential');
-        var y = newval.replace('Confidential', 'Exposed');
+        var n = newval.search('(1)');
+        var x = newval.replace('(1)', '(0)');
+        var y = newval.replace('(0)', '(1)');
         var a = y;
         var b = x;
 
@@ -395,8 +397,8 @@
                             $('#purpose').val(purpose_coe+' '+purpose_cec);
 
                             var purpose_salary_coe = $('#purpose_salary_coe').val();
-                            var purpose_salary_cec = $('#purpose_salary_cec').val();
-                            $('#purpose_salary').val(purpose_salary_coe+' '+purpose_salary_cec);
+                            // var purpose_salary_cec = $('#purpose_salary_cec').val();
+                            $('#purpose_salary').val(purpose_salary_coe);
 
                             if (willsubmit){
                                 $.ajax({
