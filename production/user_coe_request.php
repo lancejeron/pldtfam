@@ -7,12 +7,12 @@
 
     $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-    $purpose_query_coe = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'COE')";
+    $purpose_query_coe = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'COE') ORDER BY purpose_name ASC";
     $purpose_result_coe = mysqli_query($conn, $purpose_query_coe);
 		if (!$purpose_result_coe) {
 			echo "Error:". mysqli_error($conn);
         }
-    $purpose_query_cec = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'CEC')";
+    $purpose_query_cec = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'CEC') ORDER BY purpose_name ASC";
     $purpose_result_cec = mysqli_query($conn, $purpose_query_cec);
 		if (!$purpose_result_cec) {
 			echo "Error:". mysqli_error($conn);
@@ -116,9 +116,9 @@
 
                         <div class="row">  
                         <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
-                        <input type="text" id="purpose_coe" class='addpurpose' style='display: none;'> 
+                        <input type="text" id="purpose_coe" class='addpurpose' > 
                         <input type="text" id="purpose_cec" class='addpurpose' style='display: none;'>
-                        <input type="text" id="purpose_salary_coe" class='' name='' style='display: none;' >
+                        <input type="text" id="purpose_salary_coe" class='' name='' style='display: none;'>
                         <!-- <input type="text" id="purpose_salary_cec" class='' name='' style='display: none;' > -->
                         <input type="text" id="purpose_salary" class='' name='salary' style='display: none;' >
                             <div class="col-sm-6">
@@ -130,13 +130,13 @@
                                                 echo '
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input type="checkbox" class="checkbox2" value="'.'['. $row["purpose_ID"].']" name="'. $row["purpose_name"] .'">'. $row["purpose_name"] . '
+                                                            <input type="checkbox" class="checkbox2" value="'. $row["purpose_ID"].'" name="'. $row["purpose_name"] .'">'. $row["purpose_name"] . '
                                                 ';
                                                 if($row["purpose_salary"]==0){
                                                     echo '
-                                                        <div class="radio">
+                                                        <div id="rad_'. $row["purpose_ID"].'" class="radio" style="display:none;">
                                                             <label>
-                                                                <input type="radio" value="'.'['. $row["purpose_ID"].'](E)" class="purpose_salary" name="'. $row["purpose_ID"] .'">Exposed 
+                                                                <input type="radio" value="'.'['. $row["purpose_ID"].'](E)" class="purpose_salary" name="'. $row["purpose_ID"] .'" required>Exposed 
                                                             </label>
                                             
                                                             <label>
@@ -262,28 +262,29 @@
         var currval_salary = $('#purpose_salary_coe').val();
         var a = newval+'(E); ';
         if(!this.checked){
-            var removeval= $('#purpose_coe').val().replace(''+newval+x+'(COE); ', '');
+            var removeval= $('#purpose_coe').val().replace(''+newval+'_'+x+'(COE); ', '');
             
             
             $('#purpose_coe').val(removeval);
             // $('#purpose_salary_coe').val(removeval_salary_coe1);
             var n = $('#purpose_salary_coe').val().search("(C)");
             if(n>=0){
-                var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(C); ', '');
+                var removeval_salary_coe1= $('#purpose_salary_coe').val().replace('['+newval+'](C); ', '');
                 $('#purpose_salary_coe').val(removeval_salary_coe1);
             }
             else{
-                var r= $('#purpose_salary_coe').val().replace(''+newval+'(E); ', '');
+                var r= $('#purpose_salary_coe').val().replace('['+newval+'](E); ', '');
                 $('#purpose_salary_coe').val(r);
             }
-            $("[value='"+newval+"(E)']").prop('checked', false)
-            $("[value='"+newval+"(C)']").prop('checked', false)
+            $("[value='["+newval+"(E)']").prop('checked', false)
+            $("[value='["+newval+"(C)']").prop('checked', false)
             
+            $("#rad_"+newval).hide();
         }
         else{
-            
-            $('#purpose_coe').val(currval + ''+ $(this).val() + x +'(COE); ');
+            $('#purpose_coe').val(currval + ''+ $(this).val() +'_' + x +'(COE); ');
             // $('#purpose_salary_coe').val(currval_salary+ newval + '(1); ');
+            $("#rad_"+newval).show();
             // $("[value='"+newval+"(1);']").prop('checked', true);
         }
     });
@@ -313,6 +314,7 @@
             $('.checkbox2').prop('checked', false);
             $('#purpose_salary_coe').val('');
             $(".purpose_salary").prop("checked", false);
+            $(".radio").hide();
 
         }
         else{
