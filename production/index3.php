@@ -147,10 +147,12 @@
                             <thead>
                                 <tr>
                                     <th>Start Time</th>
+																		<th>Method</th>
                                     <th>Employee ID</th>
                                     <th>Email</th>
                                     <th>Employee Name</th>
                                     <th>Type of COE</th>
+																		<th>Purpose</th>
                                     <th>Salary</th>
                                     <th>Question</th>
                                     <th>Statement</th>
@@ -169,11 +171,13 @@
                                 while($row = mysqli_fetch_array($result)){
                                     echo '
                                     <tr>
-                                    <td>' . $row["start_time"] . '</td>
+																		<td>' . $row["start_time"] . '</td>
+																		<td>' . $row["req_type"] . '</td>
                                     <td>' . $row["emp_id"] . '</td>
                                     <td>' . $row["email"] . '</td>
                                     <td>' . $row["emp_name"] . '</td>
-                                    <td>' . $row["type_of_coe"] . '</td>
+																		<td>' . $row["type_of_coe"] . '</td>
+																		<td>' . $row["purpose"] . '</td>
                                     <td>' . $row["_salary"] . '</td>
                                     <td>' . $row["question1"] . '</td>
                                     <td>' . $row["statement"] . '</td>
