@@ -63,19 +63,24 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Request for Certificate</h2>
+                    <h2>Walk-in Request</h2>
                     
              
                     <div class="clearfix"></div>
                   </div>
 
+                    <div class="col-md-6 center-margin">
+                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <strong><i class="fa fa-warning"></i> Warning!</strong> Requesting for Certificate of Employment and Compensation would require your salary to be exposed.
+                        </div>
+                    </div>
 
                   <div class="x_content">
-
+                
+                    
                     <form id='req_coe' class="form-horizontal form-label-left" method="POST" action='user_coe_request_insert_record.php'>
-                        <div class="alert alert-success" role="alert">
-                            <strong>Warning!</strong> Requesting Certificate of Employment and Compensation would require your salary to be exposed.
-                        </div>
+            
                       <div class="form-group is_req">
                           <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID *:</label>
                           <div class="col-md-6 col-sm-6 col-xs-12">
