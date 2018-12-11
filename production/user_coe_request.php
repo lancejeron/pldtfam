@@ -68,9 +68,14 @@
              
                     <div class="clearfix"></div>
                   </div>
+
+
                   <div class="x_content">
 
                     <form id='req_coe' class="form-horizontal form-label-left" method="POST" action='user_coe_request_insert_record.php'>
+                        <div class="alert alert-success" role="alert">
+                            <strong>Warning!</strong> Requesting Certificate of Employment and Compensation would require your salary to be exposed.
+                        </div>
                       <div class="form-group is_req">
                           <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID *:</label>
                           <div class="col-md-6 col-sm-6 col-xs-12">

@@ -147,8 +147,10 @@
                       <table id='mydatatable' class='table table-striped table-bordered'>
                         <thead>
                           <tr>
+														<th>ID</th>
                             <th>Name</th>
                             <th>Type</th>
+														<th>Salary</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
@@ -156,9 +158,11 @@
                         <?php
                           while($row = mysqli_fetch_array($result)){
                             echo '
-                            <tr>
+														<tr>
+														<td>' . $row["purpose_ID"] . '</td>
                             <td>' . $row["purpose_name"] . '</td>
-                            <td>' . $row["purpose_type"] . '</td>
+														<td>' . $row["purpose_type"] . '</td>
+														<td>' . $row["purpose_salary"] . '</td>
                             <td>' . $row["purpose_status"] . '</td>
                             <td>
                             <form id="deleteform'.$row["purpose_ID"].'" method="POST" action="maintenance_purpose_routes.php">
@@ -201,7 +205,8 @@
 							<input type="text" class="form-control" id="name3" placeholder="" name="purpose_name" maxlength='75' required>
 						</div>
 					</div>
-          <div class="form-group">
+          
+					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
 							<div class="col-sm-10">
 								<select id="purpose_type3" name="purpose_type" class="form-control" >
@@ -209,10 +214,22 @@
                   <option id='' value="Both">Both</option>
 									<option id='' value="COE">COE</option>
 									<option id='' value="CEC">CEC</option>
-
 								</select>            
 							</div>
           </div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2">Salary:</label>
+							<div class="col-sm-10">
+								<select id="purpose_salary3" name="purpose_salary" class="form-control" >
+                  <option id='' value="User's Choice">User's Choice</option>
+									<option id='' value="Automatically Exposed">Automatically Exposed</option>
+									<option id='' value="Automatically Confidential">Automatically Confidential</option>
+								</select>            
+							</div>
+          </div>
+					
+
         </div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -251,6 +268,16 @@
 								</select>            
 							</div>
           			</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">Salary:</label>
+							<div class="col-sm-10">
+								<select id="purpose_salary2" name="purpose_salary" class="form-control" >
+                  <option id='' value="User's Choice">User's Choice</option>
+									<option id='' value="Automatically Exposed">Automatically Exposed</option>
+									<option id='' value="Automatically Confidential">Automatically Confidential</option>
+								</select>            
+							</div>          
+     			</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2">Status:</label>
 							<div class="col-sm-10">
