@@ -11,8 +11,9 @@
     if($btn1 == 'Add'){
         $purpose_name = $_POST['purpose_name'];
         $purpose_type = $_POST['purpose_type'];
+        $purpose_salary = $_POST['purpose_salary'];
 
-        $add_purpose =  "INSERT INTO tblmpurpose (purpose_name, purpose_status, purpose_type) VALUES ('$purpose_name','active', '$purpose_type')";
+        $add_purpose =  "INSERT INTO tblmpurpose (purpose_name, purpose_status, purpose_type, purpose_salary) VALUES ('$purpose_name','active', '$purpose_type', '$purpose_salary')";
         $check_purpose = "SELECT COUNT(*) AS x FROM tblmpurpose WHERE purpose_name IN ('$purpose_name') OR purpose_name LIKE '%$purpose_name%'";
         
         $result = mysqli_query($conn,$check_purpose);
@@ -37,8 +38,9 @@
         $purpose_name = $_POST['purpose_name'];
         $purpose_status = $_POST['purpose_status'];
         $purpose_type = $_POST['purpose_type'];
+        $purpose_salary = $_POST['purpose_salary'];
 
-        $edit_purpose= "UPDATE tblmpurpose SET purpose_name='$purpose_name', purpose_status='$purpose_status', purpose_type='$purpose_type' WHERE purpose_id = '$purpose_id'";
+        $edit_purpose= "UPDATE tblmpurpose SET purpose_name='$purpose_name', purpose_status='$purpose_status', purpose_type='$purpose_type', purpose_salary='$purpose_salary' WHERE purpose_id = '$purpose_id'";
         if (!mysqli_query($conn, $edit_purpose)) {
             // echo("Error description: " . mysqli_error($conn));
             // header("refresh:1.5; url=maintenance_purpose.php");

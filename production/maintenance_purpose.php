@@ -160,16 +160,26 @@
                             echo '
 														<tr>
 														<td>' . $row["purpose_ID"] . '</td>
-                            <td>' . $row["purpose_name"] . '</td>
-														<td>' . $row["purpose_type"] . '</td>
-														<td>' . $row["purpose_salary"] . '</td>
+														<td>' . $row["purpose_name"] . '</td>
+														<td>' . $row["purpose_type"] . '</td>';
+														if($row["purpose_salary"]==0){
+															echo "<td>User's Choice</td>";
+														}
+														else if($row["purpose_salary"]==1){
+															echo "<td>Automatically Exposed</td>";
+														}
+														else{
+															echo "<td>Automatically Confidential</td>";
+														}
+														echo '
                             <td>' . $row["purpose_status"] . '</td>
                             <td>
                             <form id="deleteform'.$row["purpose_ID"].'" method="POST" action="maintenance_purpose_routes.php">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose", 
                                         data-id="'.$row["purpose_ID"].'"
-										data-name="'.$row["purpose_name"].'"
-										data-type="'.$row["purpose_type"].'"
+																				data-name="'.$row["purpose_name"].'"
+																				data-type="'.$row["purpose_type"].'"
+																				data-salary="'.$row["purpose_salary"].'"
                               data-status="'.$row["purpose_status"].'"><i class="glyphicon glyphicon-edit"></i> Edit</button>
                             <input type="text" id="inp'.$row["purpose_ID"].'" class="form-control" name="purpose_ID2" value="'.$row["purpose_ID"].'" style="display:none;">
                             <button type="submit" id="btn'.$row["purpose_ID"].'" class="btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
@@ -222,9 +232,9 @@
 						<label class="control-label col-sm-2">Salary:</label>
 							<div class="col-sm-10">
 								<select id="purpose_salary3" name="purpose_salary" class="form-control" >
-                  <option id='' value="User's Choice">User's Choice</option>
-									<option id='' value="Automatically Exposed">Automatically Exposed</option>
-									<option id='' value="Automatically Confidential">Automatically Confidential</option>
+                  <option id='' value="0">User's Choice</option>
+									<option id='' value="1">Automatically Exposed</option>
+									<option id='' value="2">Automatically Confidential</option>
 								</select>            
 							</div>
           </div>
@@ -272,9 +282,9 @@
 						<label class="control-label col-sm-2">Salary:</label>
 							<div class="col-sm-10">
 								<select id="purpose_salary2" name="purpose_salary" class="form-control" >
-                  <option id='' value="User's Choice">User's Choice</option>
-									<option id='' value="Automatically Exposed">Automatically Exposed</option>
-									<option id='' value="Automatically Confidential">Automatically Confidential</option>
+                  <option id='sal0' value="0">User's Choice</option>
+									<option id='sal1' value="1">Automatically Exposed</option>
+									<option id='sal2' value="2">Automatically Confidential</option>
 								</select>            
 							</div>          
      			</div>
@@ -355,11 +365,13 @@
 	var name = button.data('name')
 	var type = button.data('type')
 	var status = button.data('status')
+	var salary = button.data('salary')
 		
 	
 	var modal = $(this)
 	modal.find('.modal-body #id2').val(id)
 	modal.find('.modal-body #name2').val(name)
+	$('#sal'+salary).prop('selected', true);
 	// modal.find('.modal-body #status2').val(status)
 	// modal.find('.modal-body #status2').text(''+status)
 	if(status=='active'){
@@ -374,6 +386,7 @@
 	else{
 		$('#'+type).prop('selected', true);
 	}
+	
 
 
 	});
@@ -437,6 +450,7 @@
 			var purpose_name =  $('#name2').val();
 			var purpose_type =  $('#purpose_type2').val();
 			var purpose_status =  $('#status3').val();
+			var purpose_salary =  $('#purpose_salary2').val();
 			if(purpose_name == ''){
 				swal("Please fill the required(*) fields.","","info");
 				e.preventDefault();
@@ -450,6 +464,7 @@
 					purpose_name: purpose_name,
 					purpose_type: purpose_type,
 					purpose_status: purpose_status,
+					purpose_salary: purpose_salary,
 					btn1: 'Edit'
 
 				},
@@ -476,6 +491,7 @@
 		$('#addformbtn').click(function(e){
 			var purpose_name =  $('#name3').val();
 			var purpose_type =  $('#purpose_type3').val();
+			var purpose_salary =  $('#purpose_salary3').val();
 			if(purpose_name == ''){
 				swal("Please fill the required(*) fields.","","info");
 				e.preventDefault();
@@ -487,6 +503,7 @@
 				data: {
 					purpose_name: purpose_name,
 					purpose_type: purpose_type,
+					purpose_salary: purpose_salary,
 					btn1: 'Add'
 
 				},
