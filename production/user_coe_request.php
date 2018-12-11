@@ -118,7 +118,7 @@
                         <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
                         <input type="text" id="purpose_coe" class='addpurpose' style='display: none;'> 
                         <input type="text" id="purpose_cec" class='addpurpose' style='display: none;'>
-                        <input type="text" id="purpose_salary_coe" class='' name='' >
+                        <input type="text" id="purpose_salary_coe" class='' name='' style='display: none;' >
                         <!-- <input type="text" id="purpose_salary_cec" class='' name='' style='display: none;' > -->
                         <input type="text" id="purpose_salary" class='' name='salary' style='display: none;' >
                             <div class="col-sm-6">
@@ -136,11 +136,11 @@
                                                     echo '
                                                         <div class="radio">
                                                             <label>
-                                                                <input type="radio" value="'.'['. $row["purpose_ID"].'](1)" class="purpose_salary" name="'. $row["purpose_ID"] .'">Exposed 
+                                                                <input type="radio" value="'.'['. $row["purpose_ID"].'](E)" class="purpose_salary" name="'. $row["purpose_ID"] .'">Exposed 
                                                             </label>
                                             
                                                             <label>
-                                                                <input type="radio" value="'.'['. $row["purpose_ID"].'](0)" class="purpose_salary" name="'. $row["purpose_ID"] .'">Confidential
+                                                                <input type="radio" value="'.'['. $row["purpose_ID"].'](C)" class="purpose_salary" name="'. $row["purpose_ID"] .'">Confidential
                                                             </label>
                                                         </div>
                                                     ';
@@ -260,24 +260,24 @@
         var x = $(this).attr('name');
         var currval = $('#purpose_coe').val();
         var currval_salary = $('#purpose_salary_coe').val();
-        var a = newval+'(1); ';
+        var a = newval+'(E); ';
         if(!this.checked){
             var removeval= $('#purpose_coe').val().replace(''+newval+x+'(COE); ', '');
             
             
             $('#purpose_coe').val(removeval);
             // $('#purpose_salary_coe').val(removeval_salary_coe1);
-            var n = $('#purpose_salary_coe').val().search("(0)");
+            var n = $('#purpose_salary_coe').val().search("(C)");
             if(n>=0){
-                var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(0); ', '');
+                var removeval_salary_coe1= $('#purpose_salary_coe').val().replace(''+newval+'(C); ', '');
                 $('#purpose_salary_coe').val(removeval_salary_coe1);
             }
             else{
-                var r= $('#purpose_salary_coe').val().replace(''+newval+'(1); ', '');
+                var r= $('#purpose_salary_coe').val().replace(''+newval+'(E); ', '');
                 $('#purpose_salary_coe').val(r);
             }
-            $("[value='"+newval+"(1)']").prop('checked', false)
-            $("[value='"+newval+"(0)']").prop('checked', false)
+            $("[value='"+newval+"(E)']").prop('checked', false)
+            $("[value='"+newval+"(C)']").prop('checked', false)
             
         }
         else{
@@ -361,16 +361,11 @@
     $(".purpose_salary").change(function(){
         var x = $(this).attr('name');
         var y = $(this).val();
-        var newval = '['+x+']'+'(1)';
-        var nnewval = '['+x+']'+'(0)';
-        // var nnewval = '['+x+']'+'(1)';
-        // var y= ''+x;
+        var newval = '['+x+']'+'(E)';
+        var nnewval = '['+x+']'+'(C)';
         var currval = $('#purpose_salary_coe').val();
         var findnewval = currval.search(x);
 
-        // alert(findnewval);
-        // alert(y);
-        // alert(y);
         if(findnewval < 0){
             $('#purpose_salary_coe').val(currval+ y +'; ');
         }
