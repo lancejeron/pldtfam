@@ -84,7 +84,7 @@
               <div class="menu_section">
                 <h3>Menu</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-edit"></i> Certificate of Employment <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> Certificate<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.php">Requests</a></li>
                       <li><a href="index3.php">Finished</a></li>
@@ -127,7 +127,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Certificate of Employment</h3>
+                <h3>Certificate</h3>
               </div>
 
             </div>

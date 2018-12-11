@@ -98,7 +98,7 @@
                       
                       <div class="col-md-8 center-margin">
                           <div class="form-group">
-                              <h4>Select type of certificate:</h4>
+                              <h4>Select type of certificate:*</h4>
                                   <div class="form-group">
                                     <input type="text" id='typeofcoe' name='type_of_coe' style='display: none;'>
                                       <div class="checkbox">
