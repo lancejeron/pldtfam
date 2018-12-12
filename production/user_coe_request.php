@@ -92,7 +92,7 @@
                       <div class="form-group is_req">
                           <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name *:</label>
                           <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" autocomplete="off">
+                            <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: Dela Cruz, Juan" autocomplete="off">
                           </div>
                       </div>
                       
