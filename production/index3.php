@@ -51,6 +51,52 @@
 
     <link href="../production/images/icons/favicon.ico" rel="icon"/>
 
+		<!-- signature -->
+    <link href="css/signature/jquery.signaturepad.css" rel="stylesheet">
+    <script src="js/signature/jquery.min.js"></script>
+    <script src="js/signature/numeric-1.2.6.min.js"></script> 
+    <script src="js/signature/bezier.js"></script>
+    <script src="js/signature/jquery.signaturepad.js"></script> 
+    
+    <script src="js/signature/html2canvas.js"></script>
+    <script src="js/signature/json2.min.js"></script>
+    
+    <style type="text/css">
+			/* body{
+				font-family:monospace;
+				text-align:center;
+			} */
+			#btnSaveSign {
+				color: #fff;
+				background: #f99a0b;
+				padding: 5px;
+				border: none;
+				border-radius: 5px;
+				font-size: 20px;
+				margin-top: 10px;
+			}
+			#signArea{
+				width:304px;
+				/* margin: 50px auto; */
+			}
+			/* .sign-container {
+				width: 60%;
+				margin: auto;
+			} */
+			/* .sign-preview {
+				width: 150px;
+				height: 50px;
+				border: solid 1px #CFCFCF;
+				margin: 10px 5px;
+			} */
+			/* .tag-ingo {
+				font-family: cursive;
+				font-size: 12px;
+				text-align: left;
+				font-style: oblique;
+			} */
+    </style>
+
   </head>
 
   <body class="nav-md">
@@ -313,6 +359,20 @@
 					</div>
 
 					<div class="form-group">
+							<label for="signature" class="control-label col-sm-2">Claimer's Signature</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+									<div id="signArea" >
+										<div class="sig sigWrapper" style="height:auto;">
+												<div class="typed"></div>
+												<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
+										</div>
+										<br>
+										<center><button type="button" class="btn btn-default btn-sm" id='btnclear'>Clear</button></center>
+									</div>
+							</div>
+						</div>
+
+					<div class="form-group">
 						<label class="control-label col-sm-2" for="claimdate">Claim Date</label>
 						<div class="col-sm-10">          
 							<input type="text" class="form-control" id="claimdate" placeholder="" disabled>
@@ -384,9 +444,9 @@
     <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
     <!-- Momentjs -->
     <script src="../vendors/momentjs/moment.min.js"></script>
-	<!-- sweetalert -->
-	<script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>
-
+		<!-- sweetalert -->
+		<script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>
+		<script type="text/javascript" src="js/signature/jquery.signaturepad.js"></script> 
   </body>
 </html>
 <script>
@@ -543,6 +603,32 @@
 	});
   });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
+    });
+    $('#btnclear').click(function(e){
+        $('#signArea').signaturePad().clearCanvas();
+    });
+    $("#btnSaveSign").click(function(e){
+        html2canvas([document.getElementById('sign-pad')], {
+            onrendered: function (canvas) {
+                var canvas_img_data = canvas.toDataURL('image/png');
+                var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
+                //ajax call to save image inside folder
+                $.ajax({
+                    url: 'save_sign.php',
+                    data: { img_data:img_data },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    });
+</script> 
 <?php
 	}
 ?>
