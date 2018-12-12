@@ -313,10 +313,6 @@
 					</div>
 
 					<div class="form-group">
-						<button type="button" class="btn btn-warning" data-toggle='modal' data-target='#signature' >Signature</button>
-					</div>
-
-					<div class="form-group">
 						<label class="control-label col-sm-2" for="claimdate">Claim Date</label>
 						<div class="col-sm-10">          
 							<input type="text" class="form-control" id="claimdate" placeholder="" disabled>
@@ -348,28 +344,6 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="submit" id="editformbtn" class="btn btn-success" value='Edit' onclick='getdatetime();'>Save</button>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
-<!-- signture modal -->
-<div id='signature' class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Signature</h4>
-				</div>
-				<div class="modal-body">
-					<div class="ln_solid"></div>
-								
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-warning">Clear</button>
-					<button type="button" class="btn btn-success">Done</button>
 				</div>
 			</div>
 		</form>
