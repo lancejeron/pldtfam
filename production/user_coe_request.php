@@ -116,7 +116,7 @@
 
                         <div class="row">  
                         <input type="text" id="purpose" class='addpurpose' name='purpose' style='display: none;'>
-                        <input type="text" id="purpose_coe" class='addpurpose' > 
+                        <input type="text" id="purpose_coe" class='addpurpose' style='display: none;' > 
                         <input type="text" id="purpose_cec" class='addpurpose' style='display: none;'>
                         <input type="text" id="purpose_salary_coe" class='' name='' style='display: none;'>
                         <!-- <input type="text" id="purpose_salary_cec" class='' name='' style='display: none;' > -->
