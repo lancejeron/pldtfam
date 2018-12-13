@@ -84,7 +84,7 @@
                         <div class="form-group is_req">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID:*</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12" autocomplete="off">
+                                <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12" autocomplete="off" maxlength='10'>
                                 <input type="text" id="start_time" name='start_time' class="form-control col-md-7 col-xs-12" style='display: none;'>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                         <div class="form-group is_req">
                             <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name:*</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: Dela Cruz, Juan" autocomplete="off">
+                                <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: Dela Cruz, Juan" autocomplete="off" maxlength='150'>
                             </div>
                         </div>
                       
