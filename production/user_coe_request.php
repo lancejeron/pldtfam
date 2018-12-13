@@ -337,27 +337,6 @@
             $("#cec_purpose").attr('hidden', false);
         }
     });
-    // purpose salary
-    // $(".purpose_salary").change(function() {
-    //     var newval = $(this).val();
-    //     var currval = $('#purpose_salary_coe').val();
-    //     var n = newval.search('(1)');
-    //     var x = newval.replace('(1)', '(0)');
-    //     var y = newval.replace('(0)', '(1)');
-    //     var a = y;
-    //     var b = x;
-
-    //     if(newval == y){
-    //         var makeitexposed=$('#purpose_salary_coe').val().replace(''+b, ''+a);
-    //         $('#purpose_salary_coe').val(makeitexposed);
-    //     }
-    //     else{
-    //         var makeitconf = $('#purpose_salary_coe').val().replace(''+a, ''+b);
-    //         $('#purpose_salary_coe').val(makeitconf);
-            
-    //     }
-
-    // });
     $(".purpose_salary").change(function(){
         var x = $(this).attr('name');
         var y = $(this).val();

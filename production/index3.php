@@ -193,12 +193,12 @@
                             <thead>
                                 <tr>
                                     <th>Start Time</th>
-																		<th>Method</th>
+									<th>Method</th>
                                     <th>Employee ID</th>
                                     <th>Email</th>
                                     <th>Employee Name</th>
                                     <th>Type of COE</th>
-																		<th>Purpose</th>
+									<th>Purpose</th>
                                     <th>Salary</th>
                                     <th>Question</th>
                                     <th>Statement</th>
@@ -217,13 +217,13 @@
                                 while($row = mysqli_fetch_array($result)){
                                     echo '
                                     <tr>
-																		<td>' . $row["start_time"] . '</td>
-																		<td>' . $row["req_type"] . '</td>
+									<td>' . $row["start_time"] . '</td>
+									<td>' . $row["req_type"] . '</td>
                                     <td>' . $row["emp_id"] . '</td>
                                     <td>' . $row["email"] . '</td>
                                     <td>' . $row["emp_name"] . '</td>
-																		<td>' . $row["type_of_coe"] . '</td>
-																		<td>' . $row["purpose"] . '</td>
+									<td>' . $row["type_of_coe"] . '</td>
+									<td>' . $row["purpose"] . '</td>
                                     <td>' . $row["_salary"] . '</td>
                                     <td>' . $row["question1"] . '</td>
                                     <td>' . $row["statement"] . '</td>
@@ -248,7 +248,8 @@
                                             data-req_status="'.$row['req_status'].'"
                                             data-claimersname="'.$row['claimersname'].'"
                                             data-returned_status="'.$row['returned_status'].'"
-                                            data-date_returned="'.$row['date_returned'].'"
+											data-date_returned="'.$row['date_returned'].'"
+											data-claimers_signature="'.$row['claimers_signature'].'"
                                             data-claimdate="'.$row['claimdate2'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
                                 </tr>
                                 ';
@@ -361,14 +362,16 @@
 					<div class="form-group">
 							<label for="signature" class="control-label col-sm-2">Claimer's Signature</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-									<div id="signArea" >
-										<div class="sig sigWrapper" style="height:auto;">
-												<div class="typed"></div>
-												<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
-										</div>
-										<br>
-										<center><button type="button" class="btn btn-default btn-sm" id='btnclear'>Clear</button></center>
+							<input type="text" class="form-control" id="claimersign" placeholder="" name="claimersign" style="display:none;">
+							<input type="text" class="form-control" id="claimers_signature" placeholder="" style="display:none;">
+								<div id="signArea" >
+									<div class="sig sigWrapper" style="height:auto;">
+										<div class="typed"></div>
+										<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
 									</div>
+									<br>
+									<center><button type="button" class="btn btn-default btn-sm" id='btnclear'>Clear</button></center>
+								</div>
 							</div>
 						</div>
 
@@ -488,6 +491,7 @@
 		var returned_status= button.data('returned_status')
 		var date_returned= button.data('date_returned')
 		var date_returned4= button.data('date_returned')
+		var claimers_signature= button.data('claimers_signature')
 		
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
@@ -506,6 +510,7 @@
 		modal.find('.modal-body #claimdate').val(claimdate)
 		modal.find('.modal-body #date_returned').val(date_returned)
 		modal.find('.modal-body #date_returned4').val(date_returned4)
+		modal.find('.modal-body #claimers_signature').val(claimers_signature)
 
 
 		if (returned_status == 'yes'){
@@ -527,7 +532,13 @@
 		else{
 			$('#'+req_status).prop('selected', true);
 		}
-    
+
+		if(claimers_signature==''){
+
+		}
+		else{
+			$("#signArea").replaceWith('<img src="./doc_signs/'+claimers_signature+'" class="sign-preview" />');
+		} 
 	});
 
   
@@ -575,24 +586,73 @@
 			})
 			.then((willsubmit)=>{
 				if (willsubmit){
-					$.ajax({
-						url: 'index3_update_record.php',
-						method: 'POST',
-						data: $('#editform').serialize(),
-						success: function(data){
-							console.log(data);
-							swal({
-								title: "Record updated.",
-								text: " ",
-								icon: "success",
-								buttons: false,
+					html2canvas([document.getElementById('sign-pad')], {
+						onrendered: function (canvas) {
+							var canvas_img_data = canvas.toDataURL('image/png');
+							var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
+							$("#claimersign").val(''+img_data);
+
+							var ajax1 = $.ajax({ 
+								url: 'save_sign.php',
+							    data: { img_data:img_data },
+							    type: 'post',
+							    dataType: 'json',
+							    success: function (response) {
+							        // window.location.reload();
+							    }             
 							});
-							setTimeout( function () {
-								location.reload(); 
-							}, 1500);
-						},
-						error: function(data){
-							swal("Oops...", "Something went wrong.", "error");
+							
+							
+							var ajax2 = $.ajax({
+								url: 'index3_update_record.php',
+								method: 'POST',
+								data: $('#editform').serialize(),
+									
+								success: function(data){
+									console.log(data);
+									swal({
+										title: "Record updated.",
+										text: " ",
+										icon: "success",
+										buttons: false,
+									});
+									setTimeout( function () {
+										location.reload(); 
+									}, 1500);
+								},
+								error: function(data){
+									swal("Oops...", "Something went wrong.", "error");
+								}
+							});
+
+							$.when( ajax1 , ajax2  ).done(function( a1, a2 ) {
+								var data = a1[0] + a2[0]; // a1[0] = "Got", a2[0] = " Success"
+								if ( /Got Success/.test( data ) ) {
+									alert( "All AJAX calls successfully gave responses" );
+								}
+							}); 
+
+							// $.ajax({
+							// 	url: 'index3_update_record.php',
+							// 	method: 'POST',
+							// 	data: $('#editform').serialize(),
+									
+							// 	success: function(data){
+							// 		console.log(data);
+							// 		swal({
+							// 			title: "Record updated.",
+							// 			text: " ",
+							// 			icon: "success",
+							// 			buttons: false,
+							// 		});
+							// 		setTimeout( function () {
+							// 			location.reload(); 
+							// 		}, 1500);
+							// 	},
+							// 	error: function(data){
+							// 		swal("Oops...", "Something went wrong.", "error");
+							// 	}
+							// });
 						}
 					});
 				}
@@ -609,24 +669,6 @@
     });
     $('#btnclear').click(function(e){
         $('#signArea').signaturePad().clearCanvas();
-    });
-    $("#btnSaveSign").click(function(e){
-        html2canvas([document.getElementById('sign-pad')], {
-            onrendered: function (canvas) {
-                var canvas_img_data = canvas.toDataURL('image/png');
-                var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
-                //ajax call to save image inside folder
-                $.ajax({
-                    url: 'save_sign.php',
-                    data: { img_data:img_data },
-                    type: 'post',
-                    dataType: 'json',
-                    success: function (response) {
-                        window.location.reload();
-                    }
-                });
-            }
-        });
     });
 </script> 
 <?php
