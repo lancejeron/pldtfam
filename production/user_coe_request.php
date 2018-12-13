@@ -42,6 +42,52 @@
 
     <link href="../production/images/icons/favicon.ico" rel="icon"/>
 
+    <!-- signature -->
+    <link href="css/signature/jquery.signaturepad.css" rel="stylesheet">
+    <script src="js/signature/jquery.min.js"></script>
+    <script src="js/signature/numeric-1.2.6.min.js"></script> 
+    <script src="js/signature/bezier.js"></script>
+    <script src="js/signature/jquery.signaturepad.js"></script> 
+    
+    <script src="js/signature/html2canvas.js"></script>
+    <script src="js/signature/json2.min.js"></script>
+    
+    <style type="text/css">
+			/* body{
+				font-family:monospace;
+				text-align:center;
+			} */
+			#btnSaveSign {
+				color: #fff;
+				background: #f99a0b;
+				padding: 5px;
+				border: none;
+				border-radius: 5px;
+				font-size: 20px;
+				margin-top: 10px;
+			}
+			#signArea{
+				width:304px;
+				/* margin: 50px auto; */
+			}
+			/* .sign-container {
+				width: 60%;
+				margin: auto;
+			} */
+			/* .sign-preview {
+				width: 150px;
+				height: 50px;
+				border: solid 1px #CFCFCF;
+				margin: 10px 5px;
+			} */
+			/* .tag-ingo {
+				font-family: cursive;
+				font-size: 12px;
+				text-align: left;
+				font-style: oblique;
+			} */
+    </style>
+
   </head>
 
   <body class="nav-sm">
@@ -81,20 +127,20 @@
                     
                     <form id='req_coe' class="form-horizontal form-label-left" method="POST" action='user_coe_request_insert_record.php'>
             
-                      <div class="form-group is_req">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID *:</label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12" autocomplete="off">
-                            <input type="text" id="start_time" name='start_time' class="form-control col-md-7 col-xs-12" style='display: none;'>
-                          </div>
-                      </div>
-        
-                      <div class="form-group is_req">
-                          <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name *:</label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: Dela Cruz, Juan" autocomplete="off">
-                          </div>
-                      </div>
+                        <div class="form-group is_req">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID *:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12" autocomplete="off">
+                                <input type="text" id="start_time" name='start_time' class="form-control col-md-7 col-xs-12" style='display: none;'>
+                            </div>
+                        </div>
+            
+                        <div class="form-group is_req">
+                            <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name *:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: Dela Cruz, Juan" autocomplete="off">
+                            </div>
+                        </div>
                       
                       <div class="col-md-8 center-margin">
                           <div class="form-group">
@@ -177,6 +223,30 @@
                         </div>    
                     </div>
                     
+                    <div class="form-group is_req">
+                        <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Claimer's Name :</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="form-control col-md-7 col-xs-12" type="text" autocomplete="off">
+                            </div>
+                    </div>
+
+                    <div class="form-group is_req">
+                        <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Claimer's Signature :</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <!-- <input class="form-control col-md-7 col-xs-12" type="text" autocomplete="off"> -->
+                                <div id="signArea" >
+                                    <!-- <h2 class="tag-ingo">Put signature below,</h2> -->
+                                    <div class="sig sigWrapper" style="height:auto;">
+                                        <div class="typed"></div>
+                                        <canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
+                                    </div>
+                                    <br>
+                                    <center><button type="button" class="btn btn-default btn-sm" id='btnclear'>Clear</button></center>
+                                </div>
+                            </div>
+                    </div>
+
+
                     <div class="ln_solid"></div>
                     
                     <div class="form-group">
@@ -191,7 +261,6 @@
           </div>
         </div>
         <!-- /page content -->
-
         <!-- footer content -->
         <footer>
           <div class="pull-right">
@@ -202,6 +271,10 @@
         <!-- /footer content -->
       </div>
     </div>
+
+    <!-- signmodal -->
+    
+
 
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
@@ -219,12 +292,16 @@
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    <script type="text/javascript" src="js/signature/jquery.signaturepad.js">
+    </script> 
 
 
 	
   </body>
 </html>
+
 <script>
+   
 	function getdatetime(){
 		var today = new Date();         
 		var dd = today.getDate();
@@ -463,3 +540,29 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
+    });
+    $('#btnclear').click(function(e){
+        $('#signArea').signaturePad().clearCanvas();
+    });
+    $("#btnSaveSign").click(function(e){
+        html2canvas([document.getElementById('sign-pad')], {
+            onrendered: function (canvas) {
+                var canvas_img_data = canvas.toDataURL('image/png');
+                var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
+                //ajax call to save image inside folder
+                $.ajax({
+                    url: 'save_sign.php',
+                    data: { img_data:img_data },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    });
+</script> 
