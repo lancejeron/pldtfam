@@ -388,7 +388,7 @@
                         var form = $('#req_coe');   
                         swal({
                             title: "Are you sure you want to submit your request?",
-                            text: "Clicking ok will certify that you fully reviewed your request.",
+                            text: "Clicking Ok will certify that you fully reviewed your request.",
                             icon: "warning",
                             buttons: {
                                 cancel: true,
