@@ -82,7 +82,7 @@
                     <form id='req_coe' class="form-horizontal form-label-left" method="POST" action='user_coe_request_insert_record.php'>
             
                         <div class="form-group is_req">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID *:</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID:*</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12" autocomplete="off" maxlength='10'>
                                 <input type="text" id="start_time" name='start_time' class="form-control col-md-7 col-xs-12" style='display: none;'>
@@ -90,7 +90,7 @@
                         </div>
             
                         <div class="form-group is_req">
-                            <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name *:</label>
+                            <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name:*</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: Dela Cruz, Juan" autocomplete="off" maxlength='150'>
                             </div>
@@ -123,7 +123,7 @@
                         <input type="text" id="purpose_salary" class='' name='salary' style='display: none;' >
                             <div class="col-sm-6">
                                 <div id='coe_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
-                                    <h4>Select purpose (COE) *:</h4>
+                                    <h4>Select purpose (COE):*</h4>
                                      <div class='col-sm-8'>
                                         <?php
                                             while($row = mysqli_fetch_array($purpose_result_coe)){
@@ -157,7 +157,7 @@
 
                             <div class="col-sm-6">    
                                 <div id='cec_purpose' class="form-group" style='height: 200px; width: auto; overflow-y: ' hidden>
-                                    <h4>Select purpose (CEC) *:</h4>
+                                    <h4>Select purpose (CEC):*</h4>
                                     <div class='col-sm-8'>
                                         <?php
                                             while($row = mysqli_fetch_array($purpose_result_cec)){

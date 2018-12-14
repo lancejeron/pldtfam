@@ -210,7 +210,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="purpose_name">Name*:</label>
+						<label class="control-label col-sm-2" for="purpose_name">Name:*</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="name3" placeholder="" name="purpose_name" maxlength='75' required>
 						</div>
