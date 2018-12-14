@@ -13,7 +13,7 @@
 	
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2 FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.emp_id AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC';
+		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2, DATE_FORMAT(date_returned, "%Y-%m-%dT%H:%i:%s") AS date_returned FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.emp_id AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC';
 		$result = mysqli_query($conn, $sql);
 		if (!$result) {
 			echo "Error:". mysqli_error($conn);
@@ -325,13 +325,6 @@
 						</div>
 					</div>
 					
-					<!-- <div class="form-group">
-						<label class="control-label col-sm-2" for="control_id">Control ID</label>
-						<div class="col-sm-10">          
-							<input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id" disabled>
-						</div>
-					</div> -->
-					
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="personal">Personal</label>
 						<div class="col-sm-10">          
@@ -343,7 +336,6 @@
 						<label class="control-label col-sm-2" for="req_status">Status</label>
 						<div class="col-sm-10">          
 								<select name="req_status" class="form-control" >
-									<!-- <option id="req_status" label="" value=""></option> -->
 									<option id="Processed" value="Processed">Processed</option>
 									<option id="Claimed" value="Claimed">Claimed</option>
 									<option id="Mailed" value="Mailed">Mailed</option>
@@ -387,17 +379,18 @@
 						<label class="control-label col-sm-2">Returned</label>
 						<div class="col-sm-10">
 							<input type="checkbox" id='returncb' name='returned_status' value='yes'>
-              	<input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
+              				<input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
 						</div>
 					</div>
 
           <div class="form-group">
 						<label class="control-label col-sm-2">Date Returned</label>
 						<div class="col-sm-10">          
-              <input type="text" id='date_returned' class="form-control" placeholder="" disabled>
-							<input type="datetime-local" id='date_returned2' class="form-control" placeholder="" disabled required>
-              <input type="text" id='date_returned3' class="form-control" placeholder="" name='date_returned' style='display:none;'>
-              <input type="text" id='date_returned4' class="form-control" placeholder="" style='display:none;'>  
+              				<!-- <input type="text" id='date_returned' class="form-control" placeholder="" disabled> -->
+							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" name='date_returned' disabled required >
+              				<!-- <input type="text" id='date_returned3' class="form-control" placeholder="" name='date_returned'> -->
+							<!-- <input type="text" id='date_returned4' class="form-control" placeholder=""> -->
+							<!-- <input type="datetime-local" id='date_returned4' class="form-control" placeholder="" value="2017-06-01T08:30:01">   -->
 						</div>
 					</div>
 
@@ -464,12 +457,12 @@
   $("#returncb").change(function() {
     if(this.checked) {
       $("#returncb2").prop('checked', false);
-      $('#date_returned2').prop('disabled', false);
+      $('#date_returned').prop('disabled', false);
       
     }
     else if(!this.checked){
       $("#returncb2").prop('checked', true);
-      $('#date_returned2').prop('disabled', true);
+      $('#date_returned').prop('disabled', true);
     }
   });
   
@@ -490,7 +483,7 @@
 		var claimdate= button.data('claimdate')
 		var returned_status= button.data('returned_status')
 		var date_returned= button.data('date_returned')
-		var date_returned4= button.data('date_returned')
+		// var date_returned4= button.data('date_returned')
 		var claimers_signature= button.data('claimers_signature')
 		
 		var modal = $(this)
@@ -509,20 +502,20 @@
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
 		modal.find('.modal-body #date_returned').val(date_returned)
-		modal.find('.modal-body #date_returned4').val(date_returned4)
+		// modal.find('.modal-body #date_returned4').val(date_returned4)
 		modal.find('.modal-body #claimers_signature').val(claimers_signature)
 
 
 		if (returned_status == 'yes'){
 			modal.find('.modal-body #returncb').prop('checked', true);
 			modal.find('.modal-body #returncb2').prop('checked', false);
-			modal.find('.modal-body #date_returned2').prop('disabled', false);
+			modal.find('.modal-body #date_returned').prop('disabled', false);
 
 		}
 		else{
 			modal.find('.modal-body #returncb').prop('checked', false);
 			modal.find('.modal-body #returncb2').prop('checked', true);
-			modal.find('.modal-body #date_returned2').prop('disabled', true);
+			modal.find('.modal-body #date_returned').prop('disabled', true);
 		}
 
 		if(req_status == 'Processed'){
@@ -539,6 +532,8 @@
 		else{
 			$("#signArea").replaceWith('<img src="./doc_signs/'+claimers_signature+'" class="sign-preview" />');
 		} 
+
+
 	});
 
   
@@ -565,8 +560,8 @@
 		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
 
 		document.getElementById("test1").value=today;
-    document.getElementById("date_returned4").value=document.getElementById("date_returned2").value
-    document.getElementById("date_returned3").value=document.getElementById("date_returned4").value
+    // document.getElementById("date_returned4").value=document.getElementById("date_returned2").value
+    // document.getElementById("date_returned3").value=document.getElementById("date_returned4").value
 	}
 </script>
 <script>
