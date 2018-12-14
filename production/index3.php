@@ -362,8 +362,8 @@
 					<div class="form-group">
 							<label for="signature" class="control-label col-sm-2">Claimer's Signature</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" class="form-control" id="claimersign" placeholder="" name="claimersign" style="display:none;">
-							<input type="text" class="form-control" id="claimers_signature" placeholder="" style="display:none;">
+							<input type="text" class="form-control" id="claimersign" name="claimersign" placeholder="" style='display: none;' >
+							<input type="text" class="form-control" id="claimers_signature" name="claimers_signature" placeholder="" style='display: none;'>
 								<div id="signArea" >
 									<div class="sig sigWrapper" style="height:auto;">
 										<div class="typed"></div>
@@ -387,7 +387,7 @@
 						<label class="control-label col-sm-2">Returned</label>
 						<div class="col-sm-10">
 							<input type="checkbox" id='returncb' name='returned_status' value='yes'>
-              <input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
+              	<input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
 						</div>
 					</div>
 
@@ -586,24 +586,9 @@
 			})
 			.then((willsubmit)=>{
 				if (willsubmit){
-					html2canvas([document.getElementById('sign-pad')], {
-						onrendered: function (canvas) {
-							var canvas_img_data = canvas.toDataURL('image/png');
-							var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
-							$("#claimersign").val(''+img_data);
-
-							var ajax1 = $.ajax({ 
-								url: 'save_sign.php',
-							    data: { img_data:img_data },
-							    type: 'post',
-							    dataType: 'json',
-							    success: function (response) {
-							        // window.location.reload();
-							    }             
-							});
-							
-							
-							var ajax2 = $.ajax({
+					if($("#claimers_signature").val()!=''){
+						
+						$.ajax({
 								url: 'index3_update_record.php',
 								method: 'POST',
 								data: $('#editform').serialize(),
@@ -623,38 +608,58 @@
 								error: function(data){
 									swal("Oops...", "Something went wrong.", "error");
 								}
-							});
+						});
+					}
+					else{
 
-							$.when( ajax1 , ajax2  ).done(function( a1, a2 ) {
-								var data = a1[0] + a2[0]; // a1[0] = "Got", a2[0] = " Success"
-								if ( /Got Success/.test( data ) ) {
-									alert( "All AJAX calls successfully gave responses" );
-								}
-							}); 
+						html2canvas([document.getElementById('sign-pad')], {
+							onrendered: function (canvas) {
+								var canvas_img_data = canvas.toDataURL('image/png');
+								var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
+								$("#claimersign").val(''+img_data);
 
-							// $.ajax({
-							// 	url: 'index3_update_record.php',
-							// 	method: 'POST',
-							// 	data: $('#editform').serialize(),
-									
-							// 	success: function(data){
-							// 		console.log(data);
-							// 		swal({
-							// 			title: "Record updated.",
-							// 			text: " ",
-							// 			icon: "success",
-							// 			buttons: false,
-							// 		});
-							// 		setTimeout( function () {
-							// 			location.reload(); 
-							// 		}, 1500);
-							// 	},
-							// 	error: function(data){
-							// 		swal("Oops...", "Something went wrong.", "error");
-							// 	}
-							// });
-						}
-					});
+								var ajax1 = $.ajax({ 
+									url: 'save_sign.php',
+										data: { img_data:img_data },
+										type: 'post',
+										dataType: 'json',
+										success: function (response) {
+												// window.location.reload();
+										}             
+								});
+								
+								
+								var ajax2 = $.ajax({
+									url: 'index3_update_record.php',
+									method: 'POST',
+									data: $('#editform').serialize(),
+										
+									success: function(data){
+										console.log(data);
+										swal({
+											title: "Record updated.",
+											text: " ",
+											icon: "success",
+											buttons: false,
+										});
+										setTimeout( function () {
+											location.reload(); 
+										}, 1500);
+									},
+									error: function(data){
+										swal("Oops...", "Something went wrong.", "error");
+									}
+								});
+
+								$.when( ajax1 , ajax2  ).done(function( a1, a2 ) {
+									var data = a1[0] + a2[0]; // a1[0] = "Got", a2[0] = " Success"
+									if ( /Got Success/.test( data ) ) {
+										alert( "All AJAX calls successfully gave responses" );
+									}
+								}); 
+							}
+						});
+					}
 				}
 				else{
 				}
