@@ -13,10 +13,11 @@
 
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
-				WHERE NOT EXISTS
-					(SELECT * FROM prepared_certificates as tbl2
-					WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time)';
+		// $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1';
+    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
+    WHERE NOT EXISTS
+      (SELECT * FROM prepared_certificates as tbl2
+      WHERE tbl2.emp_id = tbl1.persno AND tbl2.date_prepared=tbl1.start_time)';
 		$result = mysqli_query($conn, $sql);
 		if (!$result) {
 			echo "Error:". mysqli_error($conn);
@@ -164,7 +165,6 @@
                             <th>Request for</th>
                             <th>Request for Name</th>
                             <th>Positon Title</th>
-                            <th>Persno</th>
                             <th>MMProv</th>
                             <th>Other Instruction</th>
                             <!-- <th>Action</th> -->
@@ -176,7 +176,7 @@
                             <tr>
                             <td>' . $row["start_time"] . '</td>
                             <td>' . $row["req_type"] . '</td>
-                            <td>' . $row["emp_id"] . '</td>
+                            <td>' . $row["persno"] . '</td>
                             <td>' . $row["email"] . '</td>
                             <td>' . $row["emp_name"] . '</td>
                             <td>' . $row["type_of_coe"] . '</td>
@@ -187,7 +187,6 @@
                             <td>' . $row["reqt_for"] . '</td>
                             <td>' . $row["reqt_for_name"] . '</td>
                             <td>' . $row["position_title"] . '</td>
-                            <td>' . $row["persno"] . '</td>
                             <td>' . $row["MMProv"] . '</td>
                             <td>' . $row["other_instruction"] . '</td>
 
@@ -205,126 +204,6 @@
           </div>
         </div>
 <!-- MODAL -->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index_insert_record.php'>
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Process Request</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="ref_no">Reference Number</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="start_time">Date Prepared</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="start_time2" placeholder=""disabled>
-							<input type="text" class="form-control" id="start_time" placeholder="" name="start_time" style='display: none;'>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
-						<div class="col-sm-10">          
-							<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
-							<input type="text" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display: none;'>
-						</div>
-					</div>
-					
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="name">Name</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="name" placeholder="" disabled>
-							<input type="text" class="form-control" id="name" placeholder="" name="name" style='display: none;'>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="purpose">Purpose</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="purpose" placeholder="" disabled>
-							<input type="text" class="form-control" id="purpose" placeholder="" name="purpose" style='display: none;'>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" >
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="type_of_coe">CBO Type</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="type_of_coe" placeholder="" disabled>
-							<input type="text" class="form-control" id="type_of_coe" placeholder="" name="type_of_coe" style='display: none;'>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="control_id">Control ID</label>
-						<div class="col-sm-10">          
-							<input type="control_id" class="form-control" id="control_id" placeholder="" name="control_id">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="personal">Personal</label>
-						<div class="col-sm-10">          
-							<input type="personal" class="form-control" id="personal" placeholder="" name="personal">
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="req_status">Status</label>
-						<div class="col-sm-10">          
-								<select name="req_status" class="form-control" >
-									<!-- <option id="req_status" label="" value=""></option> -->
-									<option value="Processed">Processed</option>
-									<!-- <option value="Claim">Claim</option>  
-									<option value="Mail">Mail</option> -->
-									<option value="Claimed">Claimed</option>
-									<option value="Mailed">Mailed</option>
-
-								</select>                
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="claimdate">Claim Date</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="claimdate" placeholder="" disabled>
-							<input type="text" class="form-control" id='test1' name="claimdate" style='display: none;'>
-						</div>
-					</div>
-							
-					<div class="ln_solid"></div>
-								
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-success" value='Process' onclick='getdatetime();'>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
-
-
         <!-- /page content -->
 
         <!-- footer content -->
@@ -382,36 +261,36 @@
         order: [0, 'desc']
     } );
 	});
-	$('.bs-example-modal-lg').on('show.bs.modal', function (event) {
-		var button = $(event.relatedTarget)
-		var ref_no = button.data('ref_no')
-		var emp_id = button.data('emp_id')
-		var start_time = button.data('start_time')
-		var start_time2 = button.data('start_time2')
-		var name= button.data('name')
-		var purpose= button.data('purpose')
-		var accomp_code= button.data('accomp_code')
-		var type_of_coe= button.data('type_of_coe')
-		var control_id= button.data('control_id')
-		var req_status= button.data('req_status')
-		var claimersname= button.data('claimersname')
-		var claimdate= button.data('claimdate')
+	// $('.bs-example-modal-lg').on('show.bs.modal', function (event) {
+	// 	var button = $(event.relatedTarget)
+	// 	var ref_no = button.data('ref_no')
+	// 	var persno = button.data('persno')
+	// 	var start_time = button.data('start_time')
+	// 	var start_time2 = button.data('start_time2')
+	// 	var name= button.data('name')
+	// 	var purpose= button.data('purpose')
+	// 	var accomp_code= button.data('accomp_code')
+	// 	var type_of_coe= button.data('type_of_coe')
+	// 	var control_id= button.data('control_id')
+	// 	var req_status= button.data('req_status')
+	// 	var claimersname= button.data('claimersname')
+	// 	var claimdate= button.data('claimdate')
 	
-		var modal = $(this)
-		modal.find('.modal-body #ref_no').val(ref_no)
-		modal.find('.modal-body #emp_id').val(emp_id)
-		modal.find('.modal-body #start_time').val(start_time)
-		modal.find('.modal-body #start_time2').val(start_time2) 
-		modal.find('.modal-body #name').val(name)
-		modal.find('.modal-body #purpose').val(purpose)
-		modal.find('.modal-body #accomp_code').val(accomp_code)
-		modal.find('.modal-body #type_of_coe').val(type_of_coe)
-		modal.find('.modal-body #control_id').val(control_id)
-		modal.find('.modal-body #req_status').val(req_status)
-		modal.find('.modal-body #req_status').text(''+req_status)
-		modal.find('.modal-body #claimersname').val(claimersname)
-		modal.find('.modal-body #claimdate').val(claimdate)
-	});
+	// 	var modal = $(this)
+	// 	modal.find('.modal-body #ref_no').val(ref_no)
+	// 	modal.find('.modal-body #persno').val(persno)
+	// 	modal.find('.modal-body #start_time').val(start_time)
+	// 	modal.find('.modal-body #start_time2').val(start_time2) 
+	// 	modal.find('.modal-body #name').val(name)
+	// 	modal.find('.modal-body #purpose').val(purpose)
+	// 	modal.find('.modal-body #accomp_code').val(accomp_code)
+	// 	modal.find('.modal-body #type_of_coe').val(type_of_coe)
+	// 	modal.find('.modal-body #control_id').val(control_id)
+	// 	modal.find('.modal-body #req_status').val(req_status)
+	// 	modal.find('.modal-body #req_status').text(''+req_status)
+	// 	modal.find('.modal-body #claimersname').val(claimersname)
+	// 	modal.find('.modal-body #claimdate').val(claimdate)
+	// });
 </script>
 <script>
 	function getdatetime(){

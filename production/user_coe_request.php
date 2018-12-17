@@ -84,7 +84,7 @@
                         <div class="form-group is_req">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID:*</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" id="emp_id" name="emp_id" class="form-control col-md-7 col-xs-12" autocomplete="off" maxlength='10'>
+                                <input type="text" id="persno" name="persno" class="form-control col-md-7 col-xs-12" autocomplete="off" maxlength='6'>
                                 <input type="text" id="start_time" name='start_time' class="form-control col-md-7 col-xs-12" style='display: none;'>
                             </div>
                         </div>
@@ -378,9 +378,9 @@
                     return false;
                 }
                 else{
-                    var emp_id = $('#emp_id').val();
+                    var persno = $('#persno').val();
                     var emp_name = $('#emp_name').val();
-                    if(emp_id=='' || emp_name==''){
+                    if(persno=='' || emp_name==''){
                         swal("Please fill the required(*) fields.","","info");
                         e.preventDefault();
                     }

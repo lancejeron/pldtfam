@@ -13,7 +13,7 @@
 	
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2, DATE_FORMAT(date_returned, "%Y-%m-%dT%H:%i:%s") AS date_returned FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.emp_id AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.emp_id AND tbl2.date_prepared=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC';
+		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2, DATE_FORMAT(date_prepared, "%M %e, %Y @ %r") AS date_prepared2, DATE_FORMAT(claimdate, "%Y-%m-%dT%H:%i:%s") AS claimdate, DATE_FORMAT(claimdate, "%M %e, %Y @ %r") AS claimdate2, DATE_FORMAT(date_returned, "%Y-%m-%dT%H:%i:%s") AS date_returned FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.persno AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.persno AND tbl2.date_prepared=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC';
 		$result = mysqli_query($conn, $sql);
 		if (!$result) {
 			echo "Error:". mysqli_error($conn);
@@ -205,7 +205,6 @@
                                     <th>Request for</th>
                                     <th>Request for Name</th>
                                     <th>Positon Title</th>
-                                    <th>Personal</th>
                                     <th>MMProv</th>
                                     <th>Other Instruction</th>
                                     <th>Reference Number</th>
@@ -219,7 +218,7 @@
                                     <tr>
 									<td>' . $row["start_time"] . '</td>
 									<td>' . $row["req_type"] . '</td>
-                                    <td>' . $row["emp_id"] . '</td>
+                                    <td>' . $row["persno"] . '</td>
                                     <td>' . $row["email"] . '</td>
                                     <td>' . $row["emp_name"] . '</td>
 									<td>' . $row["type_of_coe"] . '</td>
@@ -230,7 +229,6 @@
                                     <td>' . $row["reqt_for"] . '</td>
                                     <td>' . $row["reqt_for_name"] . '</td>
                                     <td>' . $row["position_title"] . '</td>
-                                    <td>' . $row["persno"] . '</td>
                                     <td>' . $row["MMProv"] . '</td>
                                     <td>' . $row["other_instruction"] . '</td>
                                     <td>' . $row["ref_no"] . '</td>
@@ -250,7 +248,7 @@
                                             data-returned_status="'.$row['returned_status'].'"
 											data-date_returned="'.$row['date_returned'].'"
 											data-claimers_signature="'.$row['claimers_signature'].'"
-                                            data-claimdate="'.$row['claimdate2'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
+                                            data-claimdate="'.$row['claimdate'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
                                 </tr>
                                 ';
                                 }
@@ -368,10 +366,10 @@
 						</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="claimdate">Claim Date</label>
+						<label class="control-label col-sm-2" for="claimdate">Claim Date*</label>
 						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="claimdate" placeholder="" disabled>
-							<input type="text" class="form-control" id='test1' name="claimdate" style='display: none;'>
+							<!-- <input type="text" class="form-control" id="claimdate" placeholder="" disabled> -->
+							<input type="datetime-local" class="form-control" id="claimdate" name="claimdate">
 						</div>
 					</div>
 
@@ -384,7 +382,7 @@
 					</div>
 
           <div class="form-group">
-						<label class="control-label col-sm-2">Date Returned</label>
+						<label class="control-label col-sm-2">Date Returned*</label>
 						<div class="col-sm-10">          
               				<!-- <input type="text" id='date_returned' class="form-control" placeholder="" disabled> -->
 							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" name='date_returned' disabled required >
@@ -559,7 +557,7 @@
 
 		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
 
-		document.getElementById("test1").value=today;
+		// document.getElementById("test1").value=today;
     // document.getElementById("date_returned4").value=document.getElementById("date_returned2").value
     // document.getElementById("date_returned3").value=document.getElementById("date_returned4").value
 	}
@@ -567,7 +565,12 @@
 <script>
 	$(document).ready(function(){
 		$('#editformbtn').click(function(e){
-			swal({
+			if($("#claimdate").val() == ''){
+				swal("Please fill the required(*) fields.","","info");
+				e.preventDefault();
+			}
+			else{
+				swal({
 				title: "Record will be updated.",
 				text: "Are you sure you want to update this record?",
 				icon: "warning",
@@ -660,6 +663,101 @@
 				}
 			});
 			e.preventDefault();
+
+			}
+			// swal({
+			// 	title: "Record will be updated.",
+			// 	text: "Are you sure you want to update this record?",
+			// 	icon: "warning",
+			// 	buttons: {
+			// 		cancel: true,
+			// 		ok: {
+			// 			text: "Update",
+			// 			value: "willsubmit",
+			// 		}
+			// 	},
+			// })
+			// .then((willsubmit)=>{
+			// 	if (willsubmit){
+			// 		if($("#claimers_signature").val()!=''){
+						
+			// 			$.ajax({
+			// 					url: 'index3_update_record.php',
+			// 					method: 'POST',
+			// 					data: $('#editform').serialize(),
+									
+			// 					success: function(data){
+			// 						console.log(data);
+			// 						swal({
+			// 							title: "Record updated.",
+			// 							text: " ",
+			// 							icon: "success",
+			// 							buttons: false,
+			// 						});
+			// 						setTimeout( function () {
+			// 							location.reload(); 
+			// 						}, 1500);
+			// 					},
+			// 					error: function(data){
+			// 						swal("Oops...", "Something went wrong.", "error");
+			// 					}
+			// 			});
+			// 		}
+			// 		else{
+
+			// 			html2canvas([document.getElementById('sign-pad')], {
+			// 				onrendered: function (canvas) {
+			// 					var canvas_img_data = canvas.toDataURL('image/png');
+			// 					var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
+			// 					$("#claimersign").val(''+img_data);
+
+			// 					var ajax1 = $.ajax({ 
+			// 						url: 'save_sign.php',
+			// 							data: { img_data:img_data },
+			// 							type: 'post',
+			// 							dataType: 'json',
+			// 							success: function (response) {
+			// 									// window.location.reload();
+			// 							}             
+			// 					});
+								
+								
+			// 					var ajax2 = $.ajax({
+			// 						url: 'index3_update_record.php',
+			// 						method: 'POST',
+			// 						data: $('#editform').serialize(),
+										
+			// 						success: function(data){
+			// 							console.log(data);
+			// 							swal({
+			// 								title: "Record updated.",
+			// 								text: " ",
+			// 								icon: "success",
+			// 								buttons: false,
+			// 							});
+			// 							setTimeout( function () {
+			// 								location.reload(); 
+			// 							}, 1500);
+			// 						},
+			// 						error: function(data){
+			// 							swal("Oops...", "Something went wrong.", "error");
+			// 						}
+			// 					});
+
+			// 					$.when( ajax1 , ajax2  ).done(function( a1, a2 ) {
+			// 						var data = a1[0] + a2[0]; // a1[0] = "Got", a2[0] = " Success"
+			// 						if ( /Got Success/.test( data ) ) {
+			// 							alert( "All AJAX calls successfully gave responses" );
+			// 						}
+			// 					}); 
+			// 				}
+			// 			});
+			// 		}
+			// 	}
+			// 	else{
+			// 	}
+			// });
+			// e.preventDefault();
 	});
   });
 </script>
