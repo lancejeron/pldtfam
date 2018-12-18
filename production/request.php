@@ -22,6 +22,8 @@
 			echo "Error:". mysqli_error($conn);
         }
 		$request_query_res2 = mysqli_query($conn, $request_query);
+		$request_query3 = "SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'";
+		$request_query_res3 = mysqli_query($conn, $request_query3);
 		
 		$certificate_que = "SELECT * FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY claimdate DESC";
 		$certificate_que_res = mysqli_query($conn, $certificate_que);
@@ -157,7 +159,12 @@
                   </div>
                   <div class="x_content">
                     <div class='table-responsive'>
-                    <center><button type='button' class='btn btn-success btn-lg' data-toggle='modal' data-target='#create_certificate'><i class="fa fa-plus"></i> Create Certificate</button></center>
+					<?php
+						while($row = mysqli_fetch_array($request_query_res3)){
+							echo '<center><button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row["persno"].'" data-start_time="'.$row["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+						}
+					?>
+                    
                       <table id='mydatatable' class='table table-striped table-bordered'>
                         <thead>
                           <tr>
@@ -232,10 +239,10 @@
 											echo '
 												<tr>
 													<td>'.$row["ref_no"].'</td>
-													<td>'.$row["prupose"].'</td>
-													<td>'.$row["claimdate"].'</td>
-													<td> <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_certificate", 
-                          </td>
+													<td>'.$row["purpose"].'</td>
+													<td>'.$row["req_status"].'</td>
+													<td>'.$row["date_prepared"].'</td>
+													<td> <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_certificate">Edit</button></td>
 												</tr>
 											';
 										}
@@ -251,7 +258,7 @@
 <!-- CREATE CERTIFICATE MODAL -->
 <div class="modal fade bs-example-modal-sm" id="create_certificate" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
-		<form id="addform" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='maintenance_purpose_routes.php'>
+		<form id="" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='request_create_certificate.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -259,29 +266,35 @@
 					<h4 class="modal-title" id="myModalLabel">Create Certificate</h4>
 				</div>
 				<div class="modal-body">
+					<input type="" id="persno" name="persno" style="display: none;">
+					<input type="" id="start_time" name="start_time" style="display: none;">
+
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="purpose_name">Purpose:*</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name3" placeholder="" name="purpose_name" maxlength='75' required>
+							<input type="text" class="form-control" id="name3" placeholder="" name="purpose" maxlength='75' required>
 						</div>
+            <!-- pdf display -->
+
 					</div>
           
 					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
 							<div class="col-sm-10">
-								<select id="purpose_type3" name="purpose_type" class="form-control" >
+								<select id="type_of_cert" name="type_of_cert" class="form-control" >
 									<!-- <option id="status2" label="" value=""></option> -->
 									<option id='' value="COE">COE</option>
 									<option id='' value="CEC">CEC</option>
+									<option id='' value="CECwN">CEC with Notary</option>
 								</select>            
 							</div>
           </div>
 
-           <center><button type='button' class='btn btn-info btn-md'> Generate</button></center>
+           <!-- <center><button type='button' class='btn btn-info btn-md' data-toggle='modal' data-target='#preview_certificate'> Generate</button></center> -->
         </div>
         <div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" id='editformbtn' class="btn btn-success" value='Edit' name='btn1'>Save</button>
+					<button type="submit" id='' class="btn btn-success" value='' name='btn1'>Generate</button>
 				</div>
 			</div>
 		</form>
@@ -477,15 +490,23 @@
 </html>
 <script>
 	$(document).ready(function() {
-    // $('#mydatatable').DataTable();
-    $('#mydatatable').DataTable( {
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        order: [0, 'desc']
-    } );
-	$('#mydatatable2').DataTable( {
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        order: [0, 'desc']
-    } );
+		$('#mydatatable').DataTable( {
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+			order: [0, 'desc']
+		} );
+		$('#mydatatable2').DataTable( {
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+			order: [0, 'desc']
+		} );
+	});
+	$('#create_certificate').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget)
+		var persno = button.data('persno')
+		var start_time = button.data('start_time')
+		
+		var modal = $(this)
+		modal.find('.modal-body #persno').val(persno)
+		modal.find('.modal-body #start_time').val(start_time)	
 	});
 </script>
 <script>
