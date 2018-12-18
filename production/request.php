@@ -234,7 +234,8 @@
 													<td>'.$row["ref_no"].'</td>
 													<td>'.$row["prupose"].'</td>
 													<td>'.$row["claimdate"].'</td>
-													<td></td>
+													<td> <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_certificate", 
+                          </td>
 												</tr>
 											';
 										}
@@ -246,7 +247,189 @@
             	</div>
           	</div>
         </div>
-<!-- MODAL -->
+
+<!-- CREATE CERTIFICATE MODAL -->
+<div class="modal fade bs-example-modal-sm" id="create_certificate" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+		<form id="addform" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='maintenance_purpose_routes.php'>
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Create Certificate</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="purpose_name">Purpose:*</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name3" placeholder="" name="purpose_name" maxlength='75' required>
+						</div>
+					</div>
+          
+					<div class="form-group">
+						<label class="control-label col-sm-2">Type:</label>
+							<div class="col-sm-10">
+								<select id="purpose_type3" name="purpose_type" class="form-control" >
+									<!-- <option id="status2" label="" value=""></option> -->
+									<option id='' value="COE">COE</option>
+									<option id='' value="CEC">CEC</option>
+								</select>            
+							</div>
+          </div>
+
+           <center><button type='button' class='btn btn-info btn-md'> Generate</button></center>
+        </div>
+        <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" id='editformbtn' class="btn btn-success" value='Edit' name='btn1'>Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- EDIT CERTIFICATE MODAL -->
+<div class="modal fade bs-example-modal-lg" id="edit_certificate" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+	<form id="editform" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index3_update_record.php'>
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Process Request</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="ref_no">Reference Number</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="ref_no" placeholder="" disabled>
+							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no" style="display:none;">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
+						<div class="col-sm-10">          
+							<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
+							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
+						<div class="col-sm-10">          
+							<input type="text" class="form-control" id="date_prepared2" placeholder=""disabled>
+							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" style='display: none;'>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Name</label>
+						<div class="col-sm-10">          
+							<input type="text" class="form-control" id="name" placeholder="" name="name" disabled>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="purpose">Purpose</label>
+						<div class="col-sm-10">          
+							<input type="text" class="form-control" id="purpose" placeholder="" name="purpose" disabled>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
+						<div class="col-sm-10">          
+							<input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" disabled>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="cbotype">CBO Type</label>
+						<div class="col-sm-10">          
+							<input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype" disabled>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="personal">Personal</label>
+						<div class="col-sm-10">          
+							<input type="personal" class="form-control" id="personal" placeholder="" name="personal" disabled>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="req_status">Status</label>
+						<div class="col-sm-10">          
+								<select name="req_status" class="form-control" >
+									<option id="Processed" value="Processed">Processed</option>
+									<option id="Claimed" value="Claimed">Claimed</option>
+									<option id="Mailed" value="Mailed">Mailed</option>
+
+								</select>                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
+						<div class="col-sm-10">          
+							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname" maxlength='75'>
+						</div>
+					</div>
+
+					<div class="form-group">
+							<label for="signature" class="control-label col-sm-2">Claimer's Signature</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" class="form-control" id="claimersign" name="claimersign" placeholder="" style='display: none;' >
+							<input type="text" class="form-control" id="claimers_signature" name="claimers_signature" placeholder="" style='display: none;'>
+								<div id="signArea" >
+									<div class="sig sigWrapper" style="height:auto;">
+										<div class="typed"></div>
+										<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
+									</div>
+									<br>
+									<center><button type="button" class="btn btn-default btn-sm" id='btnclear'>Clear</button></center>
+								</div>
+							</div>
+						</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="claimdate">Claim Date*</label>
+						<div class="col-sm-10">          
+							<!-- <input type="text" class="form-control" id="claimdate" placeholder="" disabled> -->
+							<input type="datetime-local" class="form-control" id="claimdate" name="claimdate">
+						</div>
+					</div>
+
+          <div class="form-group">
+						<label class="control-label col-sm-2">Returned</label>
+						<div class="col-sm-10">
+							<input type="checkbox" id='returncb' name='returned_status' value='yes'>
+              				<input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
+						</div>
+					</div>
+
+          <div class="form-group">
+						<label class="control-label col-sm-2">Date Returned*</label>
+						<div class="col-sm-10">          
+              				<!-- <input type="text" id='date_returned' class="form-control" placeholder="" disabled> -->
+							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" name='date_returned' disabled required >
+              				<!-- <input type="text" id='date_returned3' class="form-control" placeholder="" name='date_returned'> -->
+							<!-- <input type="text" id='date_returned4' class="form-control" placeholder=""> -->
+							<!-- <input type="datetime-local" id='date_returned4' class="form-control" placeholder="" value="2017-06-01T08:30:01">   -->
+						</div>
+					</div>
+
+					<div class="ln_solid"></div>
+								
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" id="editformbtn" class="btn btn-success" value='Edit' onclick='getdatetime();'>Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
         <!-- /page content -->
 
         <!-- footer content -->

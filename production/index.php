@@ -206,7 +206,6 @@
             </div>
           </div>
         </div>
-<!-- MODAL -->
         <!-- /page content -->
 
         <!-- footer content -->
