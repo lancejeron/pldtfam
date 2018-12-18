@@ -11,18 +11,20 @@
 	}
 	else{
 
-		$conn = mysqli_connect($servername, $username, $password, $dbname);
+        $conn = mysqli_connect($servername, $username, $password, $dbname);
+        
+        $persno= $_GET['emp_id'];
+        $start_time= $_GET['start_time'];
 
-		// $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1';
-    $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
-    WHERE NOT EXISTS
-      (SELECT * FROM prepared_certificates as tbl2
-      WHERE tbl2.emp_id = tbl1.persno AND tbl2.date_prepared=tbl1.start_time)';
-		$result = mysqli_query($conn, $sql);
-		if (!$result) {
+        $request_query = "SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'";
+        $request_query_res = mysqli_query($conn, $request_query);
+		if (!$request_query_res) {
 			echo "Error:". mysqli_error($conn);
-		}
+        }
+		$request_query_res2 = mysqli_query($conn, $request_query);
 		
+		$certificate_que = "SELECT * FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY claimdate DESC";
+		$certificate_que_res = mysqli_query($conn, $certificate_que);
 ?>
 
 <!DOCTYPE html>
@@ -143,12 +145,19 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Requests</h2>
-                    <!-- <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#walkin'><i class="fa fa-plus"></i> Create Request</button> -->
+                    <!-- <h2>Request > </h2> -->
+                    <?php
+                        while($row = mysqli_fetch_array($request_query_res2)){
+                            echo '<h2>Request > '.$row["start_time"].'</h2>';
+                        }
+                    ?>
+                    <a href="index.php"><button type='button' class='btn btn-primary pull-right btn-md'><i class="fa fa-chevron-left"></i> Back</button></a>
+
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
                     <div class='table-responsive'>
+                    <center><button type='button' class='btn btn-success btn-lg' data-toggle='modal' data-target='#create_certificate'><i class="fa fa-plus"></i> Create Certificate</button></center>
                       <table id='mydatatable' class='table table-striped table-bordered'>
                         <thead>
                           <tr>
@@ -167,13 +176,10 @@
                             <th>Positon Title</th>
                             <th>MMProv</th>
                             <th>Other Instruction</th>
-                            <th>Action</th>
                           </tr>
                         </thead>
                         <?php
-                          while($row = mysqli_fetch_array($result)){
-                            $persno = $row["persno"];
-                            $start_time = $row["start_time"];
+                          while($row = mysqli_fetch_array($request_query_res)){
                             echo '
                             <tr>
                             <td>' . $row["start_time"] . '</td>
@@ -190,10 +196,7 @@
                             <td>' . $row["reqt_for_name"] . '</td>
                             <td>' . $row["position_title"] . '</td>
                             <td>' . $row["MMProv"] . '</td>
-                            <td>' . $row["other_instruction"] . '</td>
-                            <td><a href="request.php?emp_id='.$persno.'&start_time='.$start_time.'"><button type="button" class="btn btn-info">View</button></a></td>
-
-                            
+                            <td>' . $row["other_instruction"] . '</td>  
                           </tr>
                           ';
                           }
@@ -204,7 +207,44 @@
                 </div>
               </div>
             </div>
-          </div>
+            <div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="x_panel">
+						<div class="x_title">
+						  	<h2>Certificates</h2>
+						<div class="clearfix"></div>
+						</div>
+						
+						<div class="x_content">
+							<div class='table-responsive'>
+								<table id='mydatatable2' class='table table-striped table-bordered'>
+									<thead>
+										<tr>
+											<th>Reference Number</th>
+											<th>Purpose</th>
+											<th>Status</th>
+											<th>Claim Date</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<?php
+										while($row = mysqli_fetch_array($certificate_que_res)){
+											echo '
+												<tr>
+													<td>'.$row["ref_no"].'</td>
+													<td>'.$row["prupose"].'</td>
+													<td>'.$row["claimdate"].'</td>
+													<td></td>
+												</tr>
+											';
+										}
+									?>
+								</table>
+							</div>
+						</div>
+					</div>    
+            	</div>
+          	</div>
         </div>
 <!-- MODAL -->
         <!-- /page content -->
@@ -256,44 +296,14 @@
 	$(document).ready(function() {
     // $('#mydatatable').DataTable();
     $('#mydatatable').DataTable( {
-        // dom: 'Bfrtip',
-        // buttons: [
-        //     'copy', 'csv', 'print'
-        // ],
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        order: [0, 'desc']
+    } );
+	$('#mydatatable2').DataTable( {
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         order: [0, 'desc']
     } );
 	});
-	// $('.bs-example-modal-lg').on('show.bs.modal', function (event) {
-	// 	var button = $(event.relatedTarget)
-	// 	var ref_no = button.data('ref_no')
-	// 	var persno = button.data('persno')
-	// 	var start_time = button.data('start_time')
-	// 	var start_time2 = button.data('start_time2')
-	// 	var name= button.data('name')
-	// 	var purpose= button.data('purpose')
-	// 	var accomp_code= button.data('accomp_code')
-	// 	var type_of_coe= button.data('type_of_coe')
-	// 	var control_id= button.data('control_id')
-	// 	var req_status= button.data('req_status')
-	// 	var claimersname= button.data('claimersname')
-	// 	var claimdate= button.data('claimdate')
-	
-	// 	var modal = $(this)
-	// 	modal.find('.modal-body #ref_no').val(ref_no)
-	// 	modal.find('.modal-body #persno').val(persno)
-	// 	modal.find('.modal-body #start_time').val(start_time)
-	// 	modal.find('.modal-body #start_time2').val(start_time2) 
-	// 	modal.find('.modal-body #name').val(name)
-	// 	modal.find('.modal-body #purpose').val(purpose)
-	// 	modal.find('.modal-body #accomp_code').val(accomp_code)
-	// 	modal.find('.modal-body #type_of_coe').val(type_of_coe)
-	// 	modal.find('.modal-body #control_id').val(control_id)
-	// 	modal.find('.modal-body #req_status').val(req_status)
-	// 	modal.find('.modal-body #req_status').text(''+req_status)
-	// 	modal.find('.modal-body #claimersname').val(claimersname)
-	// 	modal.find('.modal-body #claimdate').val(claimdate)
-	// });
 </script>
 <script>
 	function getdatetime(){
