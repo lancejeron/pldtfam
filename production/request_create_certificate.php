@@ -24,7 +24,7 @@
         }
         else{
 
-            header("Location: index.php");
+            header('Location: request.php?emp_id='.$persno.'&start_time='.$start_time.'');
         }
     }
 ?>

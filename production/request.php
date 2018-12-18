@@ -138,6 +138,7 @@
               <div class="title_left">
                 <h3>Certificate</h3>
               </div>
+				<a href="index.php"><button type='button' class='btn btn-secondary pull-right btn-md'><i class="fa fa-chevron-left"></i> Back</button></a>
 
             </div>
 
@@ -150,18 +151,36 @@
                     <!-- <h2>Request > </h2> -->
                     <?php
                         while($row = mysqli_fetch_array($request_query_res2)){
-                            echo '<h2>Request > '.$row["start_time"].'</h2>';
+							echo '<h2>Request > '.$row["start_time"].'</h2>';
+							if($row["req_status"]==0){
+								echo '
+								<form method="POST" action="request_finished.php">
+									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
+									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
+									<button type="submit" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
+								</form>
+								';
+							}
+							else{
+								echo '
+								<form method="POST" action="request_finished.php">
+									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
+									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
+									<button type="submit" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
+								</form>
+								';
+
+							}
+							
                         }
                     ?>
-                    <a href="index.php"><button type='button' class='btn btn-primary pull-right btn-md'><i class="fa fa-chevron-left"></i> Back</button></a>
-
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
                     <div class='table-responsive'>
 					<?php
 						while($row = mysqli_fetch_array($request_query_res3)){
-							echo '<center><button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row["persno"].'" data-start_time="'.$row["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+							echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row["persno"].'" data-start_time="'.$row["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
 						}
 					?>
                     

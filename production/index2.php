@@ -13,7 +13,7 @@
 
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1 WHERE req_status=0';
+		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1 WHERE req_status=1';
     // $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
     // WHERE NOT EXISTS
     //   (SELECT * FROM prepared_certificates as tbl2
@@ -92,7 +92,7 @@
                   <li><a><i class="fa fa-edit"></i> Certificate<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.php">Requests</a></li>
-                      <li><a href="index2.php">Finished Requests</a></li>
+                      <li><a href=" .php">Finished Requests</a></li>
                       <li><a href="index3.php">Certificates</a></li>
                     </ul>
                   </li>
@@ -144,7 +144,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Requests</h2>
+                    <h2>Finished Requests</h2>
                     <!-- <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#walkin'><i class="fa fa-plus"></i> Create Request</button> -->
                     <div class="clearfix"></div>
                   </div>
