@@ -92,7 +92,7 @@
                   <li><a><i class="fa fa-edit"></i> Certificate<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.php">Requests</a></li>
-                      <li><a href=" .php">Finished Requests</a></li>
+                      <li><a href="index2.php">Finished Requests</a></li>
                       <li><a href="index3.php">Certificates</a></li>
                     </ul>
                   </li>

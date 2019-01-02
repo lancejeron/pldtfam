@@ -526,10 +526,13 @@
 		}
 
 		if(claimers_signature==''){
-
+			$("#signArea").replaceWith('<div id="signArea" ><div class="sig sigWrapper current" style="height:auto; display:block;"><div class="typed" style="display: none;"></div><canvas class="sign-pad" id="sign-pad" width="300" height="100"></div><br><center><button type="button" class="btn btn-default btn-sm" id="btnclear">Clear</button></center></div>');
+			$('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
 		}
 		else{
-			$("#signArea").replaceWith('<img src="./doc_signs/'+claimers_signature+'" class="sign-preview" />');
+			$("#signArea").replaceWith('<div id="signArea"><img src="./doc_signs/'+claimers_signature+'" class="sign-preview" /></div>');
+
+			
 		} 
 
 

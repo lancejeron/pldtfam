@@ -25,7 +25,7 @@
 		$request_query3 = "SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'";
 		$request_query_res3 = mysqli_query($conn, $request_query3);
 		
-		$certificate_que = "SELECT * FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY claimdate DESC";
+		$certificate_que = "SELECT *, DATE_FORMAT(date_prepared, '%M %e, %Y @ %r') AS date_prepared2, DATE_FORMAT(claimdate, '%Y-%m-%dT%H:%i:%s') AS claimdate FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY claimdate DESC";
 		$certificate_que_res = mysqli_query($conn, $certificate_que);
 ?>
 
@@ -59,6 +59,30 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
     <link href="../production/images/icons/favicon.ico" rel="icon"/>
+		<!-- signature -->
+    <link href="css/signature/jquery.signaturepad.css" rel="stylesheet">
+    <script src="js/signature/jquery.min.js"></script>
+    <script src="js/signature/numeric-1.2.6.min.js"></script> 
+    <script src="js/signature/bezier.js"></script>
+    <script src="js/signature/jquery.signaturepad.js"></script> 
+    
+    <script src="js/signature/html2canvas.js"></script>
+    <script src="js/signature/json2.min.js"></script>
+    
+    <style type="text/css">
+			#btnSaveSign {
+				color: #fff;
+				background: #f99a0b;
+				padding: 5px;
+				border: none;
+				border-radius: 5px;
+				font-size: 20px;
+				margin-top: 10px;
+			}
+			#signArea{
+				width:304px;
+			}
+    </style>
 
   </head>
 
@@ -96,7 +120,8 @@
                   <li><a><i class="fa fa-edit"></i> Certificate<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.php">Requests</a></li>
-                      <li><a href="index3.php">Finished</a></li>
+                      <li><a href="index2.php">Finished Requests</a></li>
+                      <li><a href="index3.php">Certificates</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-wrench"></i> Maintenance <span class="fa fa-chevron-down"></span></a>
@@ -260,8 +285,23 @@
 													<td>'.$row["ref_no"].'</td>
 													<td>'.$row["purpose"].'</td>
 													<td>'.$row["req_status"].'</td>
-													<td>'.$row["date_prepared"].'</td>
-													<td> <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_certificate">Edit</button></td>
+													<td>'.$row["claimdate"].'</td>
+													<td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
+                                            data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
+                                            data-date_prepared2="'.$row['date_prepared2'].'"
+                                            data-date_prepared="'.$row['date_prepared'].'"
+                                            data-name="'.$row['name'].'"
+                                            data-purpose="'.$row['purpose'].'"
+                                            data-accomp_code="'.$row['accomp_code'].'"
+                                            data-cbotype="'.$row['cbotype'].'"
+                                            data-control_id="'.$row['control_id'].'"
+                                            data-personal="'.$row['personal'].'"
+                                            data-req_status="'.$row['req_status'].'"
+                                            data-claimersname="'.$row['claimersname'].'"
+                                            data-returned_status="'.$row['returned_status'].'"
+																						data-date_returned="'.$row['date_returned'].'"
+																						data-claimers_signature="'.$row['claimers_signature'].'"
+                                            data-claimdate="'.$row['claimdate'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
 												</tr>
 											';
 										}
@@ -289,13 +329,19 @@
 					<input type="" id="start_time" name="start_time" style="display: none;">
 
 					<div class="form-group">
+						<label class="control-label col-sm-2">Reference Number*</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="" placeholder="" name="ref_no" required>
+						</div>
+					</div>
+
+					<div class="form-group">
 						<label class="control-label col-sm-2" for="purpose_name">Purpose:*</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="name3" placeholder="" name="purpose" maxlength='75' required>
 						</div>
-            <!-- pdf display -->
-
 					</div>
+            <!-- pdf display -->
           
 					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
@@ -410,19 +456,19 @@
 
 					<div class="form-group">
 							<label for="signature" class="control-label col-sm-2">Claimer's Signature</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
+						<div class="col-md-6 col-sm-6 col-xs-12">
 							<input type="text" class="form-control" id="claimersign" name="claimersign" placeholder="" style='display: none;' >
 							<input type="text" class="form-control" id="claimers_signature" name="claimers_signature" placeholder="" style='display: none;'>
-								<div id="signArea" >
-									<div class="sig sigWrapper" style="height:auto;">
-										<div class="typed"></div>
+							<div id="signArea" >
+								<div class="sig sigWrapper" style="height:auto;">
+									<div class="typed"></div>
 										<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
-									</div>
+								</div>
 									<br>
 									<center><button type="button" class="btn btn-default btn-sm" id='btnclear'>Clear</button></center>
-								</div>
 							</div>
 						</div>
+					</div>
 
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="claimdate">Claim Date*</label>
@@ -456,7 +502,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" id="editformbtn" class="btn btn-success" value='Edit' onclick='getdatetime();'>Save</button>
+					<button type="submit" id="editformbtn" class="btn btn-success" value='Edit' >Save</button>
 				</div>
 			</div>
 		</form>
@@ -505,6 +551,10 @@
     <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
     <!-- Momentjs -->
     <script src="../vendors/momentjs/moment.min.js"></script>
+		<!-- sweetalert -->
+		<script src="../vendors/sweetalert/dist/sweetalert.min.js"></script> 
+		<!-- signature -->
+		<script type="text/javascript" src="js/signature/jquery.signaturepad.js"></script> 
   </body>
 </html>
 <script>
@@ -527,8 +577,80 @@
 		modal.find('.modal-body #persno').val(persno)
 		modal.find('.modal-body #start_time').val(start_time)	
 	});
+	$('#edit_certificate').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget)
+		var ref_no = button.data('ref_no')
+		var emp_id = button.data('emp_id')
+		var date_prepared = button.data('date_prepared')
+		var date_prepared2 = button.data('date_prepared2')
+		var name= button.data('name')
+		var purpose= button.data('purpose')
+		var accomp_code= button.data('accomp_code')
+		var cbotype= button.data('cbotype')
+		var control_id= button.data('control_id')
+		var personal= button.data('personal')
+		var req_status= button.data('req_status')
+		var claimersname= button.data('claimersname')
+		var claimdate= button.data('claimdate')
+		var returned_status= button.data('returned_status')
+		var date_returned= button.data('date_returned')
+		// var date_returned4= button.data('date_returned')
+		var claimers_signature= button.data('claimers_signature')
+		
+		var modal = $(this)
+		modal.find('.modal-body #ref_no').val(ref_no)
+		modal.find('.modal-body #emp_id').val(emp_id)
+		modal.find('.modal-body #date_prepared').val(date_prepared)
+		modal.find('.modal-body #date_prepared2').val(date_prepared2) 
+		modal.find('.modal-body #name').val(name)
+		modal.find('.modal-body #purpose').val(purpose)
+		modal.find('.modal-body #accomp_code').val(accomp_code)
+		modal.find('.modal-body #cbotype').val(cbotype)
+		modal.find('.modal-body #control_id').val(control_id)
+		modal.find('.modal-body #personal').val(personal)
+		modal.find('.modal-body #req_status').val(req_status)
+		modal.find('.modal-body #req_status').text(''+req_status)
+		modal.find('.modal-body #claimersname').val(claimersname)
+		modal.find('.modal-body #claimdate').val(claimdate)
+		modal.find('.modal-body #date_returned').val(date_returned)
+		// modal.find('.modal-body #date_returned4').val(date_returned4)
+		modal.find('.modal-body #claimers_signature').val(claimers_signature)
+
+
+		if (returned_status == 'yes'){
+			modal.find('.modal-body #returncb').prop('checked', true);
+			modal.find('.modal-body #returncb2').prop('checked', false);
+			modal.find('.modal-body #date_returned').prop('disabled', false);
+
+		}
+		else{
+			modal.find('.modal-body #returncb').prop('checked', false);
+			modal.find('.modal-body #returncb2').prop('checked', true);
+			modal.find('.modal-body #date_returned').prop('disabled', true);
+		}
+
+		if(req_status == 'Processed'){
+			$('#Processed').prop('selected', true);
+
+		}
+		else{
+			$('#'+req_status).prop('selected', true);
+		}
+
+		if(claimers_signature==''){
+			$("#signArea").replaceWith('<div id="signArea" ><div class="sig sigWrapper current" style="height:auto; display:block;"><div class="typed" style="display: none;"></div><canvas class="sign-pad" id="sign-pad" width="300" height="100"></div><br><center><button type="button" class="btn btn-default btn-sm" id="btnclear">Clear</button></center></div>');
+			$('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
+		}
+		else{
+			$("#signArea").replaceWith('<div id="signArea"><img src="./doc_signs/'+claimers_signature+'" class="sign-preview" /></div>');
+
+			
+		} 
+
+
+	});
 </script>
-<script>
+<!-- <script>
 	function getdatetime(){
 		var today = new Date();         
 		var dd = today.getDate();
@@ -551,7 +673,121 @@
 
 		document.getElementById("test1").value=today;
 	}
+</script> -->
+<script>
+	$(document).ready(function(){
+		$('#editformbtn').click(function(e){
+			if($("#claimdate").val() == ''){
+				swal("Please fill the required(*) fields.","","info");
+				e.preventDefault();
+			}
+			else{
+				swal({
+				title: "Record will be updated.",
+				text: "Are you sure you want to update this record?",
+				icon: "warning",
+				buttons: {
+					cancel: true,
+					ok: {
+						text: "Update",
+						value: "willsubmit",
+					}
+				},
+			})
+			.then((willsubmit)=>{
+				if (willsubmit){
+					if($("#claimers_signature").val()!=''){
+						
+						$.ajax({
+								url: 'index3_update_record.php',
+								method: 'POST',
+								data: $('#editform').serialize(),
+									
+								success: function(data){
+									console.log(data);
+									swal({
+										title: "Record updated.",
+										text: " ",
+										icon: "success",
+										buttons: false,
+									});
+									setTimeout( function () {
+										location.reload(); 
+									}, 1500);
+								},
+								error: function(data){
+									swal("Oops...", "Something went wrong.", "error");
+								}
+						});
+					}
+					else{
+
+						html2canvas([document.getElementById('sign-pad')], {
+							onrendered: function (canvas) {
+								var canvas_img_data = canvas.toDataURL('image/png');
+								var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
+								$("#claimersign").val(''+img_data);
+
+								var ajax1 = $.ajax({ 
+									url: 'save_sign.php',
+										data: { img_data:img_data },
+										type: 'post',
+										dataType: 'json',
+										success: function (response) {
+												// window.location.reload();
+										}             
+								});
+								
+								
+								var ajax2 = $.ajax({
+									url: 'index3_update_record.php',
+									method: 'POST',
+									data: $('#editform').serialize(),
+										
+									success: function(data){
+										console.log(data);
+										swal({
+											title: "Record updated.",
+											text: " ",
+											icon: "success",
+											buttons: false,
+										});
+										setTimeout( function () {
+											location.reload(); 
+										}, 1500);
+									},
+									error: function(data){
+										swal("Oops...", "Something went wrong.", "error");
+									}
+								});
+
+								$.when( ajax1 , ajax2  ).done(function( a1, a2 ) {
+									var data = a1[0] + a2[0]; // a1[0] = "Got", a2[0] = " Success"
+									if ( /Got Success/.test( data ) ) {
+										alert( "All AJAX calls successfully gave responses" );
+									}
+								}); 
+							}
+						});
+					}
+				}
+				else{
+				}
+			});
+			e.preventDefault();
+
+			}
+		});
+  });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
+    });
+    $('#btnclear').click(function(e){
+        $('#signArea').signaturePad().clearCanvas();
+    });
+</script> 
 <?php
 	}
 ?>
