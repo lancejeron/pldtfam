@@ -68,14 +68,6 @@
              
                     <div class="clearfix"></div>
                   </div>
-
-                    <div class="col-md-6 center-margin">
-                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                            <strong><i class="fa fa-warning"></i> Warning!</strong> Requesting for Certificate of Employment and Compensation would require your salary to be exposed.
-                        </div>
-                    </div>
-
                   <div class="x_content">
                 
                     
