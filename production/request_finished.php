@@ -25,7 +25,7 @@
                 echo("Error description: " . mysqli_error($conn)); 
             }
             else{
-                echo "Record Updated.";
+                // echo "Record Updated.";
                 // echo($file_name);
             }
         }
@@ -36,7 +36,7 @@
                 echo("Error description: " . mysqli_error($conn)); 
             }
             else{
-                echo "Record Updated.";
+                // echo "Record Updated.";
                 // echo($file_name);
             }
 

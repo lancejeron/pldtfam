@@ -179,19 +179,19 @@
 							echo '<h2>Request > '.$row["start_time"].'</h2>';
 							if($row["req_status"]==0){
 								echo '
-								<form method="POST" action="request_finished.php">
+								<form id="finishform" method="POST" action="request_finished.php">
 									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
 									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
-									<button type="submit" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
+									<button type="submit" id="finishbtn" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
 								</form>
 								';
 							}
 							else{
 								echo '
-								<form method="POST" action="request_finished.php">
+								<form id="finishform" method="POST" action="request_finished.php">
 									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
 									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
-									<button type="submit" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
+									<button type="submit" id="finishbtn" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
 								</form>
 								';
 
@@ -650,30 +650,6 @@
 
 	});
 </script>
-<!-- <script>
-	function getdatetime(){
-		var today = new Date();         
-		var dd = today.getDate();
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
-		var hh = today.getHours();
-		var min = today.getMinutes();
-		var sec = today.getSeconds();
-		// var parsetoday = new Date(today)
-		
-		if(dd<10) {
-			dd = '0'+dd
-		} 
-
-		if(mm<10) {
-			mm = '0'+mm
-		}
-
-		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
-
-		document.getElementById("test1").value=today;
-	}
-</script> -->
 <script>
 	$(document).ready(function(){
 		$('#editformbtn').click(function(e){
@@ -778,6 +754,69 @@
 
 			}
 		});
+		$('#finishbtn').click(function(e){
+			if($('#finishbtn').val()=='finish'){
+				// alert('finish');
+				var btn1=$('#finishbtn').val();
+				var persno=$('#persno').val();
+				var start_time=$('#start_time').val();
+				$.ajax({
+					url: 'request_finished.php',
+					method: 'POST',
+					data: {
+							btn1:btn1,
+							persno:persno,
+							start_time:start_time},
+						
+					success: function(data){
+						console.log(data);
+						swal({
+							title: "Request Finished!",
+							text: " ",
+							icon: "success",
+							buttons: false,
+						});
+						setTimeout( function () {
+							location.reload(); 
+						}, 1500);
+					},
+					error: function(data){
+						swal("Oops...", "Something went wrong.", "error");
+					}
+				});
+			}
+			else{
+				// alert('unfinish');
+				var btn1=$('#finishbtn').val();
+				var persno=$('#persno').val();
+				var start_time=$('#start_time').val();
+				$.ajax({
+					url: 'request_finished.php',
+					method: 'POST',
+					data: {
+							btn1:btn1,
+							persno:persno,
+							start_time:start_time},
+						
+					success: function(data){
+						console.log(data);
+						swal({
+							title: "Request Unfinished.",
+							text: " ",
+							icon: "warning",
+							buttons: false,
+						});
+						setTimeout( function () {
+							location.reload(); 
+						}, 1500);
+					},
+					error: function(data){
+						swal("Oops...", "Something went wrong.", "error");
+					}
+				});
+			}
+			e.preventDefault()
+		})
   });
 </script>
 <script>
