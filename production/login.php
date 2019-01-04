@@ -49,8 +49,6 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendors/animate/animate.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendors/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendors/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendors/select2/select2.min.css">
