@@ -25,7 +25,7 @@
 		$request_query3 = "SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'";
 		$request_query_res3 = mysqli_query($conn, $request_query3);
 		
-		$certificate_que = "SELECT *, DATE_FORMAT(date_prepared, '%M %e, %Y @ %r') AS date_prepared2, DATE_FORMAT(claimdate, '%Y-%m-%dT%H:%i:%s') AS claimdate FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY claimdate DESC";
+		$certificate_que = "SELECT *, DATE_FORMAT(date_prepared, '%M %e, %Y @ %r') AS date_prepared2, DATE_FORMAT(claimdate, '%Y-%m-%dT%H:%i:%s') AS claimdate, DATE_FORMAT(date_returned, '%Y-%m-%dT%H:%i:%s') AS date_returned FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY claimdate DESC";
 		$certificate_que_res = mysqli_query($conn, $certificate_que);
 ?>
 
@@ -649,6 +649,17 @@
 
 
 	});
+	$("#returncb").change(function() {
+    if(this.checked) {
+      $("#returncb2").prop('checked', false);
+      $('#date_returned').prop('disabled', false);
+      
+    }
+    else if(!this.checked){
+      $("#returncb2").prop('checked', true);
+      $('#date_returned').prop('disabled', true);
+    }
+  });
 </script>
 <script>
 	$(document).ready(function(){

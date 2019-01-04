@@ -449,7 +449,7 @@
 	$(document).ready(function() {
 		$('#mydatatable').DataTable({
       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-      order: [0, 'desc']
+      order: [16, 'desc']
     });
 	});
 
@@ -669,99 +669,6 @@
 			e.preventDefault();
 
 			}
-			// swal({
-			// 	title: "Record will be updated.",
-			// 	text: "Are you sure you want to update this record?",
-			// 	icon: "warning",
-			// 	buttons: {
-			// 		cancel: true,
-			// 		ok: {
-			// 			text: "Update",
-			// 			value: "willsubmit",
-			// 		}
-			// 	},
-			// })
-			// .then((willsubmit)=>{
-			// 	if (willsubmit){
-			// 		if($("#claimers_signature").val()!=''){
-						
-			// 			$.ajax({
-			// 					url: 'index3_update_record.php',
-			// 					method: 'POST',
-			// 					data: $('#editform').serialize(),
-									
-			// 					success: function(data){
-			// 						console.log(data);
-			// 						swal({
-			// 							title: "Record updated.",
-			// 							text: " ",
-			// 							icon: "success",
-			// 							buttons: false,
-			// 						});
-			// 						setTimeout( function () {
-			// 							location.reload(); 
-			// 						}, 1500);
-			// 					},
-			// 					error: function(data){
-			// 						swal("Oops...", "Something went wrong.", "error");
-			// 					}
-			// 			});
-			// 		}
-			// 		else{
-
-			// 			html2canvas([document.getElementById('sign-pad')], {
-			// 				onrendered: function (canvas) {
-			// 					var canvas_img_data = canvas.toDataURL('image/png');
-			// 					var img_data = canvas_img_data.replace(/^data:image\/(png|jpg);base64,/, "");
-			// 					$("#claimersign").val(''+img_data);
-
-			// 					var ajax1 = $.ajax({ 
-			// 						url: 'save_sign.php',
-			// 							data: { img_data:img_data },
-			// 							type: 'post',
-			// 							dataType: 'json',
-			// 							success: function (response) {
-			// 									// window.location.reload();
-			// 							}             
-			// 					});
-								
-								
-			// 					var ajax2 = $.ajax({
-			// 						url: 'index3_update_record.php',
-			// 						method: 'POST',
-			// 						data: $('#editform').serialize(),
-										
-			// 						success: function(data){
-			// 							console.log(data);
-			// 							swal({
-			// 								title: "Record updated.",
-			// 								text: " ",
-			// 								icon: "success",
-			// 								buttons: false,
-			// 							});
-			// 							setTimeout( function () {
-			// 								location.reload(); 
-			// 							}, 1500);
-			// 						},
-			// 						error: function(data){
-			// 							swal("Oops...", "Something went wrong.", "error");
-			// 						}
-			// 					});
-
-			// 					$.when( ajax1 , ajax2  ).done(function( a1, a2 ) {
-			// 						var data = a1[0] + a2[0]; // a1[0] = "Got", a2[0] = " Success"
-			// 						if ( /Got Success/.test( data ) ) {
-			// 							alert( "All AJAX calls successfully gave responses" );
-			// 						}
-			// 					}); 
-			// 				}
-			// 			});
-			// 		}
-			// 	}
-			// 	else{
-			// 	}
-			// });
-			// e.preventDefault();
 	});
   });
 </script>
