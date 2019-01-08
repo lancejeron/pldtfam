@@ -1,31 +1,28 @@
 <?php
 	session_start();
 
+	$servername = 'localhost';
+	$username = 'root';
+	$password = '';
+	$dbname = 'certificate';
+
 	if(!isset($_SESSION['username'])){
 		header("Location:login.php");
 	}
 	else{
 
-		try{
-      $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
-      $username = '';
-      $password = '';
-      $dbname = 'certificate';
-      
-      $conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
-      $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-      $conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
-    
-    }
-    catch(Exception $e)  
-    {   
-      die( print_r( $e->getMessage() ) );   
-    }
-    
-    $stmt = $conn->prepare('SELECT *, CONVERT(VARCHAR(20), start_time, 100) AS start_time2 FROM view_coe_request AS tbl1 WHERE req_status=0');
-    $stmt->execute();
-    $rows = $stmt->fetchAll()
-    
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+		$sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1 WHERE req_status=0';
+    // $sql = 'SELECT *, DATE_FORMAT(start_time, "%M %e, %Y @ %r") AS start_time2 FROM view_coe_request AS tbl1
+    // WHERE NOT EXISTS
+    //   (SELECT * FROM prepared_certificates as tbl2
+    //   WHERE tbl2.emp_id = tbl1.persno AND tbl2.date_prepared=tbl1.start_time)';
+		$result = mysqli_query($conn, $sql);
+		if (!$result) {
+			echo "Error:". mysqli_error($conn);
+		}
+		
 ?>
 
 <!DOCTYPE html>
@@ -175,12 +172,12 @@
                           </tr>
                         </thead>
                         <?php
-                          foreach($rows as $row){
+                          while($row = mysqli_fetch_array($result)){
                             $persno = $row["persno"];
                             $start_time = $row["start_time"];
                             echo '
                             <tr>
-                            <td>' . $row["start_time2"] . '</td>
+                            <td>' . $row["start_time"] . '</td>
                             <td>' . $row["req_type"] . '</td>
                             <td>' . $row["persno"] . '</td>
                             <td>' . $row["email"] . '</td>
@@ -267,7 +264,36 @@
         order: [0, 'desc']
     } );
 	});
-
+	// $('.bs-example-modal-lg').on('show.bs.modal', function (event) {
+	// 	var button = $(event.relatedTarget)
+	// 	var ref_no = button.data('ref_no')
+	// 	var persno = button.data('persno')
+	// 	var start_time = button.data('start_time')
+	// 	var start_time2 = button.data('start_time2')
+	// 	var name= button.data('name')
+	// 	var purpose= button.data('purpose')
+	// 	var accomp_code= button.data('accomp_code')
+	// 	var type_of_coe= button.data('type_of_coe')
+	// 	var control_id= button.data('control_id')
+	// 	var req_status= button.data('req_status')
+	// 	var claimersname= button.data('claimersname')
+	// 	var claimdate= button.data('claimdate')
+	
+	// 	var modal = $(this)
+	// 	modal.find('.modal-body #ref_no').val(ref_no)
+	// 	modal.find('.modal-body #persno').val(persno)
+	// 	modal.find('.modal-body #start_time').val(start_time)
+	// 	modal.find('.modal-body #start_time2').val(start_time2) 
+	// 	modal.find('.modal-body #name').val(name)
+	// 	modal.find('.modal-body #purpose').val(purpose)
+	// 	modal.find('.modal-body #accomp_code').val(accomp_code)
+	// 	modal.find('.modal-body #type_of_coe').val(type_of_coe)
+	// 	modal.find('.modal-body #control_id').val(control_id)
+	// 	modal.find('.modal-body #req_status').val(req_status)
+	// 	modal.find('.modal-body #req_status').text(''+req_status)
+	// 	modal.find('.modal-body #claimersname').val(claimersname)
+	// 	modal.find('.modal-body #claimdate').val(claimdate)
+	// });
 </script>
 <script>
 	function getdatetime(){

@@ -1,21 +1,38 @@
 <?php
     session_start();
 
-	$servername = 'localhost';
-	$username = 'root';
-	$password = '';
-	$dbname = 'certificate';
-
 	if(!isset($_SESSION['username'])){
         header("Location:login.php");
 	}
 	else{
     
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-        // echo $returned_status;
+        try{
+            $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
+            $username = '';
+            $password = '';
+            $dbname = 'certificate';
+            
+            $conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
+            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
+        
+        }
+        catch(Exception $e){   
+            die( print_r( $e->getMessage() ) );   
+        }
 
         function checkreturned_status(){
+
+            $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
+            $username = '';
+            $password = '';
+            $dbname = 'certificate';
+            
+            $conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
+            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
+
+
             $emp_id = $_POST['emp_id'];
             $date_prepared = $_POST['date_prepared'];
             $req_status = $_POST['req_status'];
@@ -25,6 +42,7 @@
             $returned_status =$_POST['returned_status'];
             $date_returned = $_POST['date_returned'];
             $claimersign = $_POST['claimersign'];
+            echo '>>>>>>>>>>.'.$claimdate;
             // 
             $result = array();
             $imagedata = base64_decode($_POST['claimers_signature']);
@@ -39,36 +57,33 @@
             if($_POST['claimers_signature']==''){
                 // wala pangpirma
                 if($returned_status == 'yes'){
-                    $update_sql = "UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned', req_status = '$req_status', claimersname='$claimersname', claimers_signature='$file_name' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned', req_status = '$req_status', claimersname='$claimersname', claimers_signature='$file_name' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'");
                     return $update_sql;
                 }
                 else{
-                    $update_sql = "UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate', returned_status = '$returned_status', claimers_signature='$file_name'  WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate', returned_status = '$returned_status', claimers_signature='$file_name'  WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'");
                     return $update_sql;
                 }
             }
             else{
                 // meron
                 if($returned_status == 'yes'){
-                    $update_sql = "UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned', req_status = '$req_status', claimersname='$claimersname' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned', req_status = '$req_status', claimersname='$claimersname' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'");
                     return $update_sql;
                 }
                 else{
-                    $update_sql = "UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate', returned_status = '$returned_status' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'";
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate', returned_status = '$returned_status' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'");
                     return $update_sql;
                 }
 
             }
         }
         $update_sql2=checkreturned_status();
-        if (!mysqli_query($conn, $update_sql2)) {
+        if (!$update_sql2->execute()) {
             echo "Record not updated." . "<br>";
-            echo("Error description: " . mysqli_error($conn)); 
         }
         else{
             echo "Record Updated.";
-            // echo($file_name);
         }
-        // header("refresh:10000; url=index3.php");
     }
 ?>

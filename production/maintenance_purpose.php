@@ -1,23 +1,30 @@
 <?php
 	session_start();
 
-	$servername = 'localhost';
-	$username = 'root';
-	$password = '';
-	$dbname = 'certificate';
-
 	if(!isset($_SESSION['username'])){
 		header("Location:login.php");
 	}
 	else{
 
-		$conn = mysqli_connect($servername, $username, $password, $dbname);
+		try{
+      $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
+      $username = '';
+      $password = '';
+      $dbname = 'certificate';
+      
+      $conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
+      $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+      $conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
+    
+    }
+    catch(Exception $e)  
+    {   
+    die( print_r( $e->getMessage() ) );   
+    }
 
-		$sql = 'SELECT * FROM tblmpurpose';
-		$result = mysqli_query($conn, $sql);
-		if (!$result) {
-			echo "Error:". mysqli_error($conn);
-		}
+		$sql = $conn->prepare('SELECT * FROM tblmpurpose');
+		$sql->execute();
+		$rows = $sql->fetchAll()
 		
 ?>
 
@@ -156,7 +163,7 @@
                           </tr>
                         </thead>
                         <?php
-                          while($row = mysqli_fetch_array($result)){
+                         	foreach($rows as $row){
                             echo '
 														<tr>
 														<td>' . $row["purpose_ID"] . '</td>
@@ -182,7 +189,7 @@
 																				data-salary="'.$row["purpose_salary"].'"
                               data-status="'.$row["purpose_status"].'"><i class="glyphicon glyphicon-edit"></i> Edit</button>
                             <input type="text" id="inp'.$row["purpose_ID"].'" class="form-control" name="purpose_ID2" value="'.$row["purpose_ID"].'" style="display:none;">
-                            <button type="submit" id="btn'.$row["purpose_ID"].'" class="btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                            <button type="submit" id="btn'.$row["purpose_ID"].'" class="btn btn-danger btn-sm del" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                           </form>
                             </td>                        
                           </tr>
@@ -394,7 +401,9 @@
 <script>
 	$(document).ready(function () {
     	// delete swal
-		$("button[type=submit]").click(function(e){
+		// $("button[type=submit]").click(function(e){
+		$(".del").click(function(e){
+
 			var id = $(this).parent('form').find('input[name="purpose_ID2"]').val();
 
 			console.log(id);
@@ -457,33 +466,34 @@
 			}
 			else{
 				$.ajax({
-				url: 'maintenance_purpose_routes.php',
-				method: 'POST',
-				data: {
-					purpose_id: purpose_ID,
-					purpose_name: purpose_name,
-					purpose_type: purpose_type,
-					purpose_status: purpose_status,
-					purpose_salary: purpose_salary,
-					btn1: 'Edit'
+					url: 'maintenance_purpose_routes.php',
+					method: 'POST',
+					data: {
+						purpose_id: purpose_ID,
+						purpose_name: purpose_name,
+						purpose_type: purpose_type,
+						purpose_status: purpose_status,
+						purpose_salary: purpose_salary,
+						btn1: 'Edit'
 
-				},
-				success: function(data){
-					console.log(data);
-					swal({
-						title: "Purpose Updated.",
-						text: " ",
-						icon: "success",
-						buttons: false,
-					});
-					setTimeout( function () {
-						location.reload(); 
-					}, 1500);
-				},
-				error: function(data){
-					swal("Oops...", "Something went wrong.", "error");
-				}
+					},
+					success: function(data){
+						console.log(data);
+						swal({
+							title: "Purpose Updated.",
+							text: " ",
+							icon: "success",
+							buttons: false,
+						});
+						setTimeout( function () {
+							location.reload(); 
+						}, 1500);
+					},
+					error: function(data){
+						swal("Oops...", "Something went wrong.", "error");
+					}
 				});
+				e.preventDefault();
 			}
 		});
 
@@ -498,40 +508,41 @@
 			}
 			else{
 				$.ajax({
-				url: 'maintenance_purpose_routes.php',
-				method: 'POST',
-				data: {
-					purpose_name: purpose_name,
-					purpose_type: purpose_type,
-					purpose_salary: purpose_salary,
-					btn1: 'Add'
+					url: 'maintenance_purpose_routes.php',
+					method: 'POST',
+					data: {
+						purpose_name: purpose_name,
+						purpose_type: purpose_type,
+						purpose_salary: purpose_salary,
+						btn1: 'Add'
 
-				},
-				success: function(response){
-					console.log(response);
-					if (response == 'success'){
-						swal({
-						title: "Purpose Added.",
-						text: " ",
-						icon: "success",
-						buttons: false,
-						});
-						setTimeout( function () {
-							location.reload(); 
-						}, 1500);
+					},
+					success: function(response){
+						console.log(response);
+						if (response == 'success'){
+							swal({
+							title: "Purpose Added.",
+							text: " ",
+							icon: "success",
+							buttons: false,
+							});
+							setTimeout( function () {
+								location.reload(); 
+							}, 1500);
+						}
+						else if (response == 'already exists'){
+							swal({
+							title: "Purpose already exists.",
+							text: "Purpose did not add.",
+							icon: "error",
+							});
+						}
+					},
+					error: function(response){
+						swal("Oops...", "Something went wrong.", "error");
 					}
-					else if (response == 'already exists'){
-						swal({
-						title: "Purpose already exists.",
-						text: "Purpose did not add.",
-						icon: "error",
-						});
-					}
-				},
-				error: function(response){
-					swal("Oops...", "Something went wrong.", "error");
-				}
 				});
+				e.preventDefault();
 			}
 		})
 	});

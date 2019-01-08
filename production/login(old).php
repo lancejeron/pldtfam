@@ -1,46 +1,25 @@
 <?php
   session_start();
-	// old
-	// 	 $servername = 'localhost';
-	//   $username = 'root';
-	//   $password = '';
-	//   $dbname = 'certificate';
-	
-	//   $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-	// new
-	try{
-		$servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
-		$username = '';
-		$password = '';
-		$dbname = 'certificate';
-		
-		$conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
-		$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-		$conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
-	
-	}
-	catch(Exception $e)  
-	{   
-	die( print_r( $e->getMessage() ) );   
-	}
+  $servername = 'localhost';
+  $username = 'root';
+  $password = '';
+  $dbname = 'certificate';
+  
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
 
   if(isSet($_POST['login'])) {
 
     $username = $_POST['username'];
-	$password = $_POST['password'];
-	
-	$query ="SELECT * FROM tblaccounts WHERE username='$username' AND password='$password'";
+    $password = $_POST['password'];
 
-	$stmt=$conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-	$stmt->execute();
-
-    $res = $stmt->rowCount();
+    $query = mysqli_query($conn,"SELECT * FROM tblaccounts WHERE username='$username' AND password='$password'");
+    $res = mysqli_num_rows($query);
 
     if ($res == 1) {
         $_SESSION['username'] = $username;
         $_SESSION['password'] = $password;
-        $_SESSION['userobj'] = $stmt->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['userobj'] = mysqli_fetch_assoc($query);
 
         header('Location: http://localhost/pldt/pldtfam/production/index.php');
         exit;

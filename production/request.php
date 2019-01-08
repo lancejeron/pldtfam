@@ -1,32 +1,43 @@
 <?php
 	session_start();
 
-	$servername = 'localhost';
-	$username = 'root';
-	$password = '';
-	$dbname = 'certificate';
-
 	if(!isset($_SESSION['username'])){
 		header("Location:login.php");
 	}
 	else{
 
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
-        
-        $persno= $_GET['emp_id'];
-        $start_time= $_GET['start_time'];
-
-        $request_query = "SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'";
-        $request_query_res = mysqli_query($conn, $request_query);
-		if (!$request_query_res) {
-			echo "Error:". mysqli_error($conn);
-        }
-		$request_query_res2 = mysqli_query($conn, $request_query);
-		$request_query3 = "SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'";
-		$request_query_res3 = mysqli_query($conn, $request_query3);
+		try{
+			$servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
+			$username = '';
+			$password = '';
+			$dbname = 'certificate';
+			
+			$conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
+			$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			$conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
+	
+		}
+		catch(Exception $e){   
+			die( print_r( $e->getMessage() ) );   
+		}
 		
-		$certificate_que = "SELECT *, DATE_FORMAT(date_prepared, '%M %e, %Y @ %r') AS date_prepared2, DATE_FORMAT(claimdate, '%Y-%m-%dT%H:%i:%s') AS claimdate, DATE_FORMAT(date_returned, '%Y-%m-%dT%H:%i:%s') AS date_returned FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY claimdate DESC";
-		$certificate_que_res = mysqli_query($conn, $certificate_que);
+		$persno= $_GET['emp_id'];
+		$start_time= $_GET['start_time'];
+
+		$request_query = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		$request_query->execute();
+		$request_query_res = $request_query->fetchAll();
+		$request_query2 = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		$request_query2->execute();
+		$request_query_res2 = $request_query2->fetchAll();
+
+		$request_query3 = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		$request_query3->execute();
+		$request_query_res3 = $request_query3->fetchAll();
+		
+		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
+		$certificate_que->execute();
+		$certificate_que_res = $certificate_que->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -175,27 +186,27 @@
                   <div class="x_title">
                     <!-- <h2>Request > </h2> -->
                     <?php
-                        while($row = mysqli_fetch_array($request_query_res2)){
-							echo '<h2>Request > '.$row["start_time"].'</h2>';
-							if($row["req_status"]==0){
-								echo '
-								<form id="finishform" method="POST" action="request_finished.php">
-									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
-									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
-									<button type="submit" id="finishbtn" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
-								</form>
-								';
-							}
-							else{
-								echo '
-								<form id="finishform" method="POST" action="request_finished.php">
-									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
-									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
-									<button type="submit" id="finishbtn" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
-								</form>
-								';
+                        foreach($request_query_res2 as $row){
+													echo '<h2>Request > '.$row["start_time"].'</h2>';
+													if($row["req_status"]==0){
+														echo '
+														<form id="finishform" method="POST" action="request_finished.php">
+															<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
+															<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
+															<button type="submit" id="finishbtn" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
+														</form>
+														';
+													}
+													else{
+														echo '
+														<form id="finishform" method="POST" action="request_finished.php">
+															<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
+															<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
+															<button type="submit" id="finishbtn" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
+														</form>
+														';
 
-							}
+													}
 							
                         }
                     ?>
@@ -204,7 +215,7 @@
                   <div class="x_content">
                     <div class='table-responsive'>
 					<?php
-						while($row = mysqli_fetch_array($request_query_res3)){
+						foreach($request_query_res3 as $row){
 							echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row["persno"].'" data-start_time="'.$row["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
 						}
 					?>
@@ -230,7 +241,7 @@
                           </tr>
                         </thead>
                         <?php
-                          while($row = mysqli_fetch_array($request_query_res)){
+                          foreach($request_query_res as $row){
                             echo '
                             <tr>
                             <td>' . $row["start_time"] . '</td>
@@ -279,7 +290,7 @@
 										</tr>
 									</thead>
 									<?php
-										while($row = mysqli_fetch_array($certificate_que_res)){
+										foreach($certificate_que_res as $row){
 											echo '
 												<tr>
 													<td>'.$row["ref_no"].'</td>
@@ -700,7 +711,7 @@
 									});
 									setTimeout( function () {
 										location.reload(); 
-									}, 1500);
+									}, 150000);
 								},
 								error: function(data){
 									swal("Oops...", "Something went wrong.", "error");
@@ -741,7 +752,7 @@
 										});
 										setTimeout( function () {
 											location.reload(); 
-										}, 1500);
+										}, 150000);
 									},
 									error: function(data){
 										swal("Oops...", "Something went wrong.", "error");
