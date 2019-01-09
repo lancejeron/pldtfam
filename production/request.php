@@ -11,7 +11,7 @@
 		$persno= $_GET['emp_id'];
 		$start_time= $_GET['start_time'];
 
-		$request_query = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		$request_query = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), start_time, 100) AS start_time FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
 		$request_query->execute();
 		$request_query_res = $request_query->fetchAll();
 		$request_query2 = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
@@ -22,7 +22,7 @@
 		$request_query3->execute();
 		$request_query_res3 = $request_query3->fetchAll();
 		
-		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
+		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
 		$certificate_que->execute();
 		$certificate_que_res = $certificate_que->fetchAll();
 ?>
@@ -283,7 +283,7 @@
 													<td>'.$row["ref_no"].'</td>
 													<td>'.$row["purpose"].'</td>
 													<td>'.$row["req_status"].'</td>
-													<td>'.$row["claimdate"].'</td>
+													<td>'.$row["claimdate2"].'</td>
 													<td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
                                             data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
                                             data-date_prepared2="'.$row['date_prepared2'].'"
