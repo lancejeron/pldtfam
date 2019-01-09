@@ -6,21 +6,7 @@
 	}
 	else{
 
-		try{
-      $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
-      $username = '';
-      $password = '';
-      $dbname = 'certificate';
-      
-      $conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
-      $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-      $conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
-    
-    }
-    catch(Exception $e)  
-    {   
-      die( print_r( $e->getMessage() ) );   
-    }
+		require 'template/connection.php';
     
     $stmt = $conn->prepare('SELECT *, CONVERT(VARCHAR(20), start_time, 100) AS start_time2 FROM view_coe_request AS tbl1 WHERE req_status=0');
     $stmt->execute();

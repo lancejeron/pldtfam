@@ -6,20 +6,7 @@
 	}
 	else{
 	
-		try{
-			$servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
-			$username = '';
-			$password = '';
-			$dbname = 'certificate';
-			
-			$conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
-			$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-			$conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
-	
-	}
-	catch(Exception $e){   
-		die( print_r( $e->getMessage() ) );   
-	}
+		require 'template/connection.php';
 
 		$sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(20), start_time, 100) AS start_time2, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.persno AND prepared_certificates.date_prepared=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.persno AND tbl2.date_prepared=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC');
 		$sql ->execute();
