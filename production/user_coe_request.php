@@ -1,22 +1,33 @@
 <?php
 
-	$servername = 'localhost';
-	$username = 'root';
-	$password = '';
-	$dbname = 'certificate';
+    try{
+        $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
+        $username = '';
+        $password = '';
+        $dbname = 'certificate';
+        
+        $conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
+        $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+        $conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
 
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    }
+    catch(Exception $e){   
+        die( print_r( $e->getMessage() ) );   
+    }
 
-    $purpose_query_coe = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'COE') ORDER BY purpose_name ASC";
-    $purpose_result_coe = mysqli_query($conn, $purpose_query_coe);
-		if (!$purpose_result_coe) {
-			echo "Error:". mysqli_error($conn);
+    $purpose_query_coe = $conn->prepare("SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'COE') ORDER BY purpose_name ASC");
+    $purpose_query_coe->execute();
+        if (!$purpose_query_coe->execute()) {
+            echo "Error:";
         }
-    $purpose_query_cec = "SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'CEC') ORDER BY purpose_name ASC";
-    $purpose_result_cec = mysqli_query($conn, $purpose_query_cec);
-		if (!$purpose_result_cec) {
-			echo "Error:". mysqli_error($conn);
+    $purpose_result_coe= $purpose_query_coe->fetchAll();
+
+    $purpose_query_cec = $conn->prepare("SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'CEC') ORDER BY purpose_name ASC");
+    $purpose_query_cec->execute();
+		if (!$purpose_query_coe->execute()) {
+			echo "Error:";
         }
+    $purpose_result_cec= $purpose_query_cec->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -118,7 +129,7 @@
                                     <h4>Select purpose (COE):*</h4>
                                      <div class='col-sm-8'>
                                         <?php
-                                            while($row = mysqli_fetch_array($purpose_result_coe)){
+                                            foreach($purpose_result_coe as $row){
                                                 echo '
                                                     <div class="checkbox">
                                                         <label>
@@ -152,7 +163,7 @@
                                     <h4>Select purpose (CEC):*</h4>
                                     <div class='col-sm-8'>
                                         <?php
-                                            while($row = mysqli_fetch_array($purpose_result_cec)){
+                                            foreach($purpose_result_cec as $row){
                                                 echo '
                                                     <div class="checkbox">
                                                         <label>

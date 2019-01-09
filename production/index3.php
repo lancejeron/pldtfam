@@ -368,7 +368,7 @@
 										<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
 									</div>
 									<br>
-									<center><button type="button" class="btn btn-default btn-sm" id='btnclear'>Clear</button></center>
+									<center><button type="button" class="btn btn-default btn-sm" id='btnclear' onclick="clearsign();">Clear</button></center>
 								</div>
 							</div>
 						</div>
@@ -533,7 +533,7 @@
 		}
 
 		if(claimers_signature==''){
-			$("#signArea").replaceWith('<div id="signArea" ><div class="sig sigWrapper current" style="height:auto; display:block;"><div class="typed" style="display: none;"></div><canvas class="sign-pad" id="sign-pad" width="300" height="100"></div><br><center><button type="button" class="btn btn-default btn-sm" id="btnclear">Clear</button></center></div>');
+			$("#signArea").replaceWith('<div id="signArea" ><div class="sig sigWrapper current" style="height:auto; display:block;"><div class="typed" style="display: none;"></div><canvas class="sign-pad" id="sign-pad" width="300" height="100"></div><br><center><button type="button" class="btn btn-default btn-sm" id="btnclear" onclick="clearsign();">Clear</button></center></div>');
 			$('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
 		}
 		else{
@@ -680,12 +680,9 @@
   });
 </script>
 <script>
-    $(document).ready(function() {
-        $('#signArea').signaturePad({drawOnly:true, drawBezierCurves:true, lineTop:90});
-    });
-    $('#btnclear').click(function(e){
-        $('#signArea').signaturePad().clearCanvas();
-    });
+	function clearsign(){
+		$('#signArea').signaturePad().clearCanvas();
+	}
 </script> 
 <?php
 	}
