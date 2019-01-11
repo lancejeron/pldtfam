@@ -249,8 +249,8 @@
 							<input type="text" class="form-control" id="name3" placeholder="" name="purpose" maxlength='75' required>
 						</div>
 					</div>
-            <!-- pdf display -->
-          
+
+            <!-- pdf display -->          
 					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
 							<div class="col-sm-10">
@@ -261,7 +261,24 @@
 									<option id='' value="CECwN">CEC with Notary</option>
 								</select>            
 							</div>
-          </div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2">Signature:</label>
+						<div class="col-sm-10">
+							<input type="checkbox" id='' name='withsignature' value='yes'>
+						</div>
+					</div>
+
+					
+					<div class="form-group">
+						<label class="control-label col-sm-2">Header and Footer:</label>
+						<div class="col-sm-10">
+							<input type="checkbox" id='' name='headerandfooter' value='yes'>
+						</div>
+					</div>
+
+
+          	</div>
 
            <!-- <center><button type='button' class='btn btn-info btn-md' data-toggle='modal' data-target='#preview_certificate'> Generate</button></center> -->
         </div>
