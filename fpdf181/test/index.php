@@ -8,13 +8,6 @@ function Header()
 {
     // Logo
     $this->Image('../pldt.png',10,6,60);
-    // Times bold 15
-    // $this->SetFont('Times','B',42);
-    // Move to the right
-    // $this->Cell(20);
-    // // Title
-    // $this->Cell(0,10,'PLDT',0,0,'L');
-    // // Line break
     $this->Ln(20);
 }
 
@@ -28,7 +21,7 @@ function Footer()
     $this->MultiCell(0,1,'*** Must be an orginal computer pirntout without erasures to be valid. *** ',0,'L');
     $this->MultiCell(0,7,'*** For verifiaction pls. contact: (632) 584-0247/0247/0255/0261/0264/0355 or email us at HRISAdvisory@pldt.com.ph.*** ',0,'L');
     $this->SetFont('Times','',12);
-    $this->MultiCell(0,10,'eHR-1123-18-94252-CEC',0,'L');
+    $this->MultiCell(0,10,'eHR-9999-99-9999-CEC',0,'L');
     $this->SetFont('Times','',8);
     $this->SetTextColor(255,0,0);
     $this->MultiCell(0,10,'PLDT General Office P.O. Box 2148 Makati City, Philippines',0,'R');
@@ -66,9 +59,6 @@ $pdf->MultiCell(0,5,'                     Total Other Income',0,'L');
 $pdf->Ln(10);
 $pdf->MultiCell(0,5,'         This cetification is being issued upon employee\'s request for Visa Application. Visa Application. Visa Application. Visa Application. Visa Application. Visa Application. Visa Application. Visa Application.',0,'L');
 $pdf->Ln(30);
-// $pdf->MultiCell(0,5,'Renelia L. Villanueva',0,'R');
-// $pdf->MultiCell(0,5,'Head',0,'R');
-// $pdf->MultiCell(0,5,'HRIS & Automation',0,'R');
 
 
 // eto yung last wag dugtungan. sa taas ka magdagdag.
@@ -94,4 +84,7 @@ $pdf->SetXY(111,200);
 $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
 
 $pdf->Output();
+// $pdf->Output("F", "../../production/doc_certs/doc.pdf");
+// $pdf->Close();
+
 ?>
