@@ -1,31 +1,45 @@
 <?php
   session_start();
 
-	require 'template/connection.php';
+	// require 'template/connection.php';
 
   if(isSet($_POST['login'])) {
+	  	
+    try{
+		$servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		$dbname = 'eHRISysUsers';
+		
+		$conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
+		$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+		$conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 ); 
 
-    $username = $_POST['username'];
-	$password = $_POST['password'];
-	
-	$query ="SELECT * FROM tblaccounts WHERE username='$username' AND password='$password'";
+		$query ="SELECT * FROM webusers WHERE username='$username' AND coe IN(1)";
 
-	$stmt=$conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-	$stmt->execute();
+		$stmt=$conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+		$stmt->execute();
 
-    $res = $stmt->rowCount();
+		$res = $stmt->rowCount();
 
-    if ($res == 1) {
-        $_SESSION['username'] = $username;
-        $_SESSION['password'] = $password;
-        $_SESSION['userobj'] = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($res == 1) {
+			$_SESSION['username'] = $username;
+			$_SESSION['password'] = $password;
+			$_SESSION['userobj'] = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        header('Location: http://localhost/pldt/pldtfam/production/index.php');
-        exit;
-    } else {
-        echo 'not valid';
-        // header("refresh:2; url=login.php");
+			header('Location: http://localhost/pldt/pldtfam/production/index.php');
+			exit;
+		} else {
+			echo 'Account have no rights to enter the application.';
+			header("Location: http://localhost/pldt/pldtfam/production/err_403.php");
+		}
     }
+    catch(Exception $e)  
+    {   
+		echo 'Invalid Account.'; 
+		header("Location: http://localhost/pldt/pldtfam/production/err_403.php");
+    }
+
 } else {
 
 

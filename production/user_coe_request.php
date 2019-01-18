@@ -1,6 +1,6 @@
 <?php
 
-    require 'template/connection.php';
+    require 'template/connection_static.php';
 
     $purpose_query_coe = $conn->prepare("SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'COE') ORDER BY purpose_name ASC");
     $purpose_query_coe->execute();

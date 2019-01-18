@@ -1,7 +1,7 @@
 <?php
 
 
-    require 'template/connection.php';
+    require 'template/connection_static.php';
 
     // ----- insert record
     $persno = $_POST['persno'];

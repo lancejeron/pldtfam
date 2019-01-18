@@ -207,8 +207,8 @@
                                             data-req_status="'.$row['req_status'].'"
                                             data-claimersname="'.$row['claimersname'].'"
                                             data-returned_status="'.$row['returned_status'].'"
-																						data-date_returned="'.$row['date_returned'].'"
-																						data-claimers_signature="'.$row['claimers_signature'].'"
+											data-date_returned="'.$row['date_returned'].'"
+											data-claimers_signature="'.$row['claimers_signature'].'"
                                             data-claimdate="'.$row['claimdate'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
 												</tr>
 											';
