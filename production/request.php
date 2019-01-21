@@ -116,8 +116,13 @@
                   <div class="x_content">
                     <div class='table-responsive'>
 					<?php
-						foreach($request_query_res3 as $row){
-							echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row["persno"].'" data-start_time="'.$row["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+						foreach($request_query_res2 as $row){
+							if($row["req_status"]==0){
+								echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row["persno"].'" data-start_time="'.$row["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+							}
+							else{
+								
+							}
 						}
 					?>
                     
