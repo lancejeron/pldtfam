@@ -8,7 +8,13 @@
 
 		require 'template/connection.php';
     
-    $stmt = $conn->prepare('SELECT *, CONVERT(VARCHAR(20), start_time, 100) AS start_time2 FROM view_coe_request AS tbl1 WHERE req_status IN(0, NULL)');
+    // $stmt = $conn->prepare('SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (0) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno');
+    $stmt = $conn->prepare('SELECT *
+    FROM
+      (SELECT view_coe_request.*, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (0) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno) as v1
+      UNION
+      (SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request WHERE start_time NOT IN (SELECT start_time FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (0,1) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno))');
+
     $stmt->execute();
     $rows = $stmt->fetchAll()
     
@@ -43,7 +49,6 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Requests</h2>
-                    <!-- <button type='button' class='btn btn-success pull-right btn-md' data-toggle='modal' data-target='#walkin'><i class="fa fa-plus"></i> Create Request</button> -->
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -52,7 +57,6 @@
                         <thead>
                           <tr>
                             <th>Start Time</th>
-                            <th>Method</th>
                             <th>Employee ID</th>
                             <th>Email</th>
                             <th>Employee Name</th>
@@ -76,7 +80,6 @@
                             echo '
                             <tr>
                             <td>' . $row["start_time2"] . '</td>
-                            <td>' . $row["req_type"] . '</td>
                             <td>' . $row["persno"] . '</td>
                             <td>' . $row["email"] . '</td>
                             <td>' . $row["emp_name"] . '</td>

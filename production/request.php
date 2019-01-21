@@ -14,7 +14,8 @@
 		$request_query = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), start_time, 100) AS start_time FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
 		$request_query->execute();
 		$request_query_res = $request_query->fetchAll();
-		$request_query2 = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		
+		$request_query2 = $conn->prepare("SELECT * FROM view_coe_request INNER JOIN (SELECT req_date, emp_id, req_status FROM prepared_certificates group by req_date, emp_id, req_status) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno WHERE start_time = '$start_time' AND persno = '$persno'");
 		$request_query2->execute();
 		$request_query_res2 = $request_query2->fetchAll();
 
@@ -22,7 +23,7 @@
 		$request_query3->execute();
 		$request_query_res3 = $request_query3->fetchAll();
 		
-		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE date_prepared = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
+		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE req_date = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
 		$certificate_que->execute();
 		$certificate_que_res = $certificate_que->fetchAll();
 ?>
@@ -84,26 +85,29 @@
                     <!-- <h2>Request > </h2> -->
                     <?php
                         foreach($request_query_res2 as $row){
-													echo '<h2>Request > '.$row["start_time"].'</h2>';
-													if($row["req_status"]==0){
-														echo '
-														<form id="finishform" method="POST" action="request_finished.php">
-															<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
-															<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
-															<button type="submit" id="finishbtn" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
-														</form>
-														';
-													}
-													else{
-														echo '
-														<form id="finishform" method="POST" action="request_finished.php">
-															<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
-															<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
-															<button type="submit" id="finishbtn" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
-														</form>
-														';
+							echo '<h2>Request > '.$row["start_time"].'</h2>';
+							if($row["req_status"]==0){
+								echo '
+								<form id="finishform" method="POST" action="request_finished.php">
+									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
+									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
+									<button type="submit" id="finishbtn" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
+								</form>
+								';
+							}
+							else if ($row["req_status"]==1){
+								echo '
+								<form id="finishform" method="POST" action="request_finished.php">
+									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
+									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
+									<button type="submit" id="finishbtn" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
+								</form>
+								';
 
-													}
+							}
+							else{
+
+							}
 							
                         }
                     ?>
@@ -121,7 +125,6 @@
                         <thead>
                           <tr>
                             <th>Start Time</th>
-                            <th>Method</th>
                             <th>Employee ID</th>
                             <th>Email</th>
                             <th>Employee Name</th>
@@ -142,7 +145,6 @@
                             echo '
                             <tr>
                             <td>' . $row["start_time"] . '</td>
-                            <td>' . $row["req_type"] . '</td>
                             <td>' . $row["persno"] . '</td>
                             <td>' . $row["email"] . '</td>
                             <td>' . $row["emp_name"] . '</td>
@@ -192,19 +194,20 @@
 												<tr>
 													<td>'.$row["ref_no"].'</td>
 													<td>'.$row["purpose"].'</td>
-													<td>'.$row["req_status"].'</td>
+													<td>'.$row["cert_status"].'</td>
 													<td>'.$row["claimdate2"].'</td>
 													<td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
                                             data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
                                             data-date_prepared2="'.$row['date_prepared2'].'"
-                                            data-date_prepared="'.$row['date_prepared'].'"
+											data-date_prepared="'.$row['date_prepared'].'"
+											data-req_date="'.$row['req_date'].'"
                                             data-name="'.$row['name'].'"
                                             data-purpose="'.$row['purpose'].'"
                                             data-accomp_code="'.$row['accomp_code'].'"
                                             data-cbotype="'.$row['cbotype'].'"
                                             data-control_id="'.$row['control_id'].'"
                                             data-personal="'.$row['personal'].'"
-                                            data-req_status="'.$row['req_status'].'"
+                                            data-cert_status="'.$row['cert_status'].'"
                                             data-claimersname="'.$row['claimersname'].'"
                                             data-returned_status="'.$row['returned_status'].'"
 											data-date_returned="'.$row['date_returned'].'"
@@ -235,6 +238,7 @@
 				<div class="modal-body">
 					<input type="" id="persno" name="persno" style="display: none;">
 					<input type="" id="start_time" name="start_time" style="display: none;">
+					<input type="" id="date_prepared" name="date_prepared" style="display: none;">
 
 					<div class="form-group">
 						<label class="control-label col-sm-2">Reference Number*</label>
@@ -322,6 +326,7 @@
 						<div class="col-sm-10">          
 							<input type="text" class="form-control" id="date_prepared2" placeholder=""disabled>
 							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" style='display: none;'>
+							<input type="text" class="form-control" id="req_date" placeholder="" name="req_date" style='display: none;'>
 						</div>
 					</div>
 					
@@ -361,9 +366,9 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="req_status">Status</label>
+						<label class="control-label col-sm-2" for="cert_status">Status</label>
 						<div class="col-sm-10">          
-								<select name="req_status" class="form-control" >
+								<select name="cert_status" class="form-control" >
 									<option id="Processed" value="Processed">Processed</option>
 									<option id="Claimed" value="Claimed">Claimed</option>
 									<option id="Mailed" value="Mailed">Mailed</option>
@@ -398,7 +403,6 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="claimdate">Claim Date*</label>
 						<div class="col-sm-10">          
-							<!-- <input type="text" class="form-control" id="claimdate" placeholder="" disabled> -->
 							<input type="datetime-local" class="form-control" id="claimdate" name="claimdate">
 						</div>
 					</div>
@@ -414,11 +418,8 @@
           <div class="form-group">
 						<label class="control-label col-sm-2">Date Returned*</label>
 						<div class="col-sm-10">          
-              				<!-- <input type="text" id='date_returned' class="form-control" placeholder="" disabled> -->
 							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" name='date_returned' disabled required >
-              				<!-- <input type="text" id='date_returned3' class="form-control" placeholder="" name='date_returned'> -->
-							<!-- <input type="text" id='date_returned4' class="form-control" placeholder=""> -->
-							<!-- <input type="datetime-local" id='date_returned4' class="form-control" placeholder="" value="2017-06-01T08:30:01">   -->
+              				
 						</div>
 					</div>
 
@@ -476,33 +477,34 @@
 		var emp_id = button.data('emp_id')
 		var date_prepared = button.data('date_prepared')
 		var date_prepared2 = button.data('date_prepared2')
+		var req_date = button.data('req_date')
 		var name= button.data('name')
 		var purpose= button.data('purpose')
 		var accomp_code= button.data('accomp_code')
 		var cbotype= button.data('cbotype')
 		var control_id= button.data('control_id')
 		var personal= button.data('personal')
-		var req_status= button.data('req_status')
+		var cert_status= button.data('cert_status')
 		var claimersname= button.data('claimersname')
 		var claimdate= button.data('claimdate')
 		var returned_status= button.data('returned_status')
 		var date_returned= button.data('date_returned')
-		// var date_returned4= button.data('date_returned')
 		var claimers_signature= button.data('claimers_signature')
 		
 		var modal = $(this)
 		modal.find('.modal-body #ref_no').val(ref_no)
 		modal.find('.modal-body #emp_id').val(emp_id)
 		modal.find('.modal-body #date_prepared').val(date_prepared)
-		modal.find('.modal-body #date_prepared2').val(date_prepared2) 
+		modal.find('.modal-body #date_prepared2').val(date_prepared2)
+		modal.find('.modal-body #req_date').val(req_date)
 		modal.find('.modal-body #name').val(name)
 		modal.find('.modal-body #purpose').val(purpose)
 		modal.find('.modal-body #accomp_code').val(accomp_code)
 		modal.find('.modal-body #cbotype').val(cbotype)
 		modal.find('.modal-body #control_id').val(control_id)
 		modal.find('.modal-body #personal').val(personal)
-		modal.find('.modal-body #req_status').val(req_status)
-		modal.find('.modal-body #req_status').text(''+req_status)
+		modal.find('.modal-body #cert_status').val(cert_status)
+		modal.find('.modal-body #cert_status').text(''+cert_status)
 		modal.find('.modal-body #claimersname').val(claimersname)
 		modal.find('.modal-body #claimdate').val(claimdate)
 		modal.find('.modal-body #date_returned').val(date_returned)
@@ -522,12 +524,12 @@
 			modal.find('.modal-body #date_returned').prop('disabled', true);
 		}
 
-		if(req_status == 'Processed'){
+		if(cert_status == 'Processed'){
 			$('#Processed').prop('selected', true);
 
 		}
 		else{
-			$('#'+req_status).prop('selected', true);
+			$('#'+cert_status).prop('selected', true);
 		}
 
 		if(claimers_signature==''){

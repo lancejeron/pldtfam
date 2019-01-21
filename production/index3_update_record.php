@@ -11,8 +11,8 @@
             require 'template/connection.php';
 
             $emp_id = $_POST['emp_id'];
-            $date_prepared = $_POST['date_prepared'];
-            $req_status = $_POST['req_status'];
+            $req_date = $_POST['req_date'];
+            $cert_status = $_POST['cert_status'];
             $ref_no = $_POST['ref_no'];
             $claimersname = $_POST['claimersname'];
             $claimdate = $_POST['claimdate'];
@@ -37,22 +37,22 @@
             if($_POST['claimers_signature']==''){
                 // wala pangpirma
                 if($returned_status == 'yes'){
-                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned2', req_status = '$req_status', claimersname='$claimersname', claimers_signature='$file_name' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'");
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned2', cert_status = '$cert_status', claimersname='$claimersname', claimers_signature='$file_name' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND req_date='$req_date'");
                     return $update_sql;
                 }
                 else{
-                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate2', returned_status = '$returned_status', claimers_signature='$file_name'  WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'");
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET cert_status = '$cert_status', claimersname='$claimersname', claimdate='$claimdate2', returned_status = '$returned_status', claimers_signature='$file_name'  WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND req_date='$req_date'");
                     return $update_sql;
                 }
             }
             else{
                 // meron
                 if($returned_status == 'yes'){
-                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned2', req_status = '$req_status', claimersname='$claimersname' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'");
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned2', cert_status = '$cert_status', claimersname='$claimersname' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND req_date='$req_date'");
                     return $update_sql;
                 }
                 else{
-                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET req_status = '$req_status', claimersname='$claimersname', claimdate='$claimdate2', returned_status = '$returned_status' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND date_prepared='$date_prepared'");
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET cert_status = '$cert_status', claimersname='$claimersname', claimdate='$claimdate2', returned_status = '$returned_status' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND req_date='$req_date'");
                     return $update_sql;
                 }
 

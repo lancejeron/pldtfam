@@ -3,7 +3,7 @@
         $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
         $username = "";
         $password = "";
-        $dbname = 'certificate';
+        $dbname = 'certification';
         
         $conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
         $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );

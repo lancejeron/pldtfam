@@ -13,24 +13,22 @@
         $persno = $_POST["persno"];
 
         if($btn1 == 'finish'){
-            $update_query = $conn->prepare("UPDATE view_coe_request SET req_status=1 WHERE start_time='$start_time' AND persno='$persno'");
+            $update_query = $conn->prepare("UPDATE prepared_certificates SET req_status=1 WHERE req_date='$start_time' AND emp_id='$persno'");
             if (!$update_query->execute()) {
                 echo "Record not updated." . "<br>";
 
             }
             else{
                 // echo "Record Updated.";
-                // echo($file_name);
             }
         }
         else{
-            $update_query = $conn->prepare("UPDATE view_coe_request SET req_status=0 WHERE start_time='$start_time' AND persno='$persno'");
+            $update_query = $conn->prepare("UPDATE prepared_certificates SET req_status=0 WHERE req_date='$start_time' AND emp_id='$persno'");
             if (!$update_query->execute()) {
                 echo "Record not updated." . "<br>";
             }
             else{
                 // echo "Record Updated.";
-                // echo($file_name);
             }
 
         }
