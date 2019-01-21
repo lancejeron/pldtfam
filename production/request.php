@@ -155,7 +155,7 @@
                             <td>' . $row["reqt_for_name"] . '</td>
                             <td>' . $row["position_title"] . '</td>
                             <td>' . $row["MMProv"] . '</td>
-                            <td>' . $row["other_instruction"] . '</td>  
+                            <td>' . $row["other_instructions"] . '</td>  
                           </tr>
                           ';
                           }
