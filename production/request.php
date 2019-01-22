@@ -22,6 +22,10 @@
 		$request_query3 = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
 		$request_query3->execute();
 		$request_query_res3 = $request_query3->fetchAll();
+
+		$request_query4 = $conn->prepare("SELECT COUNT(*) AS var_x FROM prepared_certificates WHERE emp_id = '$persno' AND req_date = '$start_time'");
+		$request_query4->execute();
+		$request_query_res4 = $request_query4->fetchAll();
 		
 		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE req_date = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
 		$certificate_que->execute();
@@ -116,12 +120,20 @@
                   <div class="x_content">
                     <div class='table-responsive'>
 					<?php
-						foreach($request_query_res2 as $row){
-							if($row["req_status"]==0){
-								echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row["persno"].'" data-start_time="'.$row["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+						foreach($request_query_res4 as $row){
+							if($request_query_res2 != NULL){
+								foreach($request_query_res2 as $row2){
+									if($row["var_x"]>=0 && $row2["req_status"]==0 ){
+										echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+									}
+									else{
+									}
+								}
 							}
-							else{
-								
+							else if($row["var_x"]==0){
+								foreach($request_query_res as $row2){
+									echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+								}
 							}
 						}
 					?>
