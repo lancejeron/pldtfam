@@ -8,8 +8,9 @@
 	
 		require 'template/connection.php';
 
-		$sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.persno AND prepared_certificates.req_date=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.persno AND tbl2.req_date=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC');
-		
+		// $sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.persno AND prepared_certificates.req_date=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.persno AND tbl2.req_date=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC');
+		$sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2 FROM prepared_certificates');
+
 		$sql ->execute();
 		$result=$sql->fetchAll();
 		
@@ -98,21 +99,16 @@
                         <table id='mydatatable' class='table table-striped table-bordered'>
                             <thead>
                                 <tr>
-                                    <th>Start Time</th>
-                                    <th>Employee ID</th>
-                                    <th>Email</th>
-                                    <th>Employee Name</th>
-                                    <th>Type of COE</th>
-									<th>Purpose</th>
-                                    <th>Salary</th>
-                                    <th>Question</th>
-                                    <th>Statement</th>
-                                    <th>Request for</th>
-                                    <th>Request for Name</th>
-                                    <th>Positon Title</th>
-                                    <th>MMProv</th>
-                                    <th>Other Instruction</th>
                                     <th>Reference Number</th>
+                                    <th>Employee ID</th>
+                                    <th>Date Prepared</th>
+                                    <th>Employee Name</th>
+									<th>Purpose</th>
+                                    <th>Accomp Code</th>
+                                    <th>CBO Type</th>
+                                    <th>Control ID</th>
+                                    <th>Personal</th>
+                                    <th>Certificate Status</th>
                                     <th>Claimdate</th>
                                     <th>Action</th>
                                 </tr>
@@ -121,21 +117,16 @@
                                 foreach($result as $row){
                                     echo '
                                     <tr>
-									<td>' . $row["start_time2"] . '</td>
-                                    <td>' . $row["persno"] . '</td>
-                                    <td>' . $row["email"] . '</td>
-                                    <td>' . $row["emp_name"] . '</td>
-									<td>' . $row["type_of_coe"] . '</td>
-									<td>' . $row["purpose"] . '</td>
-                                    <td>' . $row["_salary"] . '</td>
-                                    <td>' . $row["question1"] . '</td>
-                                    <td>' . $row["statement"] . '</td>
-                                    <td>' . $row["reqt_for"] . '</td>
-                                    <td>' . $row["reqt_for_name"] . '</td>
-                                    <td>' . $row["position_title"] . '</td>
-                                    <td>' . $row["MMProv"] . '</td>
-                                    <td>' . $row["other_instructions"] . '</td>
                                     <td>' . $row["ref_no"] . '</td>
+                                    <td>' . $row["emp_id"] . '</td>
+									<td>' . $row["date_prepared2"] . '</td>
+                                    <td>' . $row["name"] . '</td>
+									<td>' . $row["purpose"] . '</td>
+                                    <td>' . $row["accomp_code"] . '</td>
+									<td>' . $row["cbotype"] . '</td>
+                                    <td>' . $row["control_id"] . '</td>
+									<td>' . $row["personal"] . '</td>
+									<td>' . $row["cert_status"] . '</td>
                                     <td>' . $row["claimdate2"] . '</td>
                                     <td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
                                             data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
@@ -328,7 +319,7 @@
 	$(document).ready(function() {
 		$('#mydatatable').DataTable({
       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-      order: [15, 'desc']
+      order: [10, 'desc']
     });
 	});
 
