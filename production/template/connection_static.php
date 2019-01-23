@@ -1,8 +1,8 @@
 <?php
     try{
         $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
-        $username = "";
-        $password = "";
+        $username = "user_1";
+        $password = "user_1";
         $dbname = 'certification';
         
         $conn = new PDO("sqlsrv:Server=$servername ; Database=$dbname", "$username", "$password");
