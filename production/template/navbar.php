@@ -12,8 +12,8 @@
         <!-- <img src="images/img.jpg" alt="..." class="img-circle profile_img"> -->
         </div>
         <div class="profile_info">
-        <span>Welcome <?php echo $_SESSION['username'];?>!</</span>
-        <!-- <h2>John Doe</h2> -->
+        <span>Welcome,</span>
+        <h2><?php echo $_SESSION['username'];?></h2>
         </div>
         <div class="clearfix"></div>
     </div>
