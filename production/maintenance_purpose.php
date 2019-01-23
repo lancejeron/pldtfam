@@ -409,8 +409,8 @@
 						swal("Oops...", "Something went wrong.", "error");
 					}
 				});
-				e.preventDefault();
 			}
+				e.preventDefault();
 		})
 	});
 </script>

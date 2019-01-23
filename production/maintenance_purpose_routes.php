@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require 'template/connection.php';
 
     $btn1 = $_POST['btn1'];
