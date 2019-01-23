@@ -11,7 +11,7 @@
 		$persno= $_GET['emp_id'];
 		$start_time= $_GET['start_time'];
 
-		$request_query = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), start_time, 100) AS start_time FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		$request_query = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
 		$request_query->execute();
 		$request_query_res = $request_query->fetchAll();
 		
@@ -88,31 +88,33 @@
                   <div class="x_title">
                     <!-- <h2>Request > </h2> -->
                     <?php
-                        foreach($request_query_res2 as $row){
+						foreach($request_query_res as $row){
 							echo '<h2>Request > '.$row["start_time"].'</h2>';
-							if($row["req_status"]==0){
-								echo '
-								<form id="finishform" method="POST" action="request_finished.php">
-									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
-									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
-									<button type="submit" id="finishbtn" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
-								</form>
-								';
-							}
-							else if ($row["req_status"]==1){
-								echo '
-								<form id="finishform" method="POST" action="request_finished.php">
-									<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
-									<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
-									<button type="submit" id="finishbtn" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
-								</form>
-								';
-
+							if($request_query_res2 != NULL){
+								foreach($request_query_res2 as $row2){
+									if($row2["req_status"]==0 ){
+										echo '
+											<form id="finishform" method="POST" action="request_finished.php">
+												<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
+												<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
+												<button type="submit" id="finishbtn" class="btn btn-success pull-right btn-sm" name="btn1" value="finish"><i class="fa fa-check"></i> Mark as Finished</button>
+											</form>
+											';
+									}
+									else if($row2["req_status"]==1 ){
+										echo '
+											<form id="finishform" method="POST" action="request_finished.php">
+												<input type="" id="persno" value="'.$row["persno"].'"name="persno" style="display: none;">
+												<input type="" id="start_time" value="'.$row["start_time"].'"name="start_time" style="display: none;">
+												<button type="submit" id="finishbtn" class="btn btn-danger pull-right btn-sm" name="btn1" value="unfinish"><i class="fa fa-warning"></i> Mark as Unfinished</button>
+											</form>
+											';
+									}
+								}
 							}
 							else{
-
+								
 							}
-							
                         }
                     ?>
                     <div class="clearfix"></div>
