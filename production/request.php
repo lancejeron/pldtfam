@@ -11,7 +11,7 @@
 		$persno= $_GET['emp_id'];
 		$start_time= $_GET['start_time'];
 
-		$request_query = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		$request_query = $conn->prepare("SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
 		$request_query->execute();
 		$request_query_res = $request_query->fetchAll();
 		
@@ -89,7 +89,7 @@
                     <!-- <h2>Request > </h2> -->
                     <?php
 						foreach($request_query_res as $row){
-							echo '<h2>Request > '.$row["start_time"].'</h2>';
+							echo '<h2>Request > '.$row["start_time2"].'</h2>';
 							if($request_query_res2 != NULL){
 								foreach($request_query_res2 as $row2){
 									if($row2["req_status"]==0 ){
@@ -163,7 +163,7 @@
                           foreach($request_query_res as $row){
                             echo '
                             <tr>
-                            <td>' . $row["start_time"] . '</td>
+                            <td>' . $row["start_time2"] . '</td>
                             <td>' . $row["persno"] . '</td>
                             <td>' . $row["email"] . '</td>
                             <td>' . $row["emp_name"] . '</td>
