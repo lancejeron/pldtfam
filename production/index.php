@@ -36,7 +36,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Certificate</h3>
+                <h3>Certification</h3>
               </div>
 
             </div>
