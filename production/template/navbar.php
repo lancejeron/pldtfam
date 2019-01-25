@@ -30,7 +30,9 @@
             <ul class="nav child_menu">
                 <li><a href="index.php">Requests</a></li>
                 <li><a href="index2.php">Finished Requests</a></li>
-                <li><a href="index3.php">Certificates</a></li>
+                <!-- <li><a href="index3.php">Certificates</a></li> -->
+                <li data-toggle='modal' data-target='#searchmodal'><a>Certificates</a></li>
+
             </ul>
             </li>
             <li><a><i class="fa fa-wrench"></i> Maintenance <span class="fa fa-chevron-down"></span></a>
@@ -64,3 +66,40 @@
     </div>
 </div>
 <!-- /top navigation -->
+
+<!-- search modal -->
+<div class="modal fade bs-example-modal-md" id="searchmodal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+		<form id="" data-parsley-validate class="form-horizontal form-label-left" method='GET' action='index3.php'>
+			<div class="modal-content">
+				<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Search</h4>
+				</div>
+				<div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Reference Number</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="" placeholder="(All)" name="ref_no">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Employee ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="" placeholder="(All)" name="emp_id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Employee Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="" placeholder="(All)" name="name">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Search</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

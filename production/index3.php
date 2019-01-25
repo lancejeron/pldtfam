@@ -8,11 +8,62 @@
 	
 		require 'template/connection.php';
 
-		// $sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM view_COE_request AS tbl1 INNER JOIN prepared_certificates ON prepared_certificates.emp_id = tbl1.persno AND prepared_certificates.req_date=tbl1.start_time WHERE EXISTS (SELECT * FROM prepared_certificates as tbl2 WHERE tbl2.emp_id = tbl1.persno AND tbl2.req_date=tbl1.start_time) ORDER BY prepared_certificates.claimdate DESC');
-		$sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates');
+		$ref_no = $_GET['ref_no'];
+		$emp_id = $_GET['emp_id'];
+		$name = $_GET['name'];
 
-		$sql ->execute();
-		$result=$sql->fetchAll();
+		if($ref_no == '' && $emp_id == '' && $name == ''){
+			$sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates');
+			$sql ->execute();
+			$result=$sql->fetchAll();
+		}
+		else if($ref_no != '' && $emp_id != '' && $name != ''){
+			$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
+				WHERE ref_no IN ('$ref_no') AND emp_id IN ('$emp_id') AND name LIKE '%$name%'");
+			$sql ->execute();
+			$result=$sql->fetchAll();
+		}
+
+		else if($ref_no != '' && $emp_id == '' && $name == ''){
+			$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
+				WHERE ref_no IN ('$ref_no')");
+			$sql ->execute();
+			$result=$sql->fetchAll();
+		}
+		else if($ref_no == '' && $emp_id != '' && $name == ''){
+			$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
+				WHERE emp_id IN ('$emp_id')");
+			$sql ->execute();
+			$result=$sql->fetchAll();
+		}
+		else if($ref_no == '' && $emp_id == '' && $name != ''){
+			$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
+				WHERE name LIKE '%$name%'");
+			$sql ->execute();
+			$result=$sql->fetchAll();
+		}
+
+		else if($ref_no != '' && $emp_id != '' && $name == ''){
+			$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
+				WHERE ref_no IN ('$ref_no') AND emp_id IN ('$emp_id')");
+			$sql ->execute();
+			$result=$sql->fetchAll();
+		}
+		else if($ref_no != '' && $emp_id == '' && $name != ''){
+			$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
+				WHERE ref_no IN ('$ref_no') AND name LIKE '%$name%'");
+			$sql ->execute();
+			$result=$sql->fetchAll();
+		}
+		else if($ref_no == '' && $emp_id != '' && $name != ''){
+			$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
+				WHERE emp_id IN ('$emp_id') AND name LIKE '%$name%'");
+			$sql ->execute();
+			$result=$sql->fetchAll();
+		}
+		
+
+
 		
 ?>
 <!-- DATE_FORMAT(date_returned, "%Y-%m-%dT%H:%i:%s") -->
@@ -92,6 +143,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Certificates</h2>
+					<center><button type="button" data-toggle="modal" data-target="#searchmodal" class="btn btn-primary"><i class="fa fa-search"></i> Search</button></center>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -163,141 +215,142 @@
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 	<form id="editform" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index3_update_record.php'>
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Process Request</h4>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Process Request</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="ref_no">Reference Number</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="ref_no" placeholder="" disabled>
+						<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no" style="display:none;">
+					</div>
 				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="ref_no">Reference Number</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="ref_no" placeholder="" disabled>
-							<input type="text" class="form-control" id="ref_no" placeholder="" name="ref_no" style="display:none;">
-						</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
+					<div class="col-sm-10">          
+						<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
+						<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
 					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
-						<div class="col-sm-10">          
-							<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
-							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="date_prepared2" placeholder=""disabled>
-							<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" style='display: none;'>
-							<input type="text" class="form-control" id="req_date" placeholder="" name="req_date" style='display: none;'>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="date_prepared">Date Prepared</label>
+					<div class="col-sm-10">          
+						<input type="text" class="form-control" id="date_prepared2" placeholder=""disabled>
+						<input type="text" class="form-control" id="date_prepared" placeholder="" name="date_prepared" style='display: none;'>
+						<input type="text" class="form-control" id="req_date" placeholder="" name="req_date" style='display: none;'>
 
-						</div>
 					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="name">Name</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="name" placeholder="" name="name" disabled>
-						</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="name">Name</label>
+					<div class="col-sm-10">          
+						<input type="text" class="form-control" id="name" placeholder="" name="name" disabled>
 					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="purpose">Purpose</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="purpose" placeholder="" name="purpose" disabled>
-						</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="purpose">Purpose</label>
+					<div class="col-sm-10">          
+						<input type="text" class="form-control" id="purpose" placeholder="" name="purpose" disabled>
 					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" disabled>
-						</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="accomp_code">Accomp Code</label>
+					<div class="col-sm-10">          
+						<input type="text" class="form-control" id="accomp_code" placeholder="" name="accomp_code" disabled>
 					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="cbotype">CBO Type</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype" disabled>
-						</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="cbotype">CBO Type</label>
+					<div class="col-sm-10">          
+						<input type="text" class="form-control" id="cbotype" placeholder="" name="cbotype" disabled>
 					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="personal">Personal</label>
-						<div class="col-sm-10">          
-							<input type="personal" class="form-control" id="personal" placeholder="" name="personal" disabled>
-						</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="personal">Personal</label>
+					<div class="col-sm-10">          
+						<input type="personal" class="form-control" id="personal" placeholder="" name="personal" disabled>
 					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="cert_status">Status</label>
-						<div class="col-sm-10">          
-								<select name="cert_status" class="form-control" >
-									<option id="Processed" value="Processed">Processed</option>
-									<option id="Claimed" value="Claimed">Claimed</option>
-									<option id="Mailed" value="Mailed">Mailed</option>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="cert_status">Status</label>
+					<div class="col-sm-10">          
+							<select name="cert_status" class="form-control" >
+								<option id="Processed" value="Processed">Processed</option>
+								<option id="Claimed" value="Claimed">Claimed</option>
+								<option id="Mailed" value="Mailed">Mailed</option>
 
-								</select>                
-						</div>
+							</select>                
 					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
-						<div class="col-sm-10">          
-							<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname" maxlength='75'>
-						</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="claimersname">Claimer's Name</label>
+					<div class="col-sm-10">          
+						<input type="text" class="form-control" id="claimersname" placeholder="" name="claimersname" maxlength='75'>
 					</div>
+				</div>
 
-					<div class="form-group">
-							<label for="signature" class="control-label col-sm-2">Claimer's Signature</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" class="form-control" id="claimersign" name="claimersign" placeholder="" style='display: none;' >
-							<input type="text" class="form-control" id="claimers_signature" name="claimers_signature" placeholder="" style='display: none;'>
-								<div id="signArea" >
-									<div class="sig sigWrapper" style="height:auto;">
-										<div class="typed"></div>
-										<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
-									</div>
-									<br>
-									<center><button type="button" class="btn btn-default btn-sm" id='btnclear' onclick="clearsign();">Clear</button></center>
+				<div class="form-group">
+						<label for="signature" class="control-label col-sm-2">Claimer's Signature</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+						<input type="text" class="form-control" id="claimersign" name="claimersign" placeholder="" style='display: none;' >
+						<input type="text" class="form-control" id="claimers_signature" name="claimers_signature" placeholder="" style='display: none;'>
+							<div id="signArea" >
+								<div class="sig sigWrapper" style="height:auto;">
+									<div class="typed"></div>
+									<canvas class="sign-pad" id="sign-pad" width="300" height="100"></canvas>
 								</div>
+								<br>
+								<center><button type="button" class="btn btn-default btn-sm" id='btnclear' onclick="clearsign();">Clear</button></center>
 							</div>
 						</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="claimdate">Claim Date*</label>
-						<div class="col-sm-10">          
-							<input type="datetime-local" class="form-control" id="claimdate" name="claimdate">
-						</div>
 					</div>
 
-          <div class="form-group">
-						<label class="control-label col-sm-2">Returned</label>
-						<div class="col-sm-10">
-							<input type="checkbox" id='returncb' name='returned_status' value='yes'>
-              				<input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
-						</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="claimdate">Claim Date*</label>
+					<div class="col-sm-10">          
+						<input type="datetime-local" class="form-control" id="claimdate" name="claimdate">
 					</div>
-
-          <div class="form-group">
-						<label class="control-label col-sm-2">Date Returned*</label>
-						<div class="col-sm-10">          
-							<input type="datetime-local" id='date_returned' class="form-control" placeholder="" name='date_returned' disabled required >
-              				
-						</div>
-					</div>
-
-					<div class="ln_solid"></div>
-								
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" id="editformbtn" class="btn btn-success" value='Edit' onclick='getdatetime();'>Save</button>
+
+		<div class="form-group">
+					<label class="control-label col-sm-2">Returned</label>
+					<div class="col-sm-10">
+						<input type="checkbox" id='returncb' name='returned_status' value='yes'>
+						<input type="checkbox" id='returncb2' class="form-control" name='returned_status' value='no' checked style='display:none;'>
+					</div>
 				</div>
+
+		<div class="form-group">
+					<label class="control-label col-sm-2">Date Returned*</label>
+					<div class="col-sm-10">          
+						<input type="datetime-local" id='date_returned' class="form-control" placeholder="" name='date_returned' disabled required >
+						
+					</div>
+				</div>
+
+				<div class="ln_solid"></div>
+							
 			</div>
-		</form>
-	</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" id="editformbtn" class="btn btn-success" value='Edit' onclick='getdatetime();'>Save</button>
+			</div>
+		</div>
+	</form>
+</div>
+
 </div>
         <!-- /page content -->
 
@@ -321,7 +374,7 @@
 	$(document).ready(function() {
 		$('#mydatatable').DataTable({
       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-      order: [11, 'desc']
+      order: [0, 'desc']
     });
 	});
 
