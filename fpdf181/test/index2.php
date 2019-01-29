@@ -22,7 +22,7 @@ function Header()
 function Footer()
 {
     // Position at 1.5 cm from bottom
-    $this->SetY(-45);
+    $this->SetY(-15);
     // Times italic 8
     $this->SetFont('Times','I',8);
     $this->MultiCell(0,1,'*** Must be an orginal computer pirntout without erasures to be valid. *** ',0,'L');
@@ -37,7 +37,6 @@ $pdf->AddPage();
 $pdf->SetMargins(30,5);
 $pdf->Image('../pldt2.png',50,20,300);
 $pdf->SetFont('Times','B',14);
-// $pdf->MultiCell(0,10,'CERTFICATE OF EMPLOYMENT AND COMPENSATION',0, 'C');
 $pdf->SetFont('','',12);
 $pdf->Ln(5);
 $pdf->MultiCell(0,5,' November 12, 2019',0,'R');
@@ -68,7 +67,7 @@ $pdf->Ln(5);
 $pdf->MultiCell(0,5,'SSS NUMBER:',0,'L');
 $pdf->Ln(10);
 $pdf->SetFont('Times');
-$pdf->MultiCell(0,5,'         This cetification is issued upon employee\'s request for SSS purposes.',0,'L');
+$pdf->MultiCell(0,5,'         This cetification is issued upon employee\'s request for SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, SSS, purposes.',0,'L');
 $pdf->Ln(30);   
 // $pdf->MultiCell(0,5,'Renelia L. Villanueva',0,'R');
 // $pdf->MultiCell(0,5,'Head',0,'R');
@@ -119,11 +118,11 @@ $pdf->MultiCell(84,0,'__________________________________________________________
 
 // head
 $pdf->SetFont('Times');
-$pdf->SetXY(111,214);
+$pdf->SetXY(111,232);
 $pdf->MultiCell(100,0,'Renelia L. Villanueva',0,'C');
-$pdf->SetXY(111,216);
+$pdf->SetXY(111,234);
 $pdf->MultiCell(100,5,'Head',0,'C');
-$pdf->SetXY(111,220);
+$pdf->SetXY(111,238);
 $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
 
 $pdf->Output();

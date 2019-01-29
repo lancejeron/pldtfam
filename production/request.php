@@ -247,7 +247,7 @@
 <!-- CREATE CERTIFICATE MODAL -->
 <div class="modal fade bs-example-modal-sm" id="create_certificate" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
-		<form id="" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='request_create_certificate.php'>
+		<form id="createform" data-parsley-validate class="form-horizontal form-label-left" target='_blank' method='POST' action='request_create_certificate.php'>
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
@@ -276,38 +276,36 @@
             <!-- pdf display -->          
 					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
-							<div class="col-sm-10">
-								<select id="type_of_cert" name="type_of_cert" class="form-control" >
-									<!-- <option id="status2" label="" value=""></option> -->
-									<option id='' value="COE">COE</option>
-									<option id='' value="CEC">CEC</option>
-									<option id='' value="CECwN">CEC with Notary</option>
-								</select>            
-							</div>
+						<div class="col-sm-10">
+							<select id="type_of_cert" name="type_of_cert" class="form-control" >
+								<option id='' value="COE">COE</option>
+								<option id='' value="CEC">CEC</option>
+								<option id='' value="CECwN">CEC with Notary</option>
+							</select>            
+						</div>
+					</div>
+					
 
 					<div class="form-group">
-						<label class="control-label col-sm-2">Signature:</label>
+						<label class="control-label col-sm-2">With Signature:</label>
 						<div class="col-sm-10">
-							<input type="checkbox" id='' name='withsignature' value='yes'>
+							<input type="checkbox" id='withsignature' name='withsignature' value='1'>
+							<input type="checkbox" id='withsignature2' name='withsignature' value='0' checked style='display: none;'>
 						</div>
 					</div>
 
 					
 					<div class="form-group">
-						<label class="control-label col-sm-2">Header and Footer:</label>
+						<label class="control-label col-sm-2">PLD 1:</label>
 						<div class="col-sm-10">
-							<input type="checkbox" id='' name='headerandfooter' value='yes'>
+							<input type="checkbox" id='withlogo' name='withlogo' value='1'>
+							<input type="checkbox" id='withlogo2' name='withlogo' value='0' checked style='display: none;'>
 						</div>
 					</div>
-
-
-          	</div>
-
-           <!-- <center><button type='button' class='btn btn-info btn-md' data-toggle='modal' data-target='#preview_certificate'> Generate</button></center> -->
-        </div>
-        <div class="modal-footer">
+        		</div>
+        		<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" id='' class="btn btn-success" value='' name='btn1'>Generate</button>
+					<button type="submit" id='createbtn' class="btn btn-success">Create</button>
 				</div>
 			</div>
 		</form>
@@ -564,16 +562,31 @@
 
 	});
 	$("#returncb").change(function() {
-    if(this.checked) {
-      $("#returncb2").prop('checked', false);
-      $('#date_returned').prop('disabled', false);
-      
-    }
-    else if(!this.checked){
-      $("#returncb2").prop('checked', true);
-      $('#date_returned').prop('disabled', true);
-    }
-  });
+		if(this.checked) {
+			$("#returncb2").prop('checked', false);
+			$('#date_returned').prop('disabled', false);
+		}
+		else if(!this.checked){
+			$("#returncb2").prop('checked', true);
+			$('#date_returned').prop('disabled', true);
+		}
+  	});
+	$("#withsignature").change(function() {
+		if(this.checked) {
+			$("#withsignature2").prop('checked', false);
+		}
+		else if(!this.checked){
+			$("#withsignature2").prop('checked', true);
+		}
+  	});
+	$("#withlogo").change(function() {
+		if(this.checked) {
+			$("#withlogo2").prop('checked', false);
+		}
+		else if(!this.checked){
+			$("#withlogo2").prop('checked', true);
+		}
+  	});
 </script>
 <script>
 	$(document).ready(function(){
@@ -740,9 +753,32 @@
 					}
 				});
 			}
-			e.preventDefault()
-		})
-  });
+			e.preventDefault();
+		});
+		$('#createbtn').click(function(e){
+			$.ajax({
+					url: 'request_create_certificate.php',
+					method: 'POST',
+					data: $('#createform').serialize(),
+						
+					success: function(data){
+						console.log(data);
+						swal({
+							title: "Certificate Created.",
+							text: " ",
+							icon: "success",
+							buttons: false,
+						});
+						setTimeout( function () {
+							location.reload(); 
+						}, 1500);
+					},
+					error: function(data){
+						swal("Oops...", "Something went wrong.", "error");
+					}
+			});
+		});
+  	});
 </script>
 <script>
 	function clearsign(){
