@@ -215,23 +215,27 @@
 													<td>'.$row["purpose"].'</td>
 													<td>'.$row["cert_status"].'</td>
 													<td>'.$row["claimdate2"].'</td>
-													<td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
-                                            data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
-                                            data-date_prepared2="'.$row['date_prepared2'].'"
-											data-date_prepared="'.$row['date_prepared'].'"
-											data-req_date="'.$row['req_date'].'"
-                                            data-name="'.$row['name'].'"
-                                            data-purpose="'.$row['purpose'].'"
-                                            data-accomp_code="'.$row['accomp_code'].'"
-                                            data-cbotype="'.$row['cbotype'].'"
-                                            data-control_id="'.$row['control_id'].'"
-                                            data-personal="'.$row['personal'].'"
-                                            data-cert_status="'.$row['cert_status'].'"
-                                            data-claimersname="'.$row['claimersname'].'"
-                                            data-returned_status="'.$row['returned_status'].'"
-											data-date_returned="'.$row['date_returned'].'"
-											data-claimers_signature="'.$row['claimers_signature'].'"
-                                            data-claimdate="'.$row['claimdate'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
+													<td>' . '
+														<button type="button" class="btn btn-info"><i class="fa fa-eye"></i> View</button>
+														
+														<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
+															data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
+															data-date_prepared2="'.$row['date_prepared2'].'"
+															data-date_prepared="'.$row['date_prepared'].'"
+															data-req_date="'.$row['req_date'].'"
+															data-name="'.$row['name'].'"
+															data-purpose="'.$row['purpose'].'"
+															data-accomp_code="'.$row['accomp_code'].'"
+															data-cbotype="'.$row['cbotype'].'"
+															data-control_id="'.$row['control_id'].'"
+															data-personal="'.$row['personal'].'"
+															data-cert_status="'.$row['cert_status'].'"
+															data-claimersname="'.$row['claimersname'].'"
+															data-returned_status="'.$row['returned_status'].'"
+															data-date_returned="'.$row['date_returned'].'"
+															data-claimers_signature="'.$row['claimers_signature'].'"
+															data-claimdate="'.$row['claimdate'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . 
+													'</td>
 												</tr>
 											';
 										}
@@ -260,21 +264,6 @@
 					<input type="" id="date_prepared" name="date_prepared" style="display: none;">
 
 					<div class="form-group">
-						<label class="control-label col-sm-2">Reference Number*</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="" placeholder="" name="ref_no" required>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="purpose_name">Purpose:*</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name3" placeholder="" name="purpose" maxlength='75' required>
-						</div>
-					</div>
-
-            <!-- pdf display -->          
-					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
 						<div class="col-sm-10">
 							<select id="type_of_cert" name="type_of_cert" class="form-control" >
@@ -284,7 +273,28 @@
 							</select>            
 						</div>
 					</div>
-					
+
+					<div class="form-group">
+						<label class="control-label col-sm-2">Reference Number*</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="" placeholder="" name="ref_no" required>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2">Purpose:*</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="purpose1" placeholder="" name="purpose" maxlength='75' required>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2">Expose Salary:</label>
+						<div class="col-sm-10">
+							<input type="checkbox" id='expsalary' name='expsalary' value='1'>
+							<input type="checkbox" id='expsalary2' name='expsalary' value='0' checked style='display: none;'>
+						</div>
+					</div>
 
 					<div class="form-group">
 						<label class="control-label col-sm-2">With Signature:</label>
@@ -756,27 +766,52 @@
 			e.preventDefault();
 		});
 		$('#createbtn').click(function(e){
-			$.ajax({
-					url: 'request_create_certificate.php',
-					method: 'POST',
-					data: $('#createform').serialize(),
-						
-					success: function(data){
-						console.log(data);
-						swal({
-							title: "Certificate Created.",
-							text: " ",
-							icon: "success",
-							buttons: false,
-						});
-						setTimeout( function () {
-							location.reload(); 
-						}, 1500);
+			if($("#purpose1").val()==''){
+				swal("Please fill the required(*) fields.","","info");
+				e.preventDefault();
+			}
+			else{
+				swal({
+					title: "Certificate will be created.",
+					text: "Are you sure you want to create this certificate?",
+					icon: "warning",
+					buttons: {
+						cancel: true,
+						ok: {
+							text: "Yes",
+							value: "willsubmit",
+						}
 					},
-					error: function(data){
-						swal("Oops...", "Something went wrong.", "error");
+				})
+				.then((willsubmit)=>{
+					if (willsubmit){
+						$.ajax({
+							url: 'request_create_certificate.php',
+							method: 'POST',
+							data: $('#createform').serialize(),
+								
+							success: function(data){
+								console.log(data);
+								swal({
+									title: "Certificate Created.",
+									text: " ",
+									icon: "success",
+									buttons: false,
+								});
+								setTimeout( function () {
+									location.reload(); 
+								}, 1500);
+							},
+							error: function(data){
+								swal("Oops...", "Something went wrong.", "error");
+							}
+						});
+
 					}
-			});
+
+				});
+				e.preventDefault();
+			}
 		});
   	});
 </script>

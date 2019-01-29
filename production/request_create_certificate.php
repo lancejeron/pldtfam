@@ -153,8 +153,8 @@
             $pdf->SetXY(111,232);
             $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
 
+            $pdf->Output();
             $pdf->Output("F", "doc_certs/$ref_no.pdf");
-            $pdf->Output("");
         }
         else if($type_of_cert=='CEC'){
             $pdf = new PDF();
@@ -210,7 +210,7 @@
             $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
 
             $pdf->Output("F", "doc_certs/$ref_no.pdf");
-            $pdf->Output("");
+            $pdf->Output();
         }
         else if($type_of_cert=='CECwN'){
             $pdf = new PDF('P', 'mm','Legal');
@@ -276,7 +276,7 @@
             $pdf->SetXY(111,200);
             $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
 
-            $pdf->Output("");
+            $pdf->Output();
             $pdf->Output("F", "doc_certs/$ref_no.pdf");
         }
 
