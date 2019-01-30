@@ -216,9 +216,11 @@
 													<td>'.$row["cert_status"].'</td>
 													<td>'.$row["claimdate2"].'</td>
 													<td>' . '
-														<button type="button" class="btn btn-info"><i class="fa fa-eye"></i> View</button>
+														<button type="button" class="btn btn-info" data-toggle="modal" data-target="#view_certificate",
+															data-ref_no="'.$row['ref_no'].'"
+															><i class="fa fa-eye"></i> View</button>
 														
-														<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
+															<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
 															data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
 															data-date_prepared2="'.$row['date_prepared2'].'"
 															data-date_prepared="'.$row['date_prepared'].'"
@@ -229,7 +231,7 @@
 															data-cbotype="'.$row['cbotype'].'"
 															data-control_id="'.$row['control_id'].'"
 															data-personal="'.$row['personal'].'"
-															data-cert_status="'.$row['cert_status'].'"
+															data-cert_status="'.$row['cert_status'].'" 
 															data-claimersname="'.$row['claimersname'].'"
 															data-returned_status="'.$row['returned_status'].'"
 															data-date_returned="'.$row['date_returned'].'"
@@ -321,6 +323,23 @@
 		</form>
 	</div>
 </div>
+
+<!-- VIEW CERTIFICATE MODAL -->
+<div class="modal fade" id="view_certificate" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
+				<object id='certpdf' width='860', height='500', data="", type="application/pdf"></object>
+			</div>
+			<div class="modal-footer">		
+			</div>	
+		</div>
+	</div>
+</div>
+
 
 <!-- EDIT CERTIFICATE MODAL -->
 <div class="modal fade bs-example-modal-lg" id="edit_certificate" tabindex="-1" role="dialog" aria-hidden="true">
@@ -569,6 +588,14 @@
 			
 		} 
 
+
+	});
+	$('#view_certificate').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget)
+		var ref_no = button.data('ref_no')
+
+		var modal = $(this)
+		modal.find('.modal-body #certpdf').attr("data", "doc_certs/"+ref_no+".pdf");
 
 	});
 	$("#returncb").change(function() {
