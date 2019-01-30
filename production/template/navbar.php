@@ -80,7 +80,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2">Reference Number</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" placeholder="(All)" name="ref_no">
+                            <input type="text" class="form-control" id="" placeholder="(All)" name="ref_no" maxlength='75'>
                         </div>
                     </div>
                     <div class="form-group">
