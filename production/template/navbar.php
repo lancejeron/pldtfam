@@ -92,7 +92,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2">Employee Name</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" placeholder="(All)" name="name">
+                            <input type="text" class="form-control" id="" placeholder="(All)" name="name" maxlength='150'>
                         </div>
                     </div>
                 </div>
