@@ -86,7 +86,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2">Employee ID</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" placeholder="(All)" name="emp_id">
+                            <input type="text" class="form-control" id="" placeholder="(All)" name="emp_id" maxlength='6'>
                         </div>
                     </div>
                     <div class="form-group">
