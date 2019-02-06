@@ -7,6 +7,7 @@
         $purpose_name = $_POST['purpose_name'];
         $purpose_type = $_POST['purpose_type'];
         $purpose_salary = $_POST['purpose_salary'];
+        $purpose_desc = $_POST['purpose_desc'];
 
         $check_purpose = $conn->prepare("SELECT COUNT(*) AS x FROM tblmpurpose WHERE purpose_name IN ('$purpose_name') OR purpose_name LIKE '%$purpose_name%'");
         $check_purpose -> execute();
@@ -18,7 +19,7 @@
                 echo 'already exists';
             }
             else{
-                $add_purpose = $conn->prepare("INSERT INTO tblmpurpose (purpose_name, purpose_status, purpose_type, purpose_salary) VALUES ('$purpose_name','active', '$purpose_type', '$purpose_salary')");
+                $add_purpose = $conn->prepare("INSERT INTO tblmpurpose (purpose_name, purpose_status, purpose_type, purpose_salary, purpose_desc) VALUES ('$purpose_name','active', '$purpose_type', '$purpose_salary', '$purpose_desc')");
                 $add_purpose -> execute();
                 echo 'success';
             }
@@ -31,8 +32,9 @@
         $purpose_status = $_POST['purpose_status'];
         $purpose_type = $_POST['purpose_type'];
         $purpose_salary = $_POST['purpose_salary'];
+        $purpose_desc = $_POST['purpose_desc'];
 
-        $edit_purpose= $conn->prepare("UPDATE tblmpurpose SET purpose_name='$purpose_name', purpose_status='$purpose_status', purpose_type='$purpose_type', purpose_salary='$purpose_salary' WHERE purpose_id = '$purpose_id'");
+        $edit_purpose= $conn->prepare("UPDATE tblmpurpose SET purpose_name='$purpose_name', purpose_status='$purpose_status', purpose_type='$purpose_type', purpose_salary='$purpose_salary', purpose_desc='$purpose_desc' WHERE purpose_id = '$purpose_id'");
         // $edit_purpose->execute();
         if (!$edit_purpose->execute()) {
             echo 'error';

@@ -16,15 +16,18 @@
         $start_time= $_POST["start_time"];
         $purpose = $_POST["purpose"];
         $type_of_cert = $_POST["type_of_cert"];
-        $ref_no = $_POST["ref_no"];
+        // $ref_no = $_POST["ref_no"];
         $withsignature = $_POST["withsignature"];
         $withlogo = $_POST["withlogo"];
 
-        $check_cert = $conn->prepare("SELECT COUNT(*) AS x FROM prepared_certificates WHERE ref_no IN ('$ref_no')");
-        $check_cert -> execute();
-        $check_cert_res = $check_cert ->fetchAll();
-        foreach($check_cert_res as $x){
-            if($x["x"]==0){
+            // temp refno creator
+            $create_refno = $conn->prepare("SELECT COUNT(*) as totalcert FROM prepared_certificates");
+            $create_refno ->execute();
+            $create_refno_res = $create_refno->fetchAll();
+
+            foreach($create_refno_res as $row){                
+                $refno_sum=$row['totalcert']+1;
+                $ref_no = "RF_".$refno_sum;
                 $create_cert_que = $conn->prepare("INSERT INTO prepared_certificates (ref_no, date_prepared, emp_id, purpose, req_date, req_status) VALUES ('$ref_no', '$date_prepared', '$persno','$purpose', '$start_time', 0)");
                 if (!$create_cert_que->execute()) {
                     echo 'error';
@@ -32,8 +35,7 @@
                 else{
                     header('Location: request.php?emp_id='.$persno.'&start_time='.$start_time.'');
                 }
-            }
-        }
+            // 
 
         class PDF extends FPDF {
             function Header(){
@@ -279,6 +281,7 @@
             $pdf->Output();
             $pdf->Output("F", "doc_certs/$ref_no.pdf");
         }
+    }
 
     }
 ?>

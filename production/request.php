@@ -30,6 +30,10 @@
 		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE req_date = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
 		$certificate_que->execute();
 		$certificate_que_res = $certificate_que->fetchAll();
+
+		$purpose_que = $conn->prepare("SELECT * FROM tblmpurpose ORDER BY purpose_name asc");
+		$purpose_que->execute();
+		$pupose_que_res = $purpose_que->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -277,24 +281,33 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-2">Reference Number*</label>
+						<label class="control-label col-sm-2">Purpose</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="" placeholder="" name="ref_no" required>
+							<select id="purpose" name="purpose" class="form-control" >
+								<?php
+									foreach($pupose_que_res as $row){
+										echo '
+											<option value="'.$row["purpose_name"].'">'.$row["purpose_name"].'</option>
+										';
+									}
+								?>
+							</select>            
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-2">Purpose:*</label>
+						<label class="control-label col-sm-2">Confidential Salary:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="purpose1" placeholder="" name="purpose" maxlength='75' required>
+							<input type="checkbox" id='confsalary' name='confsalary' value='1'>
+							<input type="checkbox" id='confsalary2' name='confsalary' value='0' checked style='display: none;'>
 						</div>
 					</div>
-
 					<div class="form-group">
-						<label class="control-label col-sm-2">Expose Salary:</label>
+						<label class="control-label col-sm-2">Head Signatory:</label>
 						<div class="col-sm-10">
-							<input type="checkbox" id='expsalary' name='expsalary' value='1'>
-							<input type="checkbox" id='expsalary2' name='expsalary' value='0' checked style='display: none;'>
+							<select id="head_signatory" name="head_signatory" class="form-control" >
+								<option id='' value="ren">Renelia L. Villanueva</option>
+							</select>            
 						</div>
 					</div>
 
@@ -624,6 +637,15 @@
 			$("#withlogo2").prop('checked', true);
 		}
   	});
+	$("#confsalary").change(function() {
+		if(this.checked) {
+			$("#confsalary2").prop('checked', false);
+		}
+		else if(!this.checked){
+			$("#confsalary2").prop('checked', true);
+		}
+  	});
+	  
 </script>
 <script>
 	$(document).ready(function(){
@@ -793,11 +815,11 @@
 			e.preventDefault();
 		});
 		$('#createbtn').click(function(e){
-			if($("#purpose1").val()==''){
-				swal("Please fill the required(*) fields.","","info");
-				e.preventDefault();
-			}
-			else{
+			// if($("#purpose1").val()==''){
+			// 	swal("Please fill the required(*) fields.","","info");
+			// 	e.preventDefault();
+			// }
+			// else{
 				swal({
 					title: "Certificate will be created.",
 					text: "Are you sure you want to create this certificate?",
@@ -838,7 +860,7 @@
 
 				});
 				e.preventDefault();
-			}
+			// }
 		});
   	});
 </script>

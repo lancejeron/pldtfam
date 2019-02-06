@@ -8,9 +8,9 @@
 	
 		require 'template/connection.php';
 
-		$ref_no = $_GET['ref_no'];
-		$emp_id = $_GET['emp_id'];
-		$name = $_GET['name'];
+		$ref_no = $_POST['ref_no'];
+		$emp_id = $_POST['emp_id'];
+		$name = $_POST['name'];
 
 		if($ref_no == '' && $emp_id == '' && $name == ''){
 			$sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates');
@@ -61,6 +61,9 @@
 			$sql ->execute();
 			$result=$sql->fetchAll();
 		}
+		// $sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates');
+		// $sql ->execute();
+		// $result=$sql->fetchAll();
 		
 
 
@@ -151,10 +154,10 @@
                         <table id='mydatatable' class='table table-striped table-bordered'>
                             <thead>
                                 <tr>
-									<th>Date Requested</th>
+                                    <th>Date Prepared</th>
                                     <th>Employee ID</th>
                                     <th>Reference Number</th>
-                                    <th>Date Prepared</th>
+									<th>Date Requested</th>
                                     <th>Employee Name</th>
 									<th>Purpose</th>
                                     <th>Accomp Code</th>
@@ -170,10 +173,10 @@
                                 foreach($result as $row){
                                     echo '
 									<tr>
-									<td>' . $row["req_date2"] . '</td>
+									<td>' . $row["date_prepared2"] . '</td>
                                     <td>' . $row["emp_id"] . '</td>
                                     <td>' . $row["ref_no"] . '</td>
-									<td>' . $row["date_prepared2"] . '</td>
+									<td>' . $row["req_date2"] . '</td>
                                     <td>' . $row["name"] . '</td>
 									<td>' . $row["purpose"] . '</td>
                                     <td>' . $row["accomp_code"] . '</td>
@@ -373,7 +376,7 @@
 
 	$(document).ready(function() {
 		$('#mydatatable').DataTable({
-      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
       order: [0, 'desc']
     });
 	});

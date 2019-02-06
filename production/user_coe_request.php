@@ -221,7 +221,6 @@
 		var hh = today.getHours();
 		var min = today.getMinutes();
 		var sec = today.getSeconds();
-		// var parsetoday = new Date(today)
 		
 		if(dd<10) {
 			dd = '0'+dd
@@ -234,12 +233,6 @@
 		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
 
 		document.getElementById("start_time").value=today;
-
-        // var x=document.getElementById("purpose").value;
-        // var y=document.getElementById("purpose_cec").value;
-        // var xy = x+' '+y;
-        // document.getElementById("purpose").value=xy;
-        // alert(xy);
 	}
 </script>
 <script>
@@ -254,7 +247,6 @@
             
             
             $('#purpose_coe').val(removeval);
-            // $('#purpose_salary_coe').val(removeval_salary_coe1);
             var n = $('#purpose_salary_coe').val().search("(C)");
             if(n>=0){
                 var removeval_salary_coe1= $('#purpose_salary_coe').val().replace('['+newval+'](C); ', '');
@@ -266,29 +258,25 @@
             }
             $("[value='["+newval+"(E)']").prop('checked', false)
             $("[value='["+newval+"(C)']").prop('checked', false)
+            $(".purpose_salary [id='"+newval+"'").prop('checked', false);
+
             
             $("#rad_"+newval).hide();
         }
         else{
             $('#purpose_coe').val(currval + ''+ $(this).val() +'_' + x +'(COE); ');
-            // $('#purpose_salary_coe').val(currval_salary+ newval + '(1); ');
             $("#rad_"+newval).show();
-            // $("[value='"+newval+"(1);']").prop('checked', true);
         }
     });
     $(".checkbox3").change(function() {
         var newval = $(this).val();
         var currval = $('#purpose_cec').val();
-        // var currval_salary = $('#purpose_salary_cec').val();
         if(!this.checked){
             var removeval= $('#purpose_cec').val().replace(''+newval+'(CEC); ', '');
             $('#purpose_cec').val(removeval);
-            // var removeval_salary_cec1= $('#purpose_salary_cec').val().replace(''+newval+'(Exposed); ', '');
-            // $('#purpose_salary_cec').val(removeval_salary_cec1);
         }
         else{
             $('#purpose_cec').val(currval + ''+ $(this).val() + '(CEC); ');
-            // $('#purpose_salary_cec').val(currval_salary+ newval + '(Exposed); ');
         }
     });
     $(".typeofcoe").change(function() {
@@ -368,6 +356,16 @@
                     return false;
                 }
                 else{
+                    // 
+                       radio = $(".purpose_salary:radio:checked").length;
+                        if(!radio){
+                            swal("Please pick on how your salary will be displayed.","","info");
+                            return false;
+                        }
+                        else{
+
+                        // }    
+                    // 
                     var persno = $('#persno').val();
                     var emp_name = $('#emp_name').val();
                     if(persno=='' || emp_name==''){
@@ -425,6 +423,9 @@
                         });
                         e.preventDefault();
                     }
+                // 
+                }
+                // 
                 }
             }
         });

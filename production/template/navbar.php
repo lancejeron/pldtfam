@@ -70,7 +70,7 @@
 <!-- search modal -->
 <div class="modal fade bs-example-modal-md" id="searchmodal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
-		<form id="" data-parsley-validate class="form-horizontal form-label-left" method='GET' action='index3.php'>
+		<form id="" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index3.php'>
 			<div class="modal-content">
 				<div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>

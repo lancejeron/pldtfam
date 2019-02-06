@@ -13,6 +13,7 @@
       (SELECT view_coe_request.*, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (0) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno) as v1
       UNION
       (SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request as tbl1 WHERE  not exists (SELECT 1 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (0,1) group by req_date, emp_id) as tbl2 ON tbl2.req_date = tbl1.start_time AND tbl2.emp_id=tbl1.persno))');
+    // $stmt = $conn->prepare("SELECT view_coe_request.*, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request");
 
     $stmt->execute();
     $rows = $stmt->fetchAll()
@@ -132,7 +133,7 @@
         // buttons: [
         //     'copy', 'csv', 'print'
         // ],
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
         order: [0, 'desc']
     } );
 	});
