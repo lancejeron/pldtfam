@@ -19,14 +19,15 @@
         $type_of_cert = $_POST["type_of_cert"];
         // $ref_no = $_POST["ref_no"];
         $confsalary = $_POST["confsalary"];
+        $head_signatory = $_POST["head_signatory"];
         $withsignature = $_POST["withsignature"];
         $withlogo = $_POST["withlogo"];
 
         // temp joining of table
-        $emp = $conn->prepare("SELECT *,DATENAME(MM, emp_datehired) + RIGHT(CONVERT(VARCHAR(12), emp_datehired, 107), 9) AS emp_datehired2, DATENAME(MM, emp_dateseparated) + RIGHT(CONVERT(VARCHAR(12), emp_dateseparated, 107), 9) AS emp_dateseparated2
-        , FORMAT(emp_basicsalary, 'N', 'en-us') AS emp_basicsalary2 FROM tblemployee INNER JOIN tblsalary ON tblemp_emp_id = tblsal_emp_id WHERE tblemp_emp_id = '$persno'");
-        $emp -> execute();
-        $emp_res = $emp->fetchAll();
+        $emp_coe = $conn2->prepare("SELECT *, DATENAME(MM, [Date Hired]) + RIGHT(CONVERT(VARCHAR(12), [Date Hired], 107), 9) AS DateHired2, DATENAME(MM, [Date Separated]) + RIGHT(CONVERT(VARCHAR(12), [Date Separated], 107), 9) AS DateSeparated2
+            , FORMAT(Salary, 'N', 'en-us') AS Salary2 FROM [HRISData].[dbo].[vw_coe_employee] as tbl1 WHERE IDNo LIKE ('$persno')");
+        $emp_coe -> execute();
+        $emp_coe_res = $emp_coe->fetchAll();
 
             // temp refno creator
             $create_refno = $conn->prepare("SELECT COUNT(*) as totalcert FROM prepared_certificates");
@@ -71,28 +72,18 @@
             }
             
         }
-        foreach($emp_res as $x){
-            $emp_id = $x["tblemp_emp_id"];
-            $emp_name = $x["emp_name"];
-            $emp_datehired = $x["emp_datehired2"];
-            $emp_dateseparated  = $x["emp_dateseparated2"];
-            $emp_designation = $x["emp_designation"];
-            $emp_presentorg = $x["emp_presentorg"];
-            $emp_sssnum = $x["emp_sssnum"];
-            $emp_hdmfnum = $x["emp_hdmfnum"];
-            // $emp_gender = $x["emp_gender"];
-            $emp_basicsal = $x["emp_basicsalary2"];
-            // $emp_midyrbonus = $x["emp_midyrbonus"];
-            // $emp_xmasbonus = $x["emp_xmasbonus"];
-            // $emp_unusedslpay = $x["emp_unusedslpay"];
-            // $emp_otherearn = $x["emp_otherearn"];
-            // $emp_otherbonus = $x["emp_otherbonus"];
-            // $emp_total = $x["emp_total"];
-            
+        if($type_of_cert=='COE'){
+            foreach($emp_coe_res as $x){
+                $emp_id = $x["IDNo"];
+                $emp_name = $x["Name"];
+                $emp_datehired = $x["DateHired2"];
+                $emp_dateseparated  = $x["DateSeparated2"];
+                $emp_designation = $x["Official Title"];
+                $emp_presentorg = $x["org"];
+                $emp_sssnum = $x["sss_no"];
+                $emp_hdmfnum = $x["HDMF"];
+                $emp_basicsal = $x["Salary2"];
 
-            
-
-            if($type_of_cert=='COE'){
                 $pdf = new PDF('P', 'mm', 'Letter');
                 $pdf->AddPage();
                 $pdf->SetMargins(30,5);
@@ -214,7 +205,7 @@
 
                 // head of hris
                 $pdf->SetFont('Times');
-                $pdf->SetXY(111,222);
+                $pdf->SetXY(111,224);
                 $pdf->MultiCell(100,0,'Renelia L. Villanueva',0,'C');
                 $pdf->SetXY(111,226);
                 $pdf->MultiCell(100,5,'Head',0,'C');
@@ -224,134 +215,133 @@
                 $pdf->Output();
                 $pdf->Output("F", "doc_certs/$ref_no.pdf");
             }
-            else if($type_of_cert=='CEC'){
-                $pdf = new PDF();
-                $pdf->AddPage();
-                $pdf->SetMargins(20,5);
-                if($withlogo=='1'){
-                    $pdf->Image('../fpdf181/pldt2.png',50,20,300);
-                }
-                $pdf->SetFont('Times','B',14);
-                $pdf->MultiCell(0,10,'CERTFICATE OF EMPLOYMENT AND COMPENSATION',0, 'C');
-                $pdf->SetFont('','',12);
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'Date: November 12, 2019',0,'R');
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'         This is to certify that LANCE SAN PABLO is a regular employee of PLDT Inc. (formerly "Philippine Long Distance Telephone Company") since November 1, 1994 and presently holds the position of Sr Telecom Associate.',0,'L');
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'         His present basic monthly salary is P100,000.00.',0,'L');
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'         Further, he received the following bonuses, premiums and allowances during the twelve-month period:',0,'L');
-                $pdf->Ln(10);
-                $pdf->MultiCell(0,5,'                     Mid-Year Bonus',0,'L');
-                $pdf->MultiCell(0,5,'                     Christmas Bonus/13th Month Pay',0,'L');
-                $pdf->MultiCell(0,5,'                     Unused Sick Leave Pay',0,'L');
-                $pdf->MultiCell(0,5,'                     Other Earnings  ',0,'L');
-                $pdf->MultiCell(0,5,'                     Other Bonuses  ',0,'L');
-                $pdf->MultiCell(0,1,'                                                                                                          ____________________',0,'L');
-                $pdf->MultiCell(0,5,'                     Total Other Income',0,'L');
-                $pdf->Ln(10);
-                $pdf->MultiCell(0,5,'         This certification is being issued upon employee\'s request for Visa Application.',0,'L');
-                $pdf->Ln(120);
-                $pdf->MultiCell(0,5,'eHR-201235',0,'L');
-
-
-                // eto yung last wag dugtungan. sa taas ka magdagdag.
-                $pdf->SetXY(137,107.5);
-                $pdf->MultiCell(40,0,'999,999,999.00',0,'R');
-                $pdf->SetXY(137,112.5);
-                $pdf->MultiCell(40,0,'9,999,999.00',0,'R');
-                $pdf->SetXY(137,117.5);
-                $pdf->MultiCell(40,0,'999,999.00',0,'R');
-                $pdf->SetXY(137,122.5);
-                $pdf->MultiCell(40,0,'9,999.00',0,'R');
-                $pdf->SetXY(137,127.5);
-                $pdf->MultiCell(40,0,'999.00',0,'R');
-                $pdf->SetXY(137,135);
-                $pdf->MultiCell(40,0,'999,999,999,999.00',0,'R');
-
-                // head
-                $pdf->SetXY(111,200);
-                $pdf->MultiCell(100,0,'Renelia L. Villanueva',0,'C');
-                $pdf->SetXY(111,202);
-                $pdf->MultiCell(100,5,'Head',0,'C');
-                $pdf->SetXY(111,206);
-                $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
-
-                $pdf->Output("F", "doc_certs/$ref_no.pdf");
-                $pdf->Output();
-            }
-            else if($type_of_cert=='CECwN'){
-                $pdf = new PDF('P', 'mm','Legal');
-                $pdf->AddPage();
-                $pdf->SetMargins(20,5);
-                if($withlogo=='1'){
-                    $pdf->Image('../fpdf181/pldt2.png',50,20,300);
-                }
-                $pdf->SetFont('Times','B',14);
-                $pdf->MultiCell(0,10,'CERTFICATE OF EMPLOYMENT AND COMPENSATION',0, 'C');
-                $pdf->SetFont('','',12);
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'Date: November 12, 2019',0,'R');
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'         This is to certify that ROBERTO JOAQUIN ZULUETA is a regular employee of PLDT Inc. (formerly "Philippine Long Distance Telephone Company") since November 1, 1994 and presently holds the position of Sr Telecom Associate.',0,'L');
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'         His present basic monthly salary is P100,000.00.',0,'L');
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'         Further, he received the following bonuses, premiums and allowances during the twelve-month period:',0,'L');
-                $pdf->Ln(10);
-                $pdf->MultiCell(0,5,'                   Mid-Year Bonus',0,'L');
-                $pdf->MultiCell(0,5,'                   Christmas Bonus/13th Month Pay',0,'L');
-                $pdf->MultiCell(0,5,'                   Unused Sick Leave Pay',0,'L');
-                $pdf->MultiCell(0,5,'                   Other Earnings  ',0,'L');
-                $pdf->MultiCell(0,5,'                   Other Bonuses  ',0,'L');
-                $pdf->MultiCell(0,1,'                                                                                                            ____________________',0,'L');
-                $pdf->MultiCell(0,5,'                   Total Other Income',0,'L');
-                $pdf->Ln(10);
-                $pdf->MultiCell(0,5,'         This certification is being issued upon employee\'s request for Visa Application.',0,'L');
-                $pdf->Ln(60);
-                $pdf->MultiCell(0,5,'         SUBSCRIBES AND SWORN to before me, a notary public in and for the City of ____________________ this ____ day of __________________. The affiant, whom I identified through the following competent evidence of identity: Philippine Social Security System number 0391924976, personally signed the foregoing instrument before me and avowed under penalty of law to the whole truth of the contents of said instrument.',0,'L');
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'WITNESS MY HAND AND SEAL on the date and at the place first abovementioned.',0,'L');
-                $pdf->Ln(5);
-                $pdf->MultiCell(0,5,'Doc. No.',0,'L');
-                $pdf->MultiCell(0,5,'Page No',0,'L');
-                $pdf->MultiCell(0,5,'Book No',0,'L');
-                $pdf->MultiCell(0,5,'Series of',0,'L');
-                $pdf->Ln(5);
-                $pdf->SetFont('Times','B',14);
-                $pdf->MultiCell(0,5,'NOTARY PUBLIC',0,'R');
-                $pdf->SetFont('Times');
-                $pdf->Ln(49);
-                $pdf->MultiCell(0,5,'eHR-201235',0,'L');
-
-                // eto yung last wag dugtungan. sa taas ka magdagdag.
-                $pdf->SetXY(137,107.5);
-                $pdf->MultiCell(42,0,'999,999,999.00',0,'R');
-                $pdf->SetXY(137,112.5);
-                $pdf->MultiCell(42,0,'9,999,999.00',0,'R');
-                $pdf->SetXY(137,117.5);
-                $pdf->MultiCell(42,0,'999,999.00',0,'R');
-                $pdf->SetXY(137,122.5);
-                $pdf->MultiCell(42,0,'9,999.00',0,'R');
-                $pdf->SetXY(137,127.5);
-                $pdf->MultiCell(42,0,'999.00',0,'R');
-                $pdf->SetXY(137,135);
-                $pdf->MultiCell(42,0,'999,999,999,999.00',0,'R');
-
-                // head
-                $pdf->SetXY(111,194);
-                $pdf->MultiCell(100,0,'Renelia L. Villanueva',0,'C');
-                $pdf->SetXY(111,196);
-                $pdf->MultiCell(100,5,'Head',0,'C');
-                $pdf->SetXY(111,200);
-                $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
-
-                $pdf->Output();
-                $pdf->Output("F", "doc_certs/$ref_no.pdf");
-            }
         }
-    }
+        else if($type_of_cert=='CEC'){
+            $pdf = new PDF();
+            $pdf->AddPage();
+            $pdf->SetMargins(20,5);
+            if($withlogo=='1'){
+                $pdf->Image('../fpdf181/pldt2.png',50,20,300);
+            }
+            $pdf->SetFont('Times','B',14);
+            $pdf->MultiCell(0,10,'CERTFICATE OF EMPLOYMENT AND COMPENSATION',0, 'C');
+            $pdf->SetFont('','',12);
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'Date: November 12, 2019',0,'R');
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'         This is to certify that LANCE SAN PABLO is a regular employee of PLDT Inc. (formerly "Philippine Long Distance Telephone Company") since November 1, 1994 and presently holds the position of Sr Telecom Associate.',0,'L');
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'         His present basic monthly salary is P100,000.00.',0,'L');
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'         Further, he received the following bonuses, premiums and allowances during the twelve-month period:',0,'L');
+            $pdf->Ln(10);
+            $pdf->MultiCell(0,5,'                     Mid-Year Bonus',0,'L');
+            $pdf->MultiCell(0,5,'                     Christmas Bonus/13th Month Pay',0,'L');
+            $pdf->MultiCell(0,5,'                     Unused Sick Leave Pay',0,'L');
+            $pdf->MultiCell(0,5,'                     Other Earnings  ',0,'L');
+            $pdf->MultiCell(0,5,'                     Other Bonuses  ',0,'L');
+            $pdf->MultiCell(0,1,'                                                                                                          ____________________',0,'L');
+            $pdf->MultiCell(0,5,'                     Total Other Income',0,'L');
+            $pdf->Ln(10);
+            $pdf->MultiCell(0,5,'         This certification is being issued upon employee\'s request for Visa Application.',0,'L');
+            $pdf->Ln(120);
+            $pdf->MultiCell(0,5,'eHR-201235',0,'L');
 
+
+            // eto yung last wag dugtungan. sa taas ka magdagdag.
+            $pdf->SetXY(137,107.5);
+            $pdf->MultiCell(40,0,'999,999,999.00',0,'R');
+            $pdf->SetXY(137,112.5);
+            $pdf->MultiCell(40,0,'9,999,999.00',0,'R');
+            $pdf->SetXY(137,117.5);
+            $pdf->MultiCell(40,0,'999,999.00',0,'R');
+            $pdf->SetXY(137,122.5);
+            $pdf->MultiCell(40,0,'9,999.00',0,'R');
+            $pdf->SetXY(137,127.5);
+            $pdf->MultiCell(40,0,'999.00',0,'R');
+            $pdf->SetXY(137,135);
+            $pdf->MultiCell(40,0,'999,999,999,999.00',0,'R');
+
+            // head
+            $pdf->SetXY(111,200);
+            $pdf->MultiCell(100,0,'Renelia L. Villanueva',0,'C');
+            $pdf->SetXY(111,202);
+            $pdf->MultiCell(100,5,'Head',0,'C');
+            $pdf->SetXY(111,206);
+            $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
+
+            $pdf->Output("F", "doc_certs/$ref_no.pdf");
+            $pdf->Output();
+        }
+        else if($type_of_cert=='CECwN'){
+            $pdf = new PDF('P', 'mm','Legal');
+            $pdf->AddPage();
+            $pdf->SetMargins(20,5);
+            if($withlogo=='1'){
+                $pdf->Image('../fpdf181/pldt2.png',50,20,300);
+            }
+            $pdf->SetFont('Times','B',14);
+            $pdf->MultiCell(0,10,'CERTFICATE OF EMPLOYMENT AND COMPENSATION',0, 'C');
+            $pdf->SetFont('','',12);
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'Date: November 12, 2019',0,'R');
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'         This is to certify that ROBERTO JOAQUIN ZULUETA is a regular employee of PLDT Inc. (formerly "Philippine Long Distance Telephone Company") since November 1, 1994 and presently holds the position of Sr Telecom Associate.',0,'L');
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'         His present basic monthly salary is P100,000.00.',0,'L');
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'         Further, he received the following bonuses, premiums and allowances during the twelve-month period:',0,'L');
+            $pdf->Ln(10);
+            $pdf->MultiCell(0,5,'                   Mid-Year Bonus',0,'L');
+            $pdf->MultiCell(0,5,'                   Christmas Bonus/13th Month Pay',0,'L');
+            $pdf->MultiCell(0,5,'                   Unused Sick Leave Pay',0,'L');
+            $pdf->MultiCell(0,5,'                   Other Earnings  ',0,'L');
+            $pdf->MultiCell(0,5,'                   Other Bonuses  ',0,'L');
+            $pdf->MultiCell(0,1,'                                                                                                            ____________________',0,'L');
+            $pdf->MultiCell(0,5,'                   Total Other Income',0,'L');
+            $pdf->Ln(10);
+            $pdf->MultiCell(0,5,'         This certification is being issued upon employee\'s request for Visa Application.',0,'L');
+            $pdf->Ln(60);
+            $pdf->MultiCell(0,5,'         SUBSCRIBES AND SWORN to before me, a notary public in and for the City of ____________________ this ____ day of __________________. The affiant, whom I identified through the following competent evidence of identity: Philippine Social Security System number 0391924976, personally signed the foregoing instrument before me and avowed under penalty of law to the whole truth of the contents of said instrument.',0,'L');
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'WITNESS MY HAND AND SEAL on the date and at the place first abovementioned.',0,'L');
+            $pdf->Ln(5);
+            $pdf->MultiCell(0,5,'Doc. No.',0,'L');
+            $pdf->MultiCell(0,5,'Page No',0,'L');
+            $pdf->MultiCell(0,5,'Book No',0,'L');
+            $pdf->MultiCell(0,5,'Series of',0,'L');
+            $pdf->Ln(5);
+            $pdf->SetFont('Times','B',14);
+            $pdf->MultiCell(0,5,'NOTARY PUBLIC',0,'R');
+            $pdf->SetFont('Times');
+            $pdf->Ln(49);
+            $pdf->MultiCell(0,5,'eHR-201235',0,'L');
+
+            // eto yung last wag dugtungan. sa taas ka magdagdag.
+            $pdf->SetXY(137,107.5);
+            $pdf->MultiCell(42,0,'999,999,999.00',0,'R');
+            $pdf->SetXY(137,112.5);
+            $pdf->MultiCell(42,0,'9,999,999.00',0,'R');
+            $pdf->SetXY(137,117.5);
+            $pdf->MultiCell(42,0,'999,999.00',0,'R');
+            $pdf->SetXY(137,122.5);
+            $pdf->MultiCell(42,0,'9,999.00',0,'R');
+            $pdf->SetXY(137,127.5);
+            $pdf->MultiCell(42,0,'999.00',0,'R');
+            $pdf->SetXY(137,135);
+            $pdf->MultiCell(42,0,'999,999,999,999.00',0,'R');
+
+            // head
+            $pdf->SetXY(111,194);
+            $pdf->MultiCell(100,0,'Renelia L. Villanueva',0,'C');
+            $pdf->SetXY(111,196);
+            $pdf->MultiCell(100,5,'Head',0,'C');
+            $pdf->SetXY(111,200);
+            $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
+
+            $pdf->Output();
+            $pdf->Output("F", "doc_certs/$ref_no.pdf");
+        }
+            }
     }
 ?>

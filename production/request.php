@@ -306,7 +306,7 @@
 						<label class="control-label col-sm-2">Head Signatory:</label>
 						<div class="col-sm-10">
 							<select id="head_signatory" name="head_signatory" class="form-control" >
-								<option id='' value="ren">Renelia L. Villanueva</option>
+								<option id='' value="Renelia L. Villanueva">Renelia L. Villanueva</option>
 							</select>            
 						</div>
 					</div>
@@ -375,8 +375,8 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
 						<div class="col-sm-10">          
-							<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
-							<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
+							<input type="text" class="form-control" id="emp_id" placeholder="" disabled>
+							<input type="text" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
 						</div>
 					</div>
 					

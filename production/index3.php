@@ -235,8 +235,8 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
 					<div class="col-sm-10">          
-						<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
-						<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
+						<input type="text" class="form-control" id="emp_id" placeholder="" disabled>
+						<input type="text" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
 					</div>
 				</div>
 				
