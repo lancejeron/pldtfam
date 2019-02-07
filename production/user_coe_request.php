@@ -72,7 +72,7 @@
                     <form id='req_coe' class="form-horizontal form-label-left" method="POST" action='user_coe_request_insert_record.php'>
             
                         <div class="form-group is_req">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee ID:*</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Employee No.:</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" id="persno" name="persno" class="form-control col-md-7 col-xs-12" autocomplete="off" maxlength='6'>
                                 <input type="text" id="start_time" name='start_time' class="form-control col-md-7 col-xs-12" style='display: none;'>
@@ -80,9 +80,9 @@
                         </div>
             
                         <div class="form-group is_req">
-                            <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name:*</label>
+                            <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name:</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: Dela Cruz, Juan" autocomplete="off" maxlength='150'>
+                                <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: DELA CRUZ, JUAN" autocomplete="off" maxlength='150'>
                             </div>
                         </div>
                       
@@ -366,13 +366,13 @@
 
                         // }    
                     // 
-                    var persno = $('#persno').val();
-                    var emp_name = $('#emp_name').val();
-                    if(persno=='' || emp_name==''){
-                        swal("Please fill the required(*) fields.","","info");
-                        e.preventDefault();
-                    }
-                    else{
+                    // var persno = $('#persno').val();
+                    // var emp_name = $('#emp_name').val();
+                    // if(persno=='' || emp_name==''){
+                    //     swal("Please fill the required(*) fields.","","info");
+                    //     e.preventDefault();
+                    // }
+                    // else{
                         var form = $('#req_coe');   
                         swal({
                             title: "Are you sure you want to submit your request?",
@@ -422,7 +422,7 @@
                             }
                         });
                         e.preventDefault();
-                    }
+                    // }
                 // 
                 }
                 // 

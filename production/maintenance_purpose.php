@@ -89,7 +89,7 @@
 																				data-desc="'.$row["purpose_desc"].'"
                               data-status="'.$row["purpose_status"].'"><i class="glyphicon glyphicon-edit"></i> Edit</button>
                             <input type="text" id="inp'.$row["purpose_ID"].'" class="form-control" name="purpose_ID2" value="'.$row["purpose_ID"].'" style="display:none;">
-                            <button type="button" id="btn'.$row["purpose_ID"].'" class="del btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+                            <button type="submit" id="btn'.$row["purpose_ID"].'" class="del btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                           </form>
                             </td>                        
                           </tr>
@@ -289,58 +289,58 @@
 	$(document).ready(function () {
     	// delete swal
 		// $("button[type=submit]").click(function(e){
-		$(".del").click(function(e){
+		// $(".del").click(function(e){
 
-			var id = $(this).parent('form').find('input[name="purpose_ID2"]').val();
-			alert(id);
-			e.preventDefault();
+		// 	var id = $(this).parent('form').find('input[name="purpose_ID2"]').val();
+		// 	alert(id);
+		// 	e.preventDefault();
 
-			console.log(id);
-			swal({
-				title: "Delete Purpose",
-				text: "Are you sure you want to delete this purpose?",
-				icon: "warning",
-				buttons: {
-					cancel: true,
-					ok: {
-						text: "Ok",
-						value: "willsubmit",
-					}
-				},
-			})
-			.then((willsubmit)=>{
-				if (willsubmit){
-					$.ajax({
-						url: 'maintenance_purpose_routes.php',
-						method: 'POST',
-						data: {
-							purpose_ID2: id,
-							btn1: 'Delete'
+		// 	console.log(id);
+		// 	swal({
+		// 		title: "Delete Purpose",
+		// 		text: "Are you sure you want to delete this purpose?",
+		// 		icon: "warning",
+		// 		buttons: {
+		// 			cancel: true,
+		// 			ok: {
+		// 				text: "Ok",
+		// 				value: "willsubmit",
+		// 			}
+		// 		},
+		// 	})
+		// 	.then((willsubmit)=>{
+		// 		if (willsubmit){
+		// 			$.ajax({
+		// 				url: 'maintenance_purpose_routes.php',
+		// 				method: 'POST',
+		// 				data: {
+		// 					purpose_ID2: id,
+		// 					btn1: 'Delete'
 
-							},
-						success: function(data){
-							console.log(data);
-							swal({
-								title: "Purpose successfully deleted.",
-								text:" ",
-								icon: "success",
-								buttons: false,
-							});
-							setTimeout( function () {
-								location.reload(); 
-							}, 1000);
-						},
-						error: function(data){
-							swal("Oops...", "Something went wrong :(", "error");
-						}
-					});
-				}
-				else{
-				}
-				e.preventDefault();
-			});
+		// 					},
+		// 				success: function(data){
+		// 					console.log(data);
+		// 					swal({
+		// 						title: "Purpose successfully deleted.",
+		// 						text:" ",
+		// 						icon: "success",
+		// 						buttons: false,
+		// 					});
+		// 					setTimeout( function () {
+		// 						location.reload(); 
+		// 					}, 1000);
+		// 				},
+		// 				error: function(data){
+		// 					swal("Oops...", "Something went wrong :(", "error");
+		// 				}
+		// 			});
+		// 		}
+		// 		else{
+		// 		}
+		// 		e.preventDefault();
+		// 	});
 			
-		});
+		// });
 
 		// edit swal
 		$('#editformbtn').click(function(e){
