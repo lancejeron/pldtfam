@@ -34,6 +34,11 @@
 		$purpose_que = $conn->prepare("SELECT * FROM tblmpurpose ORDER BY purpose_name asc");
 		$purpose_que->execute();
 		$pupose_que_res = $purpose_que->fetchAll();
+
+		$signatory = $conn ->prepare("SELECT * FROM signatory");
+		$signatory -> execute();
+		$signatory_res = $signatory->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -306,7 +311,13 @@
 						<label class="control-label col-sm-2">Head Signatory:</label>
 						<div class="col-sm-10">
 							<select id="head_signatory" name="head_signatory" class="form-control" >
-								<option id='' value="Renelia L. Villanueva">Renelia L. Villanueva</option>
+								<?php
+									foreach($signatory_res as $row){
+										echo '
+											<option id="" value="'.$row["sign_id"].'">'.$row["signatory"].'</option>
+										';
+									}
+								?>
 							</select>            
 						</div>
 					</div>

@@ -23,11 +23,30 @@
         $withsignature = $_POST["withsignature"];
         $withlogo = $_POST["withlogo"];
 
-        // temp joining of table
+        $signatory = $conn -> prepare("SELECT * FROM signatory WHERE sign_id IN ('$head_signatory')");
+        $signatory -> execute();
+        $signatory_res = $signatory ->fetchAll();
+
         $emp_coe = $conn2->prepare("SELECT *, DATENAME(MM, [Date Hired]) + RIGHT(CONVERT(VARCHAR(12), [Date Hired], 107), 9) AS DateHired2, DATENAME(MM, [Date Separated]) + RIGHT(CONVERT(VARCHAR(12), [Date Separated], 107), 9) AS DateSeparated2
             , FORMAT(Salary, 'N', 'en-us') AS Salary2 FROM [HRISData].[dbo].[vw_coe_employee] as tbl1 WHERE IDNo LIKE ('$persno')");
         $emp_coe -> execute();
         $emp_coe_res = $emp_coe->fetchAll();
+
+        $emp_cec = $conn2->prepare("SELECT *, DATENAME(MM, [Date Hired]) + RIGHT(CONVERT(VARCHAR(12), [Date Hired], 107), 9) AS DateHired2 
+                                    , FORMAT(Salary, 'N', 'en-us') AS Salary2
+                                    , FORMAT(ChristmasBon, 'N', 'en-us') AS ChristmasBon2
+                                    , FORMAT(LNGVTPY, 'N', 'en-us') AS LNGVTPY2
+                                    , FORMAT(MIDYRBON, 'N', 'en-us') AS MIDYRBON2
+                                    , FORMAT(Allowance, 'N', 'en-us') AS Allowance2
+                                    , FORMAT(USLP, 'N', 'en-us') AS USLP2
+                                    , FORMAT(OtherBon, 'N', 'en-us') AS OtherBon2
+                                    , FORMAT(Total, 'N', 'en-us') AS Total2
+
+
+
+                                    FROM [HRISData].[dbo].[vw_certificate] as tbl1 WHERE emp_id LIKE ('$persno')");
+        $emp_cec -> execute();
+        $emp_cec_res = $emp_cec->fetchAll();
 
             // temp refno creator
             $create_refno = $conn->prepare("SELECT COUNT(*) as totalcert FROM prepared_certificates");
@@ -204,74 +223,110 @@
                 }
 
                 // head of hris
-                $pdf->SetFont('Times');
-                $pdf->SetXY(111,224);
-                $pdf->MultiCell(100,0,'Renelia L. Villanueva',0,'C');
-                $pdf->SetXY(111,226);
-                $pdf->MultiCell(100,5,'Head',0,'C');
-                $pdf->SetXY(111,230);
-                $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
+                foreach($signatory_res as $sign){
+                    $sign_name = $sign["signatory"];
+                    $sign_desig = $sign["designation"];
+                    $sign_org = $sign["organization"];
 
+                    $pdf->SetFont('Times');
+                    $pdf->SetXY(111,224);
+                    $pdf->MultiCell(100,5,"$sign_name",0,'C');
+                    $pdf->SetXY(111,228);
+                    $pdf->MultiCell(100,5,"$sign_desig",0,'C');
+                    $pdf->SetXY(111,232);
+                    $pdf->MultiCell(100,5,"$sign_org",0,'C');
+                }
                 $pdf->Output();
                 $pdf->Output("F", "doc_certs/$ref_no.pdf");
             }
         }
         else if($type_of_cert=='CEC'){
-            $pdf = new PDF();
-            $pdf->AddPage();
-            $pdf->SetMargins(20,5);
-            if($withlogo=='1'){
-                $pdf->Image('../fpdf181/pldt2.png',50,20,300);
+            foreach($emp_cec_res as $x){
+                $emp_id = $x["emp_id"];
+                $emp_fname = $x["Firstname"];
+                $emp_mname = $x["Middlename"];
+                $emp_lname = $x["Surname"];
+                $emp_suffix = $x ["Suffix"];
+                $emp_datehired = $x["DateHired2"];
+                $emp_designation = $x["Official Title"];
+                $emp_basicsal = $x["Salary2"];
+                $emp_sex = $x["Sex"];
+                $emp_xmasbon = $x["ChristmasBon2"];
+                $emp_mdyrbon = $x["MIDYRBON2"];
+                $emp_uslp = $x["USLP2"];
+                $emp_otherearn = $x["Allowance2"];
+                $emp_otherbon = $x["OtherBon2"];
+                $emp_total = $x["Total2"];
+
+                $pdf = new PDF();
+                $pdf->AddPage();
+                $pdf->SetMargins(20,5);
+                if($withlogo=='1'){
+                    $pdf->Image('../fpdf181/pldt2.png',50,20,300);
+                }
+                $pdf->SetFont('Times','B',14);
+                $pdf->MultiCell(0,10,'CERTFICATE OF EMPLOYMENT AND COMPENSATION',0, 'C');
+                $pdf->SetFont('','',12);
+                $pdf->Ln(5);
+                $pdf->MultiCell(0,5,"Date: $date_prepared2",0,'R');
+                $pdf->Ln(5);
+                $pdf->MultiCell(0,5,"         This is to certify that $emp_fname $emp_lname $emp_suffix is a regular employee of PLDT Inc. (formerly \"Philippine Long Distance Telephone Company\") since $emp_datehired and presently holds the position of $emp_designation.",0,'L');
+                $pdf->Ln(5);
+                if($emp_sex == 'M'){
+                    $pdf->MultiCell(0,5,"         His present basic monthly salary is P $emp_basicsal.",0,'L');
+                    $pdf->Ln(5);
+                    $pdf->MultiCell(0,5,'         Further, he received the following bonuses, premiums and allowances during the twelve-month period:',0,'L');
+                }
+                else{
+                    $pdf->MultiCell(0,5,"         Her present basic monthly salary is P $emp_basicsal.",0,'L');
+                    $pdf->Ln(5);
+                    $pdf->MultiCell(0,5,'         Further, she received the following bonuses, premiums and allowances during the twelve-month period:',0,'L');
+                }
+                $pdf->Ln(10);
+                $pdf->MultiCell(0,5,'                     Mid-Year Bonus',0,'L');
+                $pdf->MultiCell(0,5,'                     Christmas Bonus/13th Month Pay',0,'L');
+                $pdf->MultiCell(0,5,'                     Unused Sick Leave Pay',0,'L');
+                $pdf->MultiCell(0,5,'                     Other Earnings  ',0,'L');
+                $pdf->MultiCell(0,5,'                     Other Bonuses  ',0,'L');
+                $pdf->MultiCell(0,1,'                                                                                                          ____________________',0,'L');
+                $pdf->MultiCell(0,5,'                     Total Other Income',0,'L');
+                $pdf->Ln(10);
+                $pdf->MultiCell(0,5,"         This certification is being issued upon employee's request for $purpose.",0,'L');
+                $pdf->Ln(120);
+                $pdf->MultiCell(0,5,"$ref_no",0,'L');
+    
+    
+                // eto yung last wag dugtungan. sa taas ka magdagdag.
+                $pdf->SetXY(137,107.5);
+                $pdf->MultiCell(40,0,"$emp_mdyrbon",0,'R');
+                $pdf->SetXY(137,112.5);
+                $pdf->MultiCell(40,0,"$emp_xmasbon",0,'R');
+                $pdf->SetXY(137,117.5);
+                $pdf->MultiCell(40,0,"$emp_uslp",0,'R');
+                $pdf->SetXY(137,122.5);
+                $pdf->MultiCell(40,0,"$emp_otherearn",0,'R');
+                $pdf->SetXY(137,127.5);
+                $pdf->MultiCell(40,0,"$emp_otherbon",0,'R');
+                $pdf->SetXY(137,135);
+                $pdf->MultiCell(40,0,"P $emp_total",0,'R');
+    
+                // head
+                foreach($signatory_res as $sign){
+                    $sign_name = $sign["signatory"];
+                    $sign_desig = $sign["designation"];
+                    $sign_org = $sign["organization"];
+
+                    $pdf->SetXY(111,200);
+                    $pdf->MultiCell(100,5,"$sign_name",0,'C');
+                    $pdf->SetXY(111,204);
+                    $pdf->MultiCell(100,5,"$sign_desig",0,'C');
+                    $pdf->SetXY(111,208);
+                    $pdf->MultiCell(100,5,"$sign_org",0,'C');
+                }
+    
+                $pdf->Output("F", "doc_certs/$ref_no.pdf");
+                $pdf->Output();
             }
-            $pdf->SetFont('Times','B',14);
-            $pdf->MultiCell(0,10,'CERTFICATE OF EMPLOYMENT AND COMPENSATION',0, 'C');
-            $pdf->SetFont('','',12);
-            $pdf->Ln(5);
-            $pdf->MultiCell(0,5,'Date: November 12, 2019',0,'R');
-            $pdf->Ln(5);
-            $pdf->MultiCell(0,5,'         This is to certify that LANCE SAN PABLO is a regular employee of PLDT Inc. (formerly "Philippine Long Distance Telephone Company") since November 1, 1994 and presently holds the position of Sr Telecom Associate.',0,'L');
-            $pdf->Ln(5);
-            $pdf->MultiCell(0,5,'         His present basic monthly salary is P100,000.00.',0,'L');
-            $pdf->Ln(5);
-            $pdf->MultiCell(0,5,'         Further, he received the following bonuses, premiums and allowances during the twelve-month period:',0,'L');
-            $pdf->Ln(10);
-            $pdf->MultiCell(0,5,'                     Mid-Year Bonus',0,'L');
-            $pdf->MultiCell(0,5,'                     Christmas Bonus/13th Month Pay',0,'L');
-            $pdf->MultiCell(0,5,'                     Unused Sick Leave Pay',0,'L');
-            $pdf->MultiCell(0,5,'                     Other Earnings  ',0,'L');
-            $pdf->MultiCell(0,5,'                     Other Bonuses  ',0,'L');
-            $pdf->MultiCell(0,1,'                                                                                                          ____________________',0,'L');
-            $pdf->MultiCell(0,5,'                     Total Other Income',0,'L');
-            $pdf->Ln(10);
-            $pdf->MultiCell(0,5,'         This certification is being issued upon employee\'s request for Visa Application.',0,'L');
-            $pdf->Ln(120);
-            $pdf->MultiCell(0,5,'eHR-201235',0,'L');
-
-
-            // eto yung last wag dugtungan. sa taas ka magdagdag.
-            $pdf->SetXY(137,107.5);
-            $pdf->MultiCell(40,0,'999,999,999.00',0,'R');
-            $pdf->SetXY(137,112.5);
-            $pdf->MultiCell(40,0,'9,999,999.00',0,'R');
-            $pdf->SetXY(137,117.5);
-            $pdf->MultiCell(40,0,'999,999.00',0,'R');
-            $pdf->SetXY(137,122.5);
-            $pdf->MultiCell(40,0,'9,999.00',0,'R');
-            $pdf->SetXY(137,127.5);
-            $pdf->MultiCell(40,0,'999.00',0,'R');
-            $pdf->SetXY(137,135);
-            $pdf->MultiCell(40,0,'999,999,999,999.00',0,'R');
-
-            // head
-            $pdf->SetXY(111,200);
-            $pdf->MultiCell(100,0,'Renelia L. Villanueva',0,'C');
-            $pdf->SetXY(111,202);
-            $pdf->MultiCell(100,5,'Head',0,'C');
-            $pdf->SetXY(111,206);
-            $pdf->MultiCell(100,5,'HRIS & Automation',0,'C');
-
-            $pdf->Output("F", "doc_certs/$ref_no.pdf");
-            $pdf->Output();
         }
         else if($type_of_cert=='CECwN'){
             $pdf = new PDF('P', 'mm','Legal');
