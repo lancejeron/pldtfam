@@ -95,6 +95,17 @@
                             <input type="text" class="form-control" id="" placeholder="(All)" name="name" maxlength='150'>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Date Prepared</label>
+                        <div class="col-sm-10">
+                            <form class="form-inline">
+                                    <input type="datetime-local" class="" id="date_prepared" placeholder="" name="date_prepared">
+                                
+                                    <input type="datetime-local" class="" id="date_prepared" placeholder=""" name="date_prepared">
+                            </form>
+                        </div>    
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Search</button>
