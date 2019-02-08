@@ -96,16 +96,26 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Date Prepared</label>
+                    <!-- <div class="form-group">
+                        <label class="control-label col-sm-2">Date Prepared Between</label>
                         <div class="col-sm-10">
                             <form class="form-inline">
-                                    <input type="datetime-local" class="" id="date_prepared" placeholder="" name="date_prepared">
-                                
-                                    <input type="datetime-local" class="" id="date_prepared" placeholder=""" name="date_prepared">
+                                <?php
+                                    $m = date('m');
+                                    $d = date('d');
+                                    $y = date('Y');
+                                    $yy = date('Y') - 1;
+                                    $today = $y . '-' . $m . '-' . $d;
+                                    $last = $yy . '-' . $m . '-' . $d;
+                                    echo '
+                                        <input type="date" class="" id="date_prepared" value="'.$last.'" name="date_prepared" required>
+                                        <p>and</p>
+                                        <input type="date" class="" id="date_prepared" value="'.$today.'" name="date_prepared2" required>
+                                    ';
+                                ?>
                             </form>
                         </div>    
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Search</button>
