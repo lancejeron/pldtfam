@@ -185,7 +185,12 @@
 									<td>' . $row["personal"] . '</td>
 									<td>' . $row["cert_status"] . '</td>
                                     <td>' . $row["claimdate2"] . '</td>
-                                    <td>' . '<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
+									<td>' . 
+										'
+										<button type="button" class="btn btn-info" data-toggle="modal" data-target="#view_certificate",
+											data-ref_no="'.$row['ref_no'].'"><i class="fa fa-eye"></i> View</button>
+										
+											<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
                                             data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
                                             data-date_prepared2="'.$row['date_prepared2'].'"
 											data-date_prepared="'.$row['date_prepared'].'"
@@ -235,8 +240,8 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="emp_id">Employee ID</label>
 					<div class="col-sm-10">          
-						<input type="number" class="form-control" id="emp_id" placeholder="" disabled>
-						<input type="number" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
+						<input type="text" class="form-control" id="emp_id" placeholder="" disabled>
+						<input type="text" class="form-control" id="emp_id" placeholder="" name="emp_id" style='display:none;'>
 					</div>
 				</div>
 				
@@ -352,6 +357,22 @@
 			</div>
 		</div>
 	</form>
+	</div>
+</div>
+<!-- VIEW CERTIFICATE MODAL -->
+<div class="modal fade" id="view_certificate" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
+				<object id='certpdf' width='860', height='500', data="", type="application/pdf"></object>
+			</div>
+			<div class="modal-footer">		
+			</div>	
+		</div>
+	</div>
 </div>
 
 </div>
@@ -465,6 +486,14 @@
 			
 		} 
 
+
+	});
+	$('#view_certificate').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget)
+		var ref_no = button.data('ref_no')
+
+		var modal = $(this)
+		modal.find('.modal-body #certpdf').attr("data", "doc_certs/"+ref_no+".pdf");
 
 	});
 

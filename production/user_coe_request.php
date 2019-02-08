@@ -357,12 +357,12 @@
                 }
                 else{
                     // 
-                       radio = $(".purpose_salary:radio:checked").length;
-                        if(!radio){
-                            swal("Please pick on how your salary will be displayed.","","info");
-                            return false;
-                        }
-                        else{
+                    //    radio = $(".purpose_salary:radio:checked").length;
+                    //     if(!radio){
+                    //         swal("Please pick on how your salary will be displayed.","","info");
+                    //         return false;
+                    //     }
+                    //     else{
 
                         // }    
                     // 
@@ -424,7 +424,7 @@
                         e.preventDefault();
                     // }
                 // 
-                }
+                // }
                 // 
                 }
             }
