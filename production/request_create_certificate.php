@@ -41,9 +41,6 @@
                                     , FORMAT(USLP, 'N', 'en-us') AS USLP2
                                     , FORMAT(OtherBon, 'N', 'en-us') AS OtherBon2
                                     , FORMAT(Total, 'N', 'en-us') AS Total2
-
-
-
                                     FROM [HRISData].[dbo].[vw_certificate] as tbl1 WHERE emp_id LIKE ('$persno')");
         $emp_cec -> execute();
         $emp_cec_res = $emp_cec->fetchAll();
