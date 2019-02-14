@@ -85,7 +85,8 @@
               <div class="title_left">
                 <h3>Certificate</h3>
               </div>
-				<a href="index.php"><button type='button' class='btn btn-secondary pull-right btn-md'><i class="fa fa-chevron-left"></i> Back</button></a>
+			  
+				<!-- <a href="index.php"><button type='button' class='btn btn-secondary pull-right btn-md'><i class="fa fa-chevron-left"></i> Back</button></a> -->
 
             </div>
 
@@ -135,7 +136,7 @@
 							if($request_query_res2 != NULL){
 								foreach($request_query_res2 as $row2){
 									if($row["var_x"]>=0 && $row2["req_status"]==0 ){
-										echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+										echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'" data-emp_name="'.$row2["emp_name"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
 									}
 									else{
 									}
@@ -143,7 +144,7 @@
 							}
 							else if($row["var_x"]==0){
 								foreach($request_query_res as $row2){
-									echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+									echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'"  data-emp_name="'.$row2["emp_name"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
 								}
 							}
 						}
@@ -273,6 +274,7 @@
 					<input type="" id="persno" name="persno" style="display: none;">
 					<input type="" id="start_time" name="start_time" style="display: none;">
 					<input type="" id="date_prepared" name="date_prepared" style="display: none;">
+					<input type="" id="emp_name" name="emp_name" style="display: none;">
 
 					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
@@ -536,10 +538,13 @@
 		var button = $(event.relatedTarget)
 		var persno = button.data('persno')
 		var start_time = button.data('start_time')
+		var emp_name = button.data('emp_name')
+
 		
 		var modal = $(this)
 		modal.find('.modal-body #persno').val(persno)
-		modal.find('.modal-body #start_time').val(start_time)	
+		modal.find('.modal-body #start_time').val(start_time)
+		modal.find('.modal-body #emp_name').val(emp_name)
 	});
 	$('#edit_certificate').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget)

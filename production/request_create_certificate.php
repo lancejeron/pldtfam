@@ -11,6 +11,7 @@
 
         // create record
         $persno= $_POST["persno"];
+        $name= $_POST["emp_name"];
         date_default_timezone_set('Asia/Manila');
         $date_prepared= date('Y-m-d H:i:s', time());
         $date_prepared2= date('F j, Y');
@@ -53,7 +54,7 @@
             foreach($create_refno_res as $row){                
                 $refno_sum=$row['totalcert']+1;
                 $ref_no = "RF_".$refno_sum;
-                $create_cert_que = $conn->prepare("INSERT INTO prepared_certificates (ref_no, date_prepared, emp_id, purpose, req_date, req_status) VALUES ('$ref_no', '$date_prepared', '$persno','$purpose', '$start_time', 0)");
+                $create_cert_que = $conn->prepare("INSERT INTO prepared_certificates (ref_no, date_prepared, emp_id, name, purpose, req_date, req_status) VALUES ('$ref_no', '$date_prepared', '$persno', '$name', '$purpose', '$start_time', 0)");
                 if (!$create_cert_que->execute()) {
                     echo 'error';
                 }

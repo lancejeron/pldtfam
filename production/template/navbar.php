@@ -28,10 +28,15 @@
         <ul class="nav side-menu">
             <li><a><i class="fa fa-edit"></i> Certification<span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-                <li><a href="index.php">Requests</a></li>
-                <li><a href="index2.php">Finished Requests</a></li>
-                <!-- <li><a href="index3.php">Certificates</a></li> -->
-                <li data-toggle='modal' data-target='#searchmodal'><a>Certificates</a></li>
+                <?php
+                    echo '
+                            <li><a href="index.php?date='.$last.'&date2='.$today.'">Requests</a></li>
+                            <li><a href="index2.php?date='.$last.'&date2='.$today.'">Finished Requests</a></li>
+                            <li><a href="index3.php?date='.$last.'&date2='.$today.'">Certificates</a></li>
+                    ';
+
+                ?>
+                <!-- <li data-toggle='modal' data-target='#searchmodal'><a>Certificates</a></li> -->
 
             </ul>
             </li>
@@ -68,7 +73,7 @@
 <!-- /top navigation -->
 
 <!-- search modal -->
-<div class="modal fade bs-example-modal-md" id="searchmodal" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- <div class="modal fade bs-example-modal-md" id="searchmodal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-md">
 		<form id="" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index3.php'>
 			<div class="modal-content">
@@ -76,7 +81,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title">Search</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body"> 
                     <div class="form-group">
                         <label class="control-label col-sm-2">Reference Number</label>
                         <div class="col-sm-10">
@@ -96,17 +101,11 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <label class="control-label col-sm-2">Date Prepared Between</label>
                         <div class="col-sm-10">
                             <form class="form-inline">
                                 <?php
-                                    $m = date('m');
-                                    $d = date('d');
-                                    $y = date('Y');
-                                    $yy = date('Y') - 1;
-                                    $today = $y . '-' . $m . '-' . $d;
-                                    $last = $yy . '-' . $m . '-' . $d;
                                     echo '
                                         <input type="date" class="" id="date_prepared" value="'.$last.'" name="date_prepared" required>
                                         <p>and</p>
@@ -115,7 +114,7 @@
                                 ?>
                             </form>
                         </div>    
-                    </div> -->
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Search</button>
@@ -123,4 +122,4 @@
 			</div>
 		</form>
 	</div>
-</div>
+</div> -->

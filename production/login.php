@@ -4,6 +4,13 @@
 	// require 'template/connection.php';
 
   if(isSet($_POST['login'])) {
+	$m = date('m');
+	$d = date('d');
+	$y = date('Y');
+	$yy = date('Y') - 1;
+
+	$today = $y . '-' . $m . '-' . $d;
+	$last = $y . '-01-01';
 	  	
     try{
 		$servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
@@ -27,7 +34,7 @@
 			$_SESSION['password'] = $password;
 			$_SESSION['userobj'] = $stmt->fetch(PDO::FETCH_ASSOC);
 
-			header('Location: http://localhost/pldt/pldtfam/production/index.php');
+			header('Location: http://localhost/pldt/pldtfam/production/index.php?date='.$last.'&date2='.$today.'');
 			exit;
 		} else {
 			echo 'Account have no rights to enter the application.';

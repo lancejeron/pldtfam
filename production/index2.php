@@ -6,10 +6,11 @@
 	}
 	else{
 
-		require 'template/connection.php';
-
-		// $sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(20), start_time, 100) AS start_time2 FROM view_coe_request AS tbl1 WHERE req_status=1');
-    $sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (1) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno');
+    require 'template/connection.php';
+    $ddate = $_GET["date"];
+    $ddate2 = $_GET["date2"];
+    set_time_limit(120);
+    $sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (1) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno WHERE start_time BETWEEN '$ddate' AND '$ddate2  23:59:59'");
 
     $sql->execute();
 		$result = $sql->fetchAll();
@@ -45,6 +46,23 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Finished Requests</h2>
+                    <center>
+                      <form class="form-inline" method='GET' action='index2.php'>
+                      <?php
+                        echo'
+                            <div class="form-group">
+                              <label>Start Time From:</label>
+                              <input type="date" class="form-control" name="date" value="'.$ddate.'">
+                            </div>
+                            <div class="form-group">
+                              <label>To:</label>
+                              <input type="date" class="form-control" name="date2" value="'.$ddate2.'">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Go</button>
+                        ';
+                      ?>
+                      </form>
+                    </center>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -52,7 +70,7 @@
                       <table id='mydatatable' class='table table-striped table-bordered'>
                         <thead>
                           <tr>
-                            <th>Start Time</th>
+                            <th><u>Start Time</u></th>
                             <th>Employee ID</th>
                             <th>Email</th>
                             <th>Employee Name</th>
@@ -134,30 +152,7 @@
     } );
 	});
 </script>
-<script>
-	function getdatetime(){
-		var today = new Date();         
-		var dd = today.getDate();
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
-		var hh = today.getHours();
-		var min = today.getMinutes();
-		var sec = today.getSeconds();
-		// var parsetoday = new Date(today)
-		
-		if(dd<10) {
-			dd = '0'+dd
-		} 
 
-		if(mm<10) {
-			mm = '0'+mm
-		}
-
-		today = yyyy + '-' + mm + '-' + dd + ' '+ hh + ':' + min +':' +sec;
-
-		document.getElementById("test1").value=today;
-	}
-</script>
 <?php
 	}
 ?>

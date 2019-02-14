@@ -1,4 +1,11 @@
 <?php
+    $m = date('m');
+    $d = date('d');
+    $y = date('Y');
+    $yy = date('Y') - 1;
+
+    $today = $y . '-' . $m . '-' . $d;
+    $last = $y . '-01-01';
     try{
         $servername = 'LAPTOP-KKIP1VTU\SQLEXPRESS';
         $username = $_SESSION['username'];
@@ -20,6 +27,7 @@
     {   
     die( print_r( $e->getMessage() ) );   
     }
+
 
     
 ?>
