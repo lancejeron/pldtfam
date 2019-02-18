@@ -28,6 +28,7 @@
 		$request_query_res4 = $request_query4->fetchAll();
 		
 		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE req_date = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
+		// $certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE emp_id='$persno' AND ((req_date= '$start_time') OR (date_prepared BETWEEN date_prepared AND DATEADD(day, 7, date_prepared ))) ORDER BY prepared_certificates.claimdate DESC");
 		$certificate_que->execute();
 		$certificate_que_res = $certificate_que->fetchAll();
 

@@ -247,8 +247,11 @@
 
 <script>
 	$(document).ready(function() {
-    $('#mydatatable').DataTable( {
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    var table = $('#mydatatable').DataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+				// "bProcessing": true,
+        // "bServerSide": true,
+        // "sAjaxSource": "template/customscripts/maintenance_purpose_svr.php",
     } );
 	});
   $('#edit_purpose').on('show.bs.modal', function (event) {
