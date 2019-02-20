@@ -36,7 +36,6 @@
                     ';
 
                 ?>
-                <!-- <li data-toggle='modal' data-target='#searchmodal'><a>Certificates</a></li> -->
 
             </ul>
             </li>
@@ -72,54 +71,4 @@
 </div>
 <!-- /top navigation -->
 
-<!-- search modal -->
-<!-- <div class="modal fade bs-example-modal-md" id="searchmodal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-md">
-		<form id="" data-parsley-validate class="form-horizontal form-label-left" method='POST' action='index3.php'>
-			<div class="modal-content">
-				<div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">Search</h4>
-				</div>
-				<div class="modal-body"> 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Reference Number</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" placeholder="(All)" name="ref_no" maxlength='75'>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Employee ID</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" placeholder="(All)" name="emp_id" maxlength='6'>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Employee Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" placeholder="(All)" name="name" maxlength='150'>
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Date Prepared Between</label>
-                        <div class="col-sm-10">
-                            <form class="form-inline">
-                                <?php
-                                    echo '
-                                        <input type="date" class="" id="date_prepared" value="'.$last.'" name="date_prepared" required>
-                                        <p>and</p>
-                                        <input type="date" class="" id="date_prepared" value="'.$today.'" name="date_prepared2" required>
-                                    ';
-                                ?>
-                            </form>
-                        </div>    
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Search</button>
-				</div>
-			</div>
-		</form>
-	</div>
-</div> -->

@@ -53,14 +53,14 @@
     $sWhere = "";
     if ( isset($_GET['sSearch']) && $_GET['sSearch'] != "" ) {
         $sWhere = "WHERE (";
-        for ( $i=0 ; $i<count($aColumns) ; $i++ ) {
+        for ( $i=0 ; $i<count($aColumns)-1 ; $i++ ) {
             $sWhere .= $aColumns[$i]." LIKE '%".addslashes( $_GET['sSearch'] )."%' OR ";
         }
         $sWhere = substr_replace( $sWhere, "", -3 );
         $sWhere .= ')';
     }
     /* Individual column filtering */
-    for ( $i=0 ; $i<count($aColumns) ; $i++ ) {
+    for ( $i=0 ; $i<count($aColumns)-1 ; $i++ ) {
         if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )  {
             if ( $sWhere == "" ) {
                 $sWhere = "WHERE ";
@@ -106,47 +106,17 @@
         "aaData" => array()
     );
 
-    $act = 'Action';
-    $aColumns[]=$act;
     while ( $aRow = sqlsrv_fetch_array( $rResult ) ) {
         $row = array();
         for ( $i=0 ; $i<count($aColumns) ; $i++ ) {
-            if($aColumns[$i] == 'purpose_salary'){
-                if($aRow[$aColumns[$i]] == 0){
-                    $v = "User's Choice";
-                    $row[]=$v;
-                }
-                else if($aRow[$aColumns[$i]] == 1){
-                    $v = "Exposed";
-                    $row[]=$v;
-                }
-                else{
-                    $v = "Confidential";
-                    $row[]=$v;
-                }
-            }
-            else if($aColumns[$i] == 'Action' ) {
-                $v = '<form id="deleteform'.$aRow[$aColumns[0]].'" method="POST" action="maintenance_purpose_routes.php">
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose", 
-                            data-id="'.$aRow[$aColumns[0]].'"
-                            data-name="'.$aRow[$aColumns[1]].'"
-                            data-type="'.$aRow[$aColumns[2]].'"
-                            data-salary="'.$aRow[$aColumns[3]].'"
-                            data-desc="'.$aRow[$aColumns[4]].'"
-                            data-status="'.$aRow[$aColumns[5]].'"><i class="glyphicon glyphicon-edit"></i> Edit</button>
-                        <input type="text" id="inp'.$aRow[$aColumns[0]].'" class="form-control" name="purpose_ID2" value="'.$aRow[$aColumns[0]].'" style="display:none;">
-                        <button type="submit" id="btn'.$aRow[$aColumns[0]].'" class="del btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
-                         </form>';
-                $row[]=$v;
-            }
-            else{
+            if ( $aColumns[$i] != ' ' ) {
                 $v = $aRow[ $aColumns[$i] ];
                 $v = mb_check_encoding($v, 'UTF-8') ? $v : utf8_encode($v);
                 $row[]=$v;
             }
         }
         If (!empty($row)) {
-             $output["aaData"][] = $row; 
+             $output['aaData'][] = $row; 
             }
     }   
     echo json_encode( $output );

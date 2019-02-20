@@ -11,69 +11,6 @@
 		$ddate = $_GET["date"];
 		$ddate2 = $_GET["date2"];
 		set_time_limit(120);
-		{
-
-			// $ref_no = $_POST['ref_no'];
-			// $emp_id = $_POST['emp_id'];
-			// $name = $_POST['name'];
-			// // $date = $_POST['date_prepared'];
-			// // $date2 = $_POST['date_prepared2'];
-	
-			// if($ref_no == '' && $emp_id == '' && $name == ''){
-			// 	$sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates');
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-			// else if($ref_no != '' && $emp_id != '' && $name != ''){
-			// 	$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
-			// 		WHERE ref_no IN ('$ref_no') AND emp_id IN ('$emp_id') AND name LIKE '%$name%'");
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-	
-			// else if($ref_no != '' && $emp_id == '' && $name == ''){
-			// 	$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
-			// 		WHERE ref_no IN ('$ref_no')");
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-			// else if($ref_no == '' && $emp_id != '' && $name == ''){
-			// 	$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
-			// 		WHERE emp_id IN ('$emp_id')");
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-			// else if($ref_no == '' && $emp_id == '' && $name != ''){
-			// 	$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
-			// 		WHERE name LIKE '%$name%'");
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-	
-			// else if($ref_no != '' && $emp_id != '' && $name == ''){
-			// 	$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
-			// 		WHERE ref_no IN ('$ref_no') AND emp_id IN ('$emp_id')");
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-			// else if($ref_no != '' && $emp_id == '' && $name != ''){
-			// 	$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
-			// 		WHERE ref_no IN ('$ref_no') AND name LIKE '%$name%'");
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-			// else if($ref_no == '' && $emp_id != '' && $name != ''){
-			// 	$sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates 
-			// 		WHERE emp_id IN ('$emp_id') AND name LIKE '%$name%'");
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-			// else{
-			// 	$sql = $conn->prepare('SELECT *, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates');
-			// 	$sql ->execute();
-			// 	$result=$sql->fetchAll();
-			// }
-		}
 
 		
 		$sql = $conn->prepare("SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON emp_id = persno

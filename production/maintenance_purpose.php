@@ -60,7 +60,7 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <?php
+                        <!-- <?php
                          	foreach($rows as $row){
                             echo '
 														<tr>
@@ -79,7 +79,7 @@
 														echo '
 														<td>' . $row["purpose_desc"] . '</td>
 														<td>' . $row["purpose_status"] . '</td>
-                            <td>
+                          	<td>
                             <form id="deleteform'.$row["purpose_ID"].'" method="POST" action="maintenance_purpose_routes.php">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_purpose", 
                                         data-id="'.$row["purpose_ID"].'"
@@ -91,11 +91,11 @@
                             <input type="text" id="inp'.$row["purpose_ID"].'" class="form-control" name="purpose_ID2" value="'.$row["purpose_ID"].'" style="display:none;">
                             <button type="submit" id="btn'.$row["purpose_ID"].'" class="del btn btn-danger btn-sm" name="btn1" value="Delete"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                           </form>
-                            </td>                        
+                            </td>                
                           </tr>
                           ';
                           }
-                        ?>
+                        ?> -->
                       </table>
                     </div>
                   </div>
@@ -242,47 +242,63 @@
 
     <!-- script.php -->
     <?php require 'template/script.php' ?>
+		<script src="../vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
   </body>
 </html>
 
 <script>
 	$(document).ready(function() {
     var table = $('#mydatatable').DataTable( {
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-				// "bProcessing": true,
-        // "bServerSide": true,
-        // "sAjaxSource": "template/customscripts/maintenance_purpose_svr.php",
-    } );
+				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"bDeferRender":    true,
+				"bProcessing": true,
+        "bServerSide": true,
+				"sAjaxSource": "template/customscripts/maintenance_purpose_svr.php"
+
+
+				// serverSide: true,
+				// ordering: false,
+        // searching: true,
+        // ajax: 'template/customscripts/maintenance_purpose_svr.php',
+				// scrollY: 200,
+				// scroller: {
+        //     loadingIndicator: true
+				// },
+
+
+
+    });
 	});
-  $('#edit_purpose').on('show.bs.modal', function (event) {
-	var button = $(event.relatedTarget)
-	var id = button.data('id')
-	var name = button.data('name')
-	var type = button.data('type')
-	var status = button.data('status')
-	var salary = button.data('salary')
-	var desc = button.data('desc')
-		
 	
-	var modal = $(this)
-	modal.find('.modal-body #id2').val(id)
-	modal.find('.modal-body #name2').val(name)
-	modal.find('.modal-body #desc2').val(desc)
-	$('#sal'+salary).prop('selected', true);
-	// modal.find('.modal-body #status2').val(status)
-	// modal.find('.modal-body #status2').text(''+status)
-	if(status=='active'){
-		$('#opt_active').prop('selected', true);
-	}
-	else{
-		$('#opt_inactive').prop('selected', true);
-	}
-	if(type=='Both'){
-		$('#'+type).prop('selected', true);
-	}
-	else{
-		$('#'+type).prop('selected', true);
-	}
+  $('#edit_purpose').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget)
+		var id = button.data('id')
+		var name = button.data('name')
+		var type = button.data('type')
+		var status = button.data('status')
+		var salary = button.data('salary')
+		var desc = button.data('desc')
+			
+		
+		var modal = $(this)
+		modal.find('.modal-body #id2').val(id)
+		modal.find('.modal-body #name2').val(name)
+		modal.find('.modal-body #desc2').val(desc)
+		$('#sal'+salary).prop('selected', true);
+		// modal.find('.modal-body #status2').val(status)
+		// modal.find('.modal-body #status2').text(''+status)
+		if(status=='active'){
+			$('#opt_active').prop('selected', true);
+		}
+		else{
+			$('#opt_inactive').prop('selected', true);
+		}
+		if(type=='Both'){
+			$('#'+type).prop('selected', true);
+		}
+		else{
+			$('#'+type).prop('selected', true);
+		}
 	
 
 
