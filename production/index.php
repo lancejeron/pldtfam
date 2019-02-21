@@ -168,22 +168,47 @@
 </html>
 <script>
 	$(document).ready(function() {
-    // $('#mydatatable').DataTable();
-    // $ddate=$('#d1').val();
-    // $('#mydatatable tfoot th').each(function(){
-    //   var title = $(this).text();
-    //   $(this).html('<input type="text" />');
-    // });
+    $('#mydatatable thead tr'). clone(true).appendTo('#mydatatable thead');
+    $('#mydatatable thead tr:eq(0) th').each(function(i){
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder='+title+' />');
+      
+      $('input', this).on('keyup change0', function(){
+        if(table.column(i).search()!==this.value){
+          table
+            .column(i)
+            .search(this.value)
+            .draw();
+        }
+      });
+    });
 
-    $('#mydatatable').DataTable( {
+    var table = $('#mydatatable').DataTable( {
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         "bDeferRender":  true,
 				"bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": "template/customscripts/index_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
-        // "bFilter": true,
+        "bFilter": true,
+        // "fixedHeader":true,
         // order: [0, 'desc'],
     } );
+
+
+    // $('#mydatatable tfoot th').each(function(){
+    //   var title = $(this).text();
+    //   $(this).html('<input type="text" />');
+    // });
+    // var table = $('#mydatatable').DataTable( {
+    //     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    //     "bDeferRender":  true,
+		// 		"bProcessing": true,
+    //     "bServerSide": true,
+    //     "sAjaxSource": "template/customscripts/index_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
+    //     "bFilter": false,
+    //     "fixedHeader":true,
+    //     // order: [0, 'desc'],
+    // } );
     // table.columns().every(function(){
     //     var that = this;
     //     $('input', this.footer()).on('keyup change', function(){
