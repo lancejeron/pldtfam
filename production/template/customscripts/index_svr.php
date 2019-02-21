@@ -1,22 +1,24 @@
 <?php
+    session_start();
     /* Indexed column (used for fast and accurate table cardinality) */
-    $sIndexColumn = "start_time";
+    $sIndexColumn = "start_time2";
+    $ddate = $_GET["ddate"];
+    $ddate2 = $_GET["ddate2"];
 
     /* DB table to use */
-    $sTable = "view_coe_request";
+    $sTable = "((SELECT view_coe_request.*, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (0) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno WHERE start_time BETWEEN '$ddate' AND '$ddate2 23:59:59')
+    UNION
+    (SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request as tbl1 WHERE  not exists (SELECT 1 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (0,1) group by req_date, emp_id) as tbl2 ON tbl2.req_date = tbl1.start_time AND tbl2.emp_id=tbl1.persno) AND (start_time BETWEEN '$ddate' AND '$ddate2 23:59:59'))) as v1";
 
     /* Database connection information */
-    $gaSql['user']       = "user_1";
-    $gaSql['password']   = "user_1";
-    $gaSql['db']         = "certification";
-    $gaSql['server']     = "LAPTOP-KKIP1VTU\SQLEXPRESS";
+    require '../connection_gasql.php';
 
     /*
     * Columns
     * If you don't want all of the columns displayed you need to hardcode $aColumns array with your elements.
     * If not this will grab all the columns associated with $sTable
     */
-    $aColumns = array();
+    $aColumns = array("start_time2", "persno", "email", "emp_name", "type_of_coe", "purpose", "_salary", "question1", "statement", "reqt_for", "reqt_for_name", "position_title", "MMprov", "other_instructions");
 
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -106,16 +108,24 @@
         "aaData" => array()
     );
 
+    $act = 'Action';
+    $aColumns[]=$act;
     while ( $aRow = sqlsrv_fetch_array( $rResult ) ) {
         $row = array();
         for ( $i=0 ; $i<count($aColumns) ; $i++ ) {
-            if ( $aColumns[$i] != ' ' ) {
+            if($aColumns[$i] == 'Action'){
+                $v = "<a href='request.php?emp_id=".$aRow[$aColumns[1]]."&start_time=".$aRow[$aColumns[0]]."'><button type='button' class='btn btn-info'>View</button></a>";
+                $row[]=$v;
+            }
+            else{
                 $v = $aRow[ $aColumns[$i] ];
-                $v = mb_check_encoding($v, 'UTF-8') ? $v : utf8_encode($v);
+                // $v = mb_check_encoding($v, 'UTF-8') ? $v : utf8_encode($v);
                 $row[]=$v;
             }
         }
-        If (!empty($row)) { $output['aaData'][] = $row; }
+        If (!empty($row)) {
+             $output['aaData'][] = $row; 
+            }
     }   
     echo json_encode( $output );
 ?>

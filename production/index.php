@@ -60,11 +60,11 @@
                         echo'
                             <div class="form-group">
                               <label>Start Time From:</label>
-                              <input type="date" class="form-control" name="date" value="'.$ddate.'">
+                              <input type="date" id="d1" class="form-control" name="date" value="'.$ddate.'">
                             </div>
                             <div class="form-group">
                               <label>To:</label>
-                              <input type="date" class="form-control" name="date2" value="'.$ddate2.'">
+                              <input type="date" id="d2" class="form-control" name="date2" value="'.$ddate2.'">
                             </div>
                             <button type="submit" class="btn btn-primary">Go</button>
                         ';
@@ -95,7 +95,7 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <?php
+                        <!-- <?php
                           foreach($rows as $row){
                             $persno = $row["persno"];
                             $start_time = $row["start_time"];
@@ -121,7 +121,26 @@
                           </tr>
                           ';
                           }
-                        ?>
+                        ?> -->
+                        <!-- <tfoot>
+                          <tr>
+                          <th><u>Start Time</u></th>
+                            <th>Employee ID</th>
+                            <th>Email</th>
+                            <th>Employee Name</th>
+                            <th>Type of COE</th>
+                            <th>Purpose</th>
+                            <th>Salary</th>
+                            <th>Question</th>
+                            <th>Statement</th>
+                            <th>Request for</th>
+                            <th>Request for Name</th>
+                            <th>Positon Title</th>
+                            <th>MMProv</th>
+                            <th>Other Instruction</th>
+                            <th>Action</th>
+                          </tr>
+                        </tfoot> -->
                       </table>
                     </div>
                   </div>
@@ -150,19 +169,32 @@
 <script>
 	$(document).ready(function() {
     // $('#mydatatable').DataTable();
+    // $ddate=$('#d1').val();
+    // $('#mydatatable tfoot th').each(function(){
+    //   var title = $(this).text();
+    //   $(this).html('<input type="text" />');
+    // });
+
     $('#mydatatable').DataTable( {
-        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-        order: [0, 'desc']
-
-        // "processing": true,
-        // "ServerSide": true,
-        // "ajax": "template/customscripts/index_svr.php",
-
-        // "bProcessing": true,
-        // "bServerSide": true,
-        // "sAjaxSource": "template/customscripts/index_svr.php",
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "bDeferRender":  true,
+				"bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": "template/customscripts/index_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
+        // "bFilter": true,
+        // order: [0, 'desc'],
     } );
-	});
+    // table.columns().every(function(){
+    //     var that = this;
+    //     $('input', this.footer()).on('keyup change', function(){
+    //       if(that.search()!=this.value){
+    //         that
+    //             .search(this.value)
+    //             .draw();
+    //       }
+    //     });
+    // });
+  });
 
 </script>
 

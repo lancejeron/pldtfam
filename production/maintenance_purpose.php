@@ -250,23 +250,10 @@
 	$(document).ready(function() {
     var table = $('#mydatatable').DataTable( {
 				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-				"bDeferRender":    true,
+				"bDeferRender":  true,
 				"bProcessing": true,
         "bServerSide": true,
 				"sAjaxSource": "template/customscripts/maintenance_purpose_svr.php"
-
-
-				// serverSide: true,
-				// ordering: false,
-        // searching: true,
-        // ajax: 'template/customscripts/maintenance_purpose_svr.php',
-				// scrollY: 200,
-				// scroller: {
-        //     loadingIndicator: true
-				// },
-
-
-
     });
 	});
 	

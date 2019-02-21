@@ -1,4 +1,6 @@
+
 <?php
+    session_start();
     /* Indexed column (used for fast and accurate table cardinality) */
     $sIndexColumn = "purpose_id";
 
@@ -6,10 +8,9 @@
     $sTable = "tblmpurpose";
 
     /* Database connection information */
-    $gaSql['user']       = "user_1";
-    $gaSql['password']   = "user_1";
-    $gaSql['db']         = "certification";
-    $gaSql['server']     = "LAPTOP-KKIP1VTU\SQLEXPRESS";
+    require '../connection_gasql.php';
+    
+
 
     /*
     * Columns
