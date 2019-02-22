@@ -10,10 +10,10 @@
     $ddate = $_GET["date"];
     $ddate2 = $_GET["date2"];
     set_time_limit(120);
-    $sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (1) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno WHERE start_time BETWEEN '$ddate' AND '$ddate2  23:59:59'");
+    // $sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (1) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno WHERE start_time BETWEEN '$ddate' AND '$ddate2  23:59:59'");
 
-    $sql->execute();
-		$result = $sql->fetchAll();
+    // $sql->execute();
+		// $result = $sql->fetchAll();
 		
 ?>
 
@@ -87,7 +87,7 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <?php
+                        <!-- <?php
                           foreach($result as $row){
                             $persno = $row["persno"];
                             $start_time = $row["start_time"];
@@ -113,7 +113,7 @@
                           </tr>
                           ';
                           }
-                        ?>
+                        ?> -->
                       </table>
                     </div>
                   </div>
@@ -141,13 +141,28 @@
 </html>
 <script>
 	$(document).ready(function() {
-    // $('#mydatatable').DataTable();
-    $('#mydatatable').DataTable( {
-        // dom: 'Bfrtip',
-        // buttons: [
-        //     'copy', 'csv', 'print'
-        // ],
-        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+    $('#mydatatable thead tr'). clone(true).appendTo('#mydatatable thead');
+    $('#mydatatable thead tr:eq(0) th').each(function(i){
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder='+title+' />');
+      
+      $('input', this).on('keyup change', function(){
+        if(table.column(i).search()!==this.value){
+          table
+            .column(i)
+            .search(this.value)
+            .draw();
+        }
+      });
+    });
+
+    var table = $('#mydatatable').DataTable( {
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "bDeferRender":  true,
+				"bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": "template/customscripts/index2_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
+        "bFilter": true,
         order: [0, 'desc']
     } );
 	});
