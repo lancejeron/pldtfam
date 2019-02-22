@@ -95,52 +95,7 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <!-- <?php
-                          foreach($rows as $row){
-                            $persno = $row["persno"];
-                            $start_time = $row["start_time"];
-                            echo '
-                            <tr>
-                            <td>' . $row["start_time2"] . '</td>
-                            <td>' . $row["persno"] . '</td>
-                            <td>' . $row["email"] . '</td>
-                            <td>' . $row["emp_name"] . '</td>
-                            <td>' . $row["type_of_coe"] . '</td>
-                            <td>' . $row["purpose"] . '</td>
-                            <td>' . $row["_salary"] . '</td>
-                            <td>' . $row["question1"] . '</td>
-                            <td>' . $row["statement"] . '</td>
-                            <td>' . $row["reqt_for"] . '</td>
-                            <td>' . $row["reqt_for_name"] . '</td>
-                            <td>' . $row["position_title"] . '</td>
-                            <td>' . $row["MMProv"] . '</td>
-                            <td>' . $row["other_instructions"] . '</td>
-                            <td><a href="request.php?emp_id='.$persno.'&start_time='.$start_time.'"><button type="button" class="btn btn-info">View</button></a></td>
-
-                            
-                          </tr>
-                          ';
-                          }
-                        ?> -->
-                        <!-- <tfoot>
-                          <tr>
-                          <th><u>Start Time</u></th>
-                            <th>Employee ID</th>
-                            <th>Email</th>
-                            <th>Employee Name</th>
-                            <th>Type of COE</th>
-                            <th>Purpose</th>
-                            <th>Salary</th>
-                            <th>Question</th>
-                            <th>Statement</th>
-                            <th>Request for</th>
-                            <th>Request for Name</th>
-                            <th>Positon Title</th>
-                            <th>MMProv</th>
-                            <th>Other Instruction</th>
-                            <th>Action</th>
-                          </tr>
-                        </tfoot> -->
+                        
                       </table>
                     </div>
                   </div>
@@ -173,7 +128,7 @@
       var title = $(this).text();
       $(this).html('<input type="text" placeholder='+title+' />');
       
-      $('input', this).on('keyup change0', function(){
+      $('input', this).on('keyup change', function(){
         if(table.column(i).search()!==this.value){
           table
             .column(i)
@@ -191,7 +146,7 @@
         "sAjaxSource": "template/customscripts/index_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
         "bFilter": true,
         // "fixedHeader":true,
-        // order: [0, 'desc'],
+        order: [0, 'desc'],
     } );
 
 

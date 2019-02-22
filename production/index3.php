@@ -13,7 +13,7 @@
 		set_time_limit(120);
 
 		
-		$sql = $conn->prepare("SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON emp_id = persno
+		$sql = $conn->prepare("SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate3, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned3, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON emp_id = persno
 								WHERE (date_prepared BETWEEN '$ddate ' AND '$ddate2 23:59:59') AND (req_date=start_time OR prepared_certificates.purpose=view_coe_request.purpose) ");		
 		$sql ->execute();
 		$result=$sql->fetchAll();
@@ -135,7 +135,7 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <?php
+                            <!-- <?php
                                 foreach($result as $row){
                                     echo '
 									<tr>
@@ -170,13 +170,13 @@
                                             data-cert_status="'.$row['cert_status'].'"
                                             data-claimersname="'.$row['claimersname'].'"
                                             data-returned_status="'.$row['returned_status'].'"
-											data-date_returned="'.$row['date_returned'].'"
+											data-date_returned="'.$row['date_returned3'].'"
 											data-claimers_signature="'.$row['claimers_signature'].'"
-                                            data-claimdate="'.$row['claimdate'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
+                                            data-claimdate="'.$row['claimdate3'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
                                 </tr>
                                 ';
                                 }
-                            ?>
+                            ?> -->
                         </table>
                     </div>
                   </div>
@@ -363,9 +363,15 @@
 
 	$(document).ready(function() {
 		$('#mydatatable').DataTable({
-      "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-      order: [0, 'desc']
-    });
+			"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      		"bDeferRender":  true,
+			"bProcessing": true,
+        	"bServerSide": true,
+        	"sAjaxSource": "template/customscripts/index3_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
+        	"bFilter": true,
+			// "fixedHeader":true,
+			order: [0, 'desc'],
+    	});
 	});
 
   $("#returncb").change(function() {
