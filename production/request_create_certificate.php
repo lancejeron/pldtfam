@@ -46,22 +46,45 @@
         $emp_cec -> execute();
         $emp_cec_res = $emp_cec->fetchAll();
 
-            // temp refno creator
-            $create_refno = $conn->prepare("SELECT COUNT(*) as totalcert FROM prepared_certificates");
-            $create_refno ->execute();
-            $create_refno_res = $create_refno->fetchAll();
+            // temp refno creator----------------1
+            // $create_refno = $conn->prepare("SELECT COUNT(*) as totalcert FROM prepared_certificates");
+            // $create_refno ->execute();
+            // $create_refno_res = $create_refno->fetchAll();
 
-            foreach($create_refno_res as $row){                
-                $refno_sum=$row['totalcert']+1;
-                $ref_no = "RF_".$refno_sum;
-                $create_cert_que = $conn->prepare("INSERT INTO prepared_certificates (ref_no, date_prepared, emp_id, name, purpose, req_date, req_status) VALUES ('$ref_no', '$date_prepared', '$persno', '$name', '$purpose', '$start_time', 0)");
-                if (!$create_cert_que->execute()) {
-                    echo 'error';
-                }
-                else{
-                    header('Location: request.php?emp_id='.$persno.'&start_time='.$start_time.'');
-                }
+            // foreach($create_refno_res as $row){                
+            //     $refno_sum=$row['totalcert']+1;
+            //     $ref_no = "RF_".$refno_sum;
+            //     $create_cert_que = $conn->prepare("INSERT INTO prepared_certificates (ref_no, date_prepared, emp_id, name, purpose, req_date, req_status) VALUES ('$ref_no', '$date_prepared', '$persno', '$name', '$purpose', '$start_time', 0)");
+            //     if (!$create_cert_que->execute()) {
+            //         echo 'error';
+            //     }
+            //     else{
+            //         header('Location: request.php?emp_id='.$persno.'&start_time='.$start_time.'');
+            //     }
             // 
+                $find_refno = $conn->prepare("SELECT * FROM control_number WHERE control_id = 1");
+                $find_refno -> execute(); 
+                $find_refno_res = $find_refno->fetchAll();
+
+                foreach($find_refno_res as $row){
+                    $latest_ref_no = $row['last_num']+1;
+                    $m = date('n');
+                    $d = date('d');
+                    $y = date('y');
+                    $ref_no="eHR-".$m."".$d."-".$y."-".$latest_ref_no."-CEC";
+                    $create_cert_que = $conn->prepare("INSERT INTO prepared_certificates (ref_no, date_prepared, emp_id, name, purpose, req_date, req_status) VALUES ('$ref_no', '$date_prepared', '$persno', '$name', '$purpose', '$start_time', 0)");
+
+                    if (!$create_cert_que->execute()) {
+                        echo 'error';
+                    }
+                    else{
+                        $update_ref_no = $conn ->prepare("UPDATE control_number SET last_num = $latest_ref_no WHERE control_id=1");
+                        $update_ref_no -> execute();
+                        header('Location: request.php?emp_id='.$persno.'&start_time='.$start_time.'');
+                    }
+
+                // }
+
 
         class PDF extends FPDF {
             function Header(){
@@ -435,6 +458,7 @@
                 $pdf->Output("F", "doc_certs/$ref_no.pdf");
             }
         }
-            }
+            // }------------------------------- 1
+        }   
     }
 ?>

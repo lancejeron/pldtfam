@@ -83,7 +83,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Certification</h3>
+                <!-- <h3>Certification</h3> -->
               </div>
 
             </div>
@@ -365,7 +365,7 @@
 		$('#mydatatable thead tr'). clone(true).appendTo('#mydatatable thead');
 		$('#mydatatable thead tr:eq(0) th').each(function(i){
 			var title = $(this).text();
-			$(this).html('<input type="text" placeholder='+title+' />');
+			$(this).html('<div class="col-md-1 col-sm-12 col-xs-12 form-group"><input type="text" size ="5" class="form-control" placeholder='+title+' ></div>');
 			
 			$('input', this).on('keyup change', function(){
 				if(table.column(i).search()!==this.value){

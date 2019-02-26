@@ -60,7 +60,7 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        <!-- <?php
+                        <?php
                          	foreach($rows as $row){
                             echo '
 														<tr>
@@ -95,7 +95,7 @@
                           </tr>
                           ';
                           }
-                        ?> -->
+                        ?>
                       </table>
                     </div>
                   </div>
@@ -250,10 +250,10 @@
 	$(document).ready(function() {
     var table = $('#mydatatable').DataTable( {
 				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-				"bDeferRender":  true,
-				"bProcessing": true,
-        "bServerSide": true,
-				"sAjaxSource": "template/customscripts/maintenance_purpose_svr.php"
+				// "bDeferRender":  true,
+				// "bProcessing": true,
+        // "bServerSide": true,
+				// "sAjaxSource": "template/customscripts/maintenance_purpose_svr.php"
     });
 	});
 	
