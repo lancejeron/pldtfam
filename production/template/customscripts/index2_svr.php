@@ -117,7 +117,7 @@
             }
             else{
                 $v = $aRow[ $aColumns[$i] ];
-                // $v = mb_check_encoding($v, 'UTF-8') ? $v : utf8_encode($v);
+                $v = mb_check_encoding($v, 'UTF-8') ? $v : utf8_encode($v);
                 $row[]=$v;
             }
         }

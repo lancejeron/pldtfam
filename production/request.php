@@ -831,54 +831,54 @@
 			}
 			e.preventDefault();
 		});
-		$('#createbtn').click(function(e){
-			// if($("#purpose1").val()==''){
-			// 	swal("Please fill the required(*) fields.","","info");
-			// 	e.preventDefault();
-			// }
-			// else{
-				swal({
-					title: "Certificate will be created.",
-					text: "Are you sure you want to create this certificate?",
-					icon: "warning",
-					buttons: {
-						cancel: true,
-						ok: {
-							text: "Yes",
-							value: "willsubmit",
-						}
-					},
-				})
-				.then((willsubmit)=>{
-					if (willsubmit){
-						$.ajax({
-							url: 'request_create_certificate.php',
-							method: 'POST',
-							data: $('#createform').serialize(),
+		// $('#createbtn').click(function(e){
+		// 	// if($("#purpose1").val()==''){
+		// 	// 	swal("Please fill the required(*) fields.","","info");
+		// 	// 	e.preventDefault();
+		// 	// }
+		// 	// else{
+		// 		swal({
+		// 			title: "Certificate will be created.",
+		// 			text: "Are you sure you want to create this certificate?",
+		// 			icon: "warning",
+		// 			buttons: {
+		// 				cancel: true,
+		// 				ok: {
+		// 					text: "Yes",
+		// 					value: "willsubmit",
+		// 				}
+		// 			},
+		// 		})
+		// 		.then((willsubmit)=>{
+		// 			if (willsubmit){
+		// 				$.ajax({
+		// 					url: 'request_create_certificate.php',
+		// 					method: 'POST',
+		// 					data: $('#createform').serialize(),
 								
-							success: function(data){
-								console.log(data);
-								swal({
-									title: "Certificate Created.",
-									text: " ",
-									icon: "success",
-									buttons: false,
-								});
-								setTimeout( function () {
-									location.reload(); 
-								}, 1500);
-							},
-							error: function(data){
-								swal("Oops...", "Something went wrong.", "error");
-							}
-						});
+		// 					success: function(data){
+		// 						console.log(data);
+		// 						swal({
+		// 							title: "Certificate Created.",
+		// 							text: " ",
+		// 							icon: "success",
+		// 							buttons: false,
+		// 						});
+		// 						setTimeout( function () {
+		// 							location.reload(); 
+		// 						}, 1500);
+		// 					},
+		// 					error: function(data){
+		// 						swal("Oops...", "Something went wrong.", "error");
+		// 					}
+		// 				});
 
-					}
+		// 			}
 
-				});
-				e.preventDefault();
-			// }
-		});
+		// 		});
+		// 		e.preventDefault();
+		// 	// }
+		// });
   	});
 </script>
 <script>

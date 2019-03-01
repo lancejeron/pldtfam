@@ -82,7 +82,7 @@
                         <div class="form-group is_req">
                             <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name:</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: DELA CRUZ, JUAN" autocomplete="off" maxlength='150'>
+                                <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: JUAN DELA CRUZ" autocomplete="off" maxlength='150'>
                             </div>
                         </div>
                       
@@ -208,6 +208,9 @@
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+
+    <!--  -->
+    <script src="js/typeahead.min.js"></script>
   </body>
 </html>
 
@@ -427,6 +430,21 @@
                 // }
                 // 
                 }
+            }
+        });
+        $('#emp_name').typeahead({
+            source: function(req, result){
+                $.ajax({
+                    url:"fetch.php",
+                    method:"POST",
+                    data:{req:req},
+                    dataType:"json",
+                    success:function(data){
+                        result($.map(data, function(item){
+                            return item;
+                        }));
+                    }
+                })
             }
         });
     });
