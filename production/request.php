@@ -27,7 +27,7 @@
 		$request_query4->execute();
 		$request_query_res4 = $request_query4->fetchAll();
 		
-		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE req_date = '$start_time' AND emp_id='$persno' ORDER BY prepared_certificates.claimdate DESC");
+		$certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE (req_date = '$start_time' AND emp_id='$persno') OR (req_date = '$start_time') ORDER BY prepared_certificates.claimdate DESC");
 		// $certificate_que = $conn->prepare("SELECT *, CONVERT(VARCHAR(20), date_prepared, 100) AS date_prepared2, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate, CONVERT(VARCHAR(20), claimdate, 100) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned FROM prepared_certificates WHERE emp_id='$persno' AND ((req_date= '$start_time') OR (date_prepared BETWEEN date_prepared AND DATEADD(day, 7, date_prepared ))) ORDER BY prepared_certificates.claimdate DESC");
 		$certificate_que->execute();
 		$certificate_que_res = $certificate_que->fetchAll();
@@ -272,10 +272,29 @@
 					<h4 class="modal-title" id="myModalLabel">Create Certificate</h4>
 				</div>
 				<div class="modal-body">
-					<input type="" id="persno" name="persno" style="display: none;">
+					<!-- <input type="" id="persno" name="persno" style="display: none;"> -->
 					<input type="" id="start_time" name="start_time" style="display: none;">
 					<input type="" id="date_prepared" name="date_prepared" style="display: none;">
 					<input type="" id="emp_name" name="emp_name" style="display: none;">
+					
+					<?php
+						foreach($request_query_res as $row){
+							if($row["reqt_for"]=='Myself'){
+								echo '<input type="" id="persno" name="persno" style="display: none;">';
+							}
+							else{
+								echo '
+									<div class="form-group">
+										<label class="control-label col-sm-2">Employee ID:</label>
+										<div class="col-sm-10">
+											<input type="" class="form-control" name="persno" >
+										</div>
+									</div>
+								
+								';
+							}
+						}
+					?>
 
 					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
@@ -831,54 +850,48 @@
 			}
 			e.preventDefault();
 		});
-		// $('#createbtn').click(function(e){
-		// 	// if($("#purpose1").val()==''){
-		// 	// 	swal("Please fill the required(*) fields.","","info");
-		// 	// 	e.preventDefault();
-		// 	// }
-		// 	// else{
-		// 		swal({
-		// 			title: "Certificate will be created.",
-		// 			text: "Are you sure you want to create this certificate?",
-		// 			icon: "warning",
-		// 			buttons: {
-		// 				cancel: true,
-		// 				ok: {
-		// 					text: "Yes",
-		// 					value: "willsubmit",
-		// 				}
-		// 			},
-		// 		})
-		// 		.then((willsubmit)=>{
-		// 			if (willsubmit){
-		// 				$.ajax({
-		// 					url: 'request_create_certificate.php',
-		// 					method: 'POST',
-		// 					data: $('#createform').serialize(),
-								
-		// 					success: function(data){
-		// 						console.log(data);
-		// 						swal({
-		// 							title: "Certificate Created.",
-		// 							text: " ",
-		// 							icon: "success",
-		// 							buttons: false,
-		// 						});
-		// 						setTimeout( function () {
-		// 							location.reload(); 
-		// 						}, 1500);
-		// 					},
-		// 					error: function(data){
-		// 						swal("Oops...", "Something went wrong.", "error");
-		// 					}
-		// 				});
+		$('#createbtn').click(function(e){
+			swal({
+				title: "Certificate will be created.",
+				text: "Are you sure you want to create this certificate?",
+				icon: "warning",
+				buttons: {
+					cancel: true,
+					ok: {
+						text: "Yes",
+						value: "willsubmit",
+					}
+				},
+			})
+			.then((willsubmit)=>{
+				if (willsubmit){
+					$.ajax({
+						url: 'request_create_certificate.php',
+						method: 'POST',
+						data: $('#createform').serialize(),
+							
+						success: function(data){
+							console.log(data);
+							swal({
+								title: "Certificate Created.",
+								text: " ",
+								icon: "success",
+								buttons: false,
+							});
+							setTimeout( function () {
+								location.reload(); 
+							}, 1500);
+						},
+						error: function(data){
+							swal("Oops...", "Something went wrong.", "error");
+						}
+					});
 
-		// 			}
+				}
 
-		// 		});
-		// 		e.preventDefault();
-		// 	// }
-		// });
+			});
+			e.preventDefault();
+		});
   	});
 </script>
 <script>
