@@ -429,21 +429,35 @@
                 }
             }
         });
-        $('#emp_name').typeahead({
-            source: function(query, result){
+        $('#emp_name')
+            .typeahead({
+                source: function(query, result){
+                    $.ajax({
+                        url:"template/customscripts/user_coe_request_fetch.php",
+                        method:"POST",
+                        data:{query:query, query2:$("#persno").val()},
+                        dataType:"json",
+                        success:function(data){
+                            result($.map(data, function(item){
+                                return item;
+                            }));
+                        }
+                    })
+                }
+            })
+            .change(function(){
                 $.ajax({
-                    url:"template/customscripts/user_coe_request_fetch.php",
+                    url:"template/customscripts/user_coe_request_fetchid.php",
                     method:"POST",
-                    data:{query:query, query2:$("#persno").val()},
+                    data:{query:$("#emp_name").val(), query2:$("#persno").val()},
                     dataType:"json",
                     success:function(data){
-                        result($.map(data, function(item){
-                            return item;
-                        }));
+                        $('#persno').val(data);
                     }
                 })
-            }
+
         });
+
         $('#persno')
             .typeahead({
                 source: function(query, result){
@@ -460,16 +474,16 @@
                     })
                 }
             })
-            .keyup(function(){
+            .change(function(){
                 $.ajax({
-                        url:"template/customscripts/user_coe_request_fullfetch.php",
-                        method:"POST",
-                        data:{query:$("#emp_name").val(), query2:$("#persno").val()},
-                        dataType:"json",
-                        success:function(data){
-                            $('#emp_name').val(data);
-                        }
-                    })
+                    url:"template/customscripts/user_coe_request_fetchname.php",
+                    method:"POST",
+                    data:{query:$("#emp_name").val(), query2:$("#persno").val()},
+                    dataType:"json",
+                    success:function(data){
+                        $('#emp_name').val(data);
+                    }
+                })
 
         });
         
