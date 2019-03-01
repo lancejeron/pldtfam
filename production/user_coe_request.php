@@ -80,7 +80,7 @@
                         </div>
             
                         <div class="form-group is_req">
-                            <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name:</label>
+                            <label for="name" class="control-label col-md-3 col-sm-3 col-xs-12">Employee Name (First Name Last Name):</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input id="emp_name" class="form-control col-md-7 col-xs-12" type="text" name="emp_name" placeholder="ex: JUAN DELA CRUZ" autocomplete="off" maxlength='150'>
                             </div>
@@ -444,21 +444,35 @@
                 })
             }
         });
-        $('#persno').typeahead({
-            source: function(query, result){
+        $('#persno')
+            .typeahead({
+                source: function(query, result){
+                    $.ajax({
+                        url:"template/customscripts/user_coe_request_fetch.php",
+                        method:"POST",
+                        data:{query:query, query2:$("#persno").val()},
+                        dataType:"json",
+                        success:function(data){
+                            result($.map(data, function(item){
+                                return item;
+                            }));
+                        }
+                    })
+                }
+            })
+            .keyup(function(){
                 $.ajax({
-                    url:"template/customscripts/user_coe_request_fetch.php",
-                    method:"POST",
-                    data:{query:query, query2:$("#persno").val()},
-                    dataType:"json",
-                    success:function(data){
-                        result($.map(data, function(item){
-                            return item;
-                        }));
-                    }
-                })
-            }
+                        url:"template/customscripts/user_coe_request_fullfetch.php",
+                        method:"POST",
+                        data:{query:$("#emp_name").val(), query2:$("#persno").val()},
+                        dataType:"json",
+                        success:function(data){
+                            $('#emp_name').val(data);
+                        }
+                    })
+
         });
+        
 
     });
 </script>

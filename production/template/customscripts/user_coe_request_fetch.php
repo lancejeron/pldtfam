@@ -1,5 +1,4 @@
 <?php
-//fetch.php
 require '../connection_static.php';
 
 $request = $_POST["query"];
