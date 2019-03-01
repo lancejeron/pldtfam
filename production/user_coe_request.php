@@ -205,12 +205,8 @@
     <!-- sweetalert -->
     <script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>   
 
-
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-
-    <!--  -->
-    <script src="js/typeahead.min.js"></script>
   </body>
 </html>
 
@@ -432,21 +428,7 @@
                 }
             }
         });
-        $('#emp_name').typeahead({
-            source: function(req, result){
-                $.ajax({
-                    url:"fetch.php",
-                    method:"POST",
-                    data:{req:req},
-                    dataType:"json",
-                    success:function(data){
-                        result($.map(data, function(item){
-                            return item;
-                        }));
-                    }
-                })
-            }
-        });
+
     });
 </script>
  

@@ -55,16 +55,15 @@
             $d = date('d');
             $y = date('y');
             $ref_no="eHR-".$m."".$d."-".$y."-".$latest_ref_no."-CEC";
-            // $create_cert_que = $conn->prepare("INSERT INTO prepared_certificates (ref_no, date_prepared, emp_id, name, purpose, req_date, req_status) VALUES ('$ref_no', '$date_prepared', '$persno', '$name', '$purpose', '$start_time', 0)");
+            $create_cert_que = $conn->prepare("INSERT INTO prepared_certificates (ref_no, date_prepared, emp_id, name, purpose, req_date, req_status) VALUES ('$ref_no', '$date_prepared', '$persno', '$name', '$purpose', '$start_time', 0)");
 
-            // if (!$create_cert_que->execute()) {
-            //     echo 'error';
-            // }
-            // else{
-            //     $update_ref_no = $conn ->prepare("UPDATE control_number SET last_num = $latest_ref_no WHERE control_id=1");
-            //     $update_ref_no -> execute();
-            //     // header('Location: request.php?emp_id='.$persno.'&start_time='.$start_time.'');
-            // }
+            if (!$create_cert_que->execute()) {
+                echo 'error';
+            }
+            else{
+                $update_ref_no = $conn ->prepare("UPDATE control_number SET last_num = $latest_ref_no WHERE control_id=1");
+                $update_ref_no -> execute();
+            }
 
             class PDF extends FPDF {
                 function Header(){
@@ -287,11 +286,6 @@
                         $sign_desig = $sign["designation"];
                         $sign_org = $sign["organization"];
                         $sign_img = $sign["d_sign"]; 
-                        
-                        // $imagedata = base64_decode(base64_encode($sign_img));
-                        // $filename = "_1";
-                        // $file_name = $filename.'.jpg';
-                        // file_put_contents($file_name,$imagedata);
 
                         $pic="doc_signs/head_signatures/".$sign_id.".jpg";
 
@@ -307,7 +301,7 @@
                         $pdf->MultiCell(100,5,"$sign_org",0,'C');
 
                         $pdf->SetXY(111,236);
-                        if(strpos($purpose, 'HDMF')==true){
+                        if(strpos($purpose, 'HDMF')!==false){
                             $pdf->MultiCell(100,5,"its hdmf",0,'C');
 
                         }else{
@@ -317,7 +311,7 @@
 
                     }
                     $pdf->Output();
-                    // $pdf->Output("F", "doc_certs/$ref_no.pdf");
+                    $pdf->Output("F", "doc_certs/$ref_no.pdf");
                 }
             }
             else if($type_of_cert=='CEC'){
@@ -404,7 +398,7 @@
                         $pdf->MultiCell(100,5,"$sign_org",0,'C');
                     }
         
-                    // $pdf->Output("F", "doc_certs/$ref_no.pdf");
+                    $pdf->Output("F", "doc_certs/$ref_no.pdf");
                     $pdf->Output();
                 }
             }
@@ -505,7 +499,7 @@
                     }
 
                     $pdf->Output();
-                    // $pdf->Output("F", "doc_certs/$ref_no.pdf");
+                    $pdf->Output("F", "doc_certs/$ref_no.pdf");
                 }
             }
         }   
