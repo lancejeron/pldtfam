@@ -203,7 +203,8 @@
     <!-- validator -->
     <script src="../vendors/validator/validator.js"></script>
     <!-- sweetalert -->
-    <script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>   
+    <script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="js/typeahead/bootstrap3-typeahead.min.js"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
@@ -426,6 +427,36 @@
                 // }
                 // 
                 }
+            }
+        });
+        $('#emp_name').typeahead({
+            source: function(query, result){
+                $.ajax({
+                    url:"template/customscripts/user_coe_request_fetch.php",
+                    method:"POST",
+                    data:{query:query, query2:$("#persno").val()},
+                    dataType:"json",
+                    success:function(data){
+                        result($.map(data, function(item){
+                            return item;
+                        }));
+                    }
+                })
+            }
+        });
+        $('#persno').typeahead({
+            source: function(query, result){
+                $.ajax({
+                    url:"template/customscripts/user_coe_request_fetch.php",
+                    method:"POST",
+                    data:{query:query, query2:$("#persno").val()},
+                    dataType:"json",
+                    success:function(data){
+                        result($.map(data, function(item){
+                            return item;
+                        }));
+                    }
+                })
             }
         });
 
