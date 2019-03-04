@@ -19,9 +19,9 @@
 		$request_query2->execute();
 		$request_query_res2 = $request_query2->fetchAll();
 
-		$request_query3 = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
-		$request_query3->execute();
-		$request_query_res3 = $request_query3->fetchAll();
+		// $request_query3 = $conn->prepare("SELECT * FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		// $request_query3->execute();
+		// $request_query_res3 = $request_query3->fetchAll();
 
 		$request_query4 = $conn->prepare("SELECT COUNT(*) AS var_x FROM prepared_certificates WHERE emp_id = '$persno' AND req_date = '$start_time'");
 		$request_query4->execute();

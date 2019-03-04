@@ -37,22 +37,22 @@
             if($_POST['claimers_signature']==''){
                 // wala pangpirma
                 if($returned_status == 'yes'){
-                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned2', cert_status = '$cert_status', claimersname='$claimersname', claimers_signature='$file_name' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND req_date='$req_date'");
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned2', cert_status = '$cert_status', claimersname='$claimersname', claimers_signature='$file_name' WHERE ref_no ='$ref_no'");
                     return $update_sql;
                 }
                 else{
-                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET cert_status = '$cert_status', claimersname='$claimersname', claimdate='$claimdate2', returned_status = '$returned_status', claimers_signature='$file_name'  WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND req_date='$req_date'");
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET cert_status = '$cert_status', claimersname='$claimersname', claimdate='$claimdate2', returned_status = '$returned_status', claimers_signature='$file_name'  WHERE ref_no ='$ref_no'");
                     return $update_sql;
                 }
             }
             else{
                 // meron
                 if($returned_status == 'yes'){
-                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned2', cert_status = '$cert_status', claimersname='$claimersname' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND req_date='$req_date'");
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET returned_status = '$returned_status', date_returned='$date_returned2', cert_status = '$cert_status', claimersname='$claimersname' WHERE ref_no ='$ref_no'");
                     return $update_sql;
                 }
                 else{
-                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET cert_status = '$cert_status', claimersname='$claimersname', claimdate='$claimdate2', returned_status = '$returned_status' WHERE ref_no ='$ref_no' AND emp_id ='$emp_id' AND req_date='$req_date'");
+                    $update_sql = $conn->prepare("UPDATE prepared_certificates SET cert_status = '$cert_status', claimersname='$claimersname', claimdate='$claimdate2', returned_status = '$returned_status' WHERE ref_no ='$ref_no'");
                     return $update_sql;
                 }
 

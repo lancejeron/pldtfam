@@ -13,7 +13,7 @@
         $persno = $_POST["persno"];
 
         if($btn1 == 'finish'){
-            $update_query = $conn->prepare("UPDATE prepared_certificates SET req_status=1 WHERE req_date='$start_time' AND emp_id='$persno'");
+            $update_query = $conn->prepare("UPDATE prepared_certificates SET req_status=1 WHERE req_date='$start_time'");
             if (!$update_query->execute()) {
                 echo "Record not updated." . "<br>";
 
@@ -23,7 +23,7 @@
             }
         }
         else{
-            $update_query = $conn->prepare("UPDATE prepared_certificates SET req_status=0 WHERE req_date='$start_time' AND emp_id='$persno'");
+            $update_query = $conn->prepare("UPDATE prepared_certificates SET req_status=0 WHERE req_date='$start_time'");
             if (!$update_query->execute()) {
                 echo "Record not updated." . "<br>";
             }
