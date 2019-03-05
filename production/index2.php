@@ -10,10 +10,6 @@
     $ddate = $_GET["date"];
     $ddate2 = $_GET["date2"];
     set_time_limit(120);
-    // $sql = $conn->prepare("SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request INNER JOIN (SELECT req_date, emp_id FROM prepared_certificates WHERE req_status IN (1) group by req_date, emp_id) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno WHERE start_time BETWEEN '$ddate' AND '$ddate2  23:59:59'");
-
-    // $sql->execute();
-		// $result = $sql->fetchAll();
 		
 ?>
 

@@ -5,18 +5,11 @@
         header("Location:login.php");
 	}
 	else{
-		// $date=date("Y-m-d H:i:s", strtotime($_date));
 
 		require 'template/connection.php';
 		$ddate = $_GET["date"];
 		$ddate2 = $_GET["date2"];
 		set_time_limit(120);
-
-		
-		// $sql = $conn->prepare("SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate3, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned3, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON emp_id = persno
-		// 						WHERE (date_prepared BETWEEN '$ddate ' AND '$ddate2 23:59:59') AND (req_date=start_time OR prepared_certificates.purpose=view_coe_request.purpose) ");		
-		// $sql ->execute();
-		// $result=$sql->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -95,7 +88,6 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Certificates</h2>
-					<!-- <center><button type="button" data-toggle="modal" data-target="#searchmodal" class="btn btn-primary"><i class="fa fa-search"></i> Search</button></center> -->
                     <center>
                       <form class="form-inline" method='GET' action='index3.php'>
                       <?php
