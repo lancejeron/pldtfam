@@ -1,44 +1,59 @@
 <?php
 
-    // require 'template/connection_static.php';
-    session_start();
-    if(!isset($_SESSION['username'])){
-		header("Location:login.php");
-	}
-	else{
-        require 'template/connection.php';
-        $purpose_query_coe = $conn->prepare("SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'COE') ORDER BY purpose_name ASC");
-        $purpose_query_coe->execute();
-            if (!$purpose_query_coe->execute()) {
-                echo "Error:";
-            }
-        $purpose_result_coe= $purpose_query_coe->fetchAll();
+    require 'template/connection_static.php';
 
-        $purpose_query_cec = $conn->prepare("SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'CEC') ORDER BY purpose_name ASC");
-        $purpose_query_cec->execute();
-            if (!$purpose_query_coe->execute()) {
-                echo "Error:";
-            }
-        $purpose_result_cec= $purpose_query_cec->fetchAll();
+    $purpose_query_coe = $conn->prepare("SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'COE') ORDER BY purpose_name ASC");
+    $purpose_query_coe->execute();
+        if (!$purpose_query_coe->execute()) {
+            echo "Error:";
+        }
+    $purpose_result_coe= $purpose_query_coe->fetchAll();
+
+    $purpose_query_cec = $conn->prepare("SELECT * FROM tblmpurpose WHERE purpose_status IN ('active') AND purpose_type IN ('Both', 'CEC') ORDER BY purpose_name ASC");
+    $purpose_query_cec->execute();
+		if (!$purpose_query_coe->execute()) {
+			echo "Error:";
+        }
+    $purpose_result_cec= $purpose_query_cec->fetchAll();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- head.php -->
-        <?php require 'template/head.php'; ?>
-    </head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>PLDT-HRIS </title>
 
-  <body class="nav-md">
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+
+    <link href="../production/images/icons/favicon.ico" rel="icon"/>
+
+  </head>
+
+  <body class="nav-sm">
     <div class="container body">
       <div class="main_container">
-        <!-- navbar.php -->
-        <?php require 'template/navbar.php'; ?>
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
+              <div class="title_left">
+                <h3>Request for Certificate</h3>
+              </div>
+
+
             </div>
             <div class="clearfix"></div>
 
@@ -46,7 +61,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Create Request</h2>
+                    <h2>Walk-in Request</h2>
                     
              
                     <div class="clearfix"></div>
@@ -177,9 +192,22 @@
       </div>
     </div>
 
-    <!-- script.php -->
-    <?php require 'template/script.php' ?>
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- validator -->
+    <script src="../vendors/validator/validator.js"></script>
+    <!-- sweetalert -->
+    <script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="js/typeahead/bootstrap3-typeahead.min.js"></script>
 
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
   </body>
 </html>
 
@@ -462,7 +490,4 @@
 
     });
 </script>
-<?php
-	}
-?>
  

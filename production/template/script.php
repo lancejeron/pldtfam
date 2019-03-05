@@ -32,3 +32,5 @@
 <script src="./../vendors/sweetalert/dist/sweetalert.min.js"></script> 
 <!-- signature -->
 <script type="text/javascript" src="./js/signature/jquery.signaturepad.js"></script> 
+<!-- typeahead.js -->
+<script src="./js/typeahead/bootstrap3-typeahead.min.js"></script>

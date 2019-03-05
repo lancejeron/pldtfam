@@ -30,9 +30,10 @@
             <ul class="nav child_menu">
                 <?php
                     echo '
-                            <li><a href="index.php?date='.$last.'&date2='.$today.'">Requests</a></li>
-                            <li><a href="index2.php?date='.$last.'&date2='.$today.'">Finished Requests</a></li>
-                            <li><a href="index3.php?date='.$last.'&date2='.$today.'">Certificates</a></li>
+                        <li><a href="index.php?date='.$last.'&date2='.$today.'">Requests</a></li>
+                        <li><a href="index2.php?date='.$last.'&date2='.$today.'">Finished Requests</a></li>
+                        <li><a href="index3.php?date='.$last.'&date2='.$today.'">Certificates</a></li>
+                        <li><a href="user_coe_request.php">Create Request</a></li>
                     ';
 
                 ?>
