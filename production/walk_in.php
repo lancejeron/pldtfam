@@ -19,28 +19,10 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>PLDT-HRIS </title>
-
-    <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-    
-    <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
-
-    <link href="../production/images/icons/favicon.ico" rel="icon"/>
-
-  </head>
+    <head>
+        <!-- head.php -->
+        <?php require 'template/head.php'; ?>
+    </head>
 
   <body class="nav-sm">
     <div class="container body">
@@ -192,22 +174,9 @@
       </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- validator -->
-    <script src="../vendors/validator/validator.js"></script>
-    <!-- sweetalert -->
-    <script src="../vendors/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="js/typeahead/bootstrap3-typeahead.min.js"></script>
+    <!-- script.php -->
+    <?php require 'template/script.php' ?>
 
-    <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
   </body>
 </html>
 
@@ -433,7 +402,7 @@
             .typeahead({
                 source: function(query, result){
                     $.ajax({
-                        url:"template/customscripts/user_coe_request_fetch.php",
+                        url:"template/customscripts/walk_in_fetch.php",
                         method:"POST",
                         data:{query:query, query2:$("#persno").val()},
                         dataType:"json",
@@ -447,7 +416,7 @@
             })
             .change(function(){
                 $.ajax({
-                    url:"template/customscripts/user_coe_request_fetchid.php",
+                    url:"template/customscripts/walk_in_fetchid.php",
                     method:"POST",
                     data:{query:$("#emp_name").val(), query2:$("#persno").val()},
                     dataType:"json",
@@ -462,7 +431,7 @@
             .typeahead({
                 source: function(query, result){
                     $.ajax({
-                        url:"template/customscripts/user_coe_request_fetch.php",
+                        url:"template/customscripts/walk_in_fetch.php",
                         method:"POST",
                         data:{query:query, query2:$("#persno").val()},
                         dataType:"json",
@@ -476,7 +445,7 @@
             })
             .change(function(){
                 $.ajax({
-                    url:"template/customscripts/user_coe_request_fetchname.php",
+                    url:"template/customscripts/walk_in_fetchname.php",
                     method:"POST",
                     data:{query:$("#emp_name").val(), query2:$("#persno").val()},
                     dataType:"json",
