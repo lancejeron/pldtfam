@@ -13,10 +13,10 @@
 		set_time_limit(120);
 
 		
-		$sql = $conn->prepare("SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate3, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned3, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON emp_id = persno
-								WHERE (date_prepared BETWEEN '$ddate ' AND '$ddate2 23:59:59') AND (req_date=start_time OR prepared_certificates.purpose=view_coe_request.purpose) ");		
-		$sql ->execute();
-		$result=$sql->fetchAll();
+		// $sql = $conn->prepare("SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate3, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned3, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON emp_id = persno
+		// 						WHERE (date_prepared BETWEEN '$ddate ' AND '$ddate2 23:59:59') AND (req_date=start_time OR prepared_certificates.purpose=view_coe_request.purpose) ");		
+		// $sql ->execute();
+		// $result=$sql->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -135,48 +135,6 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <!-- <?php
-                                foreach($result as $row){
-                                    echo '
-									<tr>
-									<td>' . $row["date_prepared2"] . '</td>
-                                    <td>' . $row["emp_id"] . '</td>
-                                    <td>' . $row["ref_no"] . '</td>
-									<td>' . $row["req_date2"] . '</td>
-                                    <td>' . $row["name"] . '</td>
-									<td>' . $row["purpose"] . '</td>
-                                    <td>' . $row["accomp_code"] . '</td>
-									<td>' . $row["cbotype"] . '</td>
-                                    <td>' . $row["control_id"] . '</td>
-									<td>' . $row["personal"] . '</td>
-									<td>' . $row["cert_status"] . '</td>
-                                    <td>' . $row["claimdate2"] . '</td>
-									<td>' . 
-										'
-										<button type="button" class="btn btn-info" data-toggle="modal" data-target="#view_certificate",
-											data-ref_no="'.$row['ref_no'].'"><i class="fa fa-eye"></i> View</button>
-										
-											<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg", 
-                                            data-ref_no="'.$row['ref_no'].'" data-emp_id="'.$row['emp_id'].'"
-                                            data-date_prepared2="'.$row['date_prepared2'].'"
-											data-date_prepared="'.$row['date_prepared'].'"
-											data-req_date="'.$row['req_date'].'"
-                                            data-name="'.$row['name'].'"
-                                            data-purpose="'.$row['purpose'].'"
-                                            data-accomp_code="'.$row['accomp_code'].'"
-                                            data-cbotype="'.$row['cbotype'].'"
-                                            data-control_id="'.$row['control_id'].'"
-                                            data-personal="'.$row['personal'].'"
-                                            data-cert_status="'.$row['cert_status'].'"
-                                            data-claimersname="'.$row['claimersname'].'"
-                                            data-returned_status="'.$row['returned_status'].'"
-											data-date_returned="'.$row['date_returned3'].'"
-											data-claimers_signature="'.$row['claimers_signature'].'"
-                                            data-claimdate="'.$row['claimdate3'].'""><i class="glyphicon glyphicon-edit"></i> Edit</button>' . '</td>
-                                </tr>
-                                ';
-                                }
-                            ?> -->
                         </table>
                     </div>
                   </div>
@@ -389,17 +347,17 @@
     	});
 	});
 
-  $("#returncb").change(function() {
-    if(this.checked) {
-      $("#returncb2").prop('checked', false);
-      $('#date_returned').prop('disabled', false);
-      
-    }
-    else if(!this.checked){
-      $("#returncb2").prop('checked', true);
-      $('#date_returned').prop('disabled', true);
-    }
-  });
+	$("#returncb").change(function() {
+		if(this.checked) {
+		$("#returncb2").prop('checked', false);
+		$('#date_returned').prop('disabled', false);
+		
+		}
+		else if(!this.checked){
+		$("#returncb2").prop('checked', true);
+		$('#date_returned').prop('disabled', true);
+		}
+	});
   
 	$('.bs-example-modal-lg').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget)

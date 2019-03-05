@@ -1,5 +1,11 @@
 <?php
-    require '../connection_static.php';
+session_start();
+
+if(!isset($_SESSION['username'])){
+    header("Location:login.php");
+}
+else{
+    require '../connection.php';
 
     $request = $_POST["query"];
     $request2 = $_POST["query2"];
@@ -19,4 +25,5 @@
     else{
         echo json_encode('');
     }
+}
 ?>

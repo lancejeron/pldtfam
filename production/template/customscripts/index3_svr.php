@@ -6,7 +6,7 @@
     $ddate2 = $_GET["ddate2"];
 
     /* DB table to use */
-    $sTable = "(SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate3, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned3, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON emp_id = persno
+    $sTable = "(SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate3, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned3, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON start_time = req_date
     WHERE (date_prepared BETWEEN '$ddate' AND '$ddate2 23:59:59') AND (req_date=start_time OR prepared_certificates.purpose=view_coe_request.purpose) ) AS v1";
 
     /* Database connection information */
@@ -106,8 +106,8 @@
         "aaData" => array()
     );
 
-    $sQuery2 = "SELECT * FROM (SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate3, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned3, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON emp_id = persno
-                WHERE (date_prepared BETWEEN '$ddate' AND '$ddate2 23:59:59') AND (req_date=start_time OR prepared_certificates.purpose=view_coe_request.purpose) ) AS v1";
+    $sQuery2 = "SELECT * FROM (SELECT prepared_certificates.*, CONVERT(VARCHAR(23), claimdate, 126) AS claimdate3, CONVERT(VARCHAR(19), claimdate, 120) AS claimdate2, CONVERT(VARCHAR(23), date_returned, 126) AS date_returned3, CONVERT(VARCHAR(19), date_prepared, 120) AS date_prepared2, CONVERT(VARCHAR(19), req_date, 120) AS req_date2 FROM prepared_certificates INNER JOIN view_coe_request ON start_time = req_date
+                WHERE (date_prepared BETWEEN '$ddate' AND '$ddate2 23:59:59') AND (req_date=start_time OR prepared_certificates.purpose=view_coe_request.purpose) ) AS v1 ORDER BY date_prepared DESC";
     $rResult2 = sqlsrv_query($gaSql['link'],$sQuery2) or die("$sQuery2: " . sqlsrv_errors());
     $aColumns2 = array("date_prepared", "claimersname","req_date", "returned_status", "date_returned3", "claimers_signature", "claimdate3");
     

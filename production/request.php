@@ -15,7 +15,7 @@
 		$request_query->execute();
 		$request_query_res = $request_query->fetchAll();
 		
-		$request_query2 = $conn->prepare("SELECT * FROM view_coe_request INNER JOIN (SELECT req_date, emp_id, req_status FROM prepared_certificates group by req_date, emp_id, req_status) as tbl2 ON tbl2.req_date = start_time AND tbl2.emp_id=persno WHERE start_time = '$start_time' AND persno = '$persno'");
+		$request_query2 = $conn->prepare("SELECT * FROM view_coe_request INNER JOIN (SELECT req_date, req_status FROM prepared_certificates group by req_date, req_status) as tbl2 ON tbl2.req_date = start_time WHERE start_time = '$start_time'");
 		$request_query2->execute();
 		$request_query_res2 = $request_query2->fetchAll();
 
@@ -137,7 +137,7 @@
 							if($request_query_res2 != NULL){
 								foreach($request_query_res2 as $row2){
 									if($row["var_x"]>=0 && $row2["req_status"]==0 ){
-										echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'" data-emp_name="'.$row2["emp_name"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+										echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'" data-emp_name="'.$row2["emp_name"].'" data-reqt_for="'.$row2["reqt_for"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
 									}
 									else{
 									}
@@ -145,7 +145,7 @@
 							}
 							else if($row["var_x"]==0){
 								foreach($request_query_res as $row2){
-									echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'"  data-emp_name="'.$row2["emp_name"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
+										echo '<center><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_certificate" data-persno="'.$row2["persno"].'" data-start_time="'.$row2["start_time"].'"  data-emp_name="'.$row2["emp_name"].'" data-reqt_for="'.$row2["reqt_for"].'"><i class="fa fa-plus"></i> Create Certificate</button></center>';
 								}
 							}
 						}
@@ -276,25 +276,14 @@
 					<input type="" id="start_time" name="start_time" style="display: none;">
 					<input type="" id="date_prepared" name="date_prepared" style="display: none;">
 					<input type="" id="emp_name" name="emp_name" style="display: none;">
+
+					<div class="form-group">
+						<label class="control-label col-sm-2">Employee ID:</label>
+						<div class="col-sm-10">
+							<input type="text" id="persno" class="form-control" name="persno" readonly autocomplete="off" >
+						</div>
+					</div>
 					
-					<?php
-						foreach($request_query_res as $row){
-							if($row["reqt_for"]=='Myself'){
-								echo '<input type="" id="persno" name="persno" style="display: none;">';
-							}
-							else{
-								echo '
-									<div class="form-group">
-										<label class="control-label col-sm-2">Employee ID:</label>
-										<div class="col-sm-10">
-											<input type="" class="form-control" name="persno" >
-										</div>
-									</div>
-								
-								';
-							}
-						}
-					?>
 
 					<div class="form-group">
 						<label class="control-label col-sm-2">Type:</label>
@@ -559,12 +548,46 @@
 		var persno = button.data('persno')
 		var start_time = button.data('start_time')
 		var emp_name = button.data('emp_name')
+		var reqt_for = button.data('reqt_for')
 
 		
 		var modal = $(this)
-		modal.find('.modal-body #persno').val(persno)
 		modal.find('.modal-body #start_time').val(start_time)
-		modal.find('.modal-body #emp_name').val(emp_name)
+		
+		if(reqt_for == 'Myself'){
+			modal.find('.modal-body #persno').val(persno)
+			modal.find('.modal-body #emp_name').val(emp_name)
+		}
+		else{
+			modal.find('.modal-body #persno').prop('readonly', false)
+				.typeahead({
+					source: function(query, result){
+						$.ajax({
+							url:"template/customscripts/user_coe_request_fetch.php",
+							method:"POST",
+							data:{query:query, query2:$("#persno").val()},
+							dataType:"json",
+							success:function(data){
+								result($.map(data, function(item){
+									return item;
+								}));
+							}
+						})
+					}
+				})
+				.change(function(){
+					$.ajax({
+						url:"template/customscripts/user_coe_request_fetchname.php",
+						method:"POST",
+						data:{query:modal.find('.modal-body #emp_name').val(), query2:modal.find('.modal-body #persno').val()},
+						dataType:"json",
+						success:function(data){
+							modal.find('.modal-body #emp_name').val(data);
+						}
+					})
+
+				});
+		}
 	});
 	$('#edit_certificate').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget)
@@ -681,6 +704,34 @@
 			$("#confsalary2").prop('checked', true);
 		}
   	});
+	// $('#persno')
+	// 	.typeahead({
+	// 		source: function(query, result){
+	// 			$.ajax({
+	// 				url:"template/customscripts/user_coe_request_fetch.php",
+	// 				method:"POST",
+	// 				data:{query:query, query2:$("#persno").val()},
+	// 				dataType:"json",
+	// 				success:function(data){
+	// 					result($.map(data, function(item){
+	// 						return item;
+	// 					}));
+	// 				}
+	// 			})
+	// 		}
+	// 	})
+	// 	.change(function(){
+	// 		$.ajax({
+	// 			url:"template/customscripts/user_coe_request_fetchname.php",
+	// 			method:"POST",
+	// 			data:{query:$("#emp_name").val(), query2:$("#persno").val()},
+	// 			dataType:"json",
+	// 			success:function(data){
+	// 				$('#emp_name').val(data);
+	// 			}
+	// 		})
+
+	// });
 	  
 </script>
 <script>

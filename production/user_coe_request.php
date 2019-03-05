@@ -375,15 +375,15 @@
                                     success: function(data){
                                         console.log(data);
                                         swal({
-                                            title: "Request submitted!",
-                                            text: "Please inform us that you already submitted your request. Thank you.",
+                                            title: "Request Created.",
+                                            text: "  ",
                                             icon: "success",
                                             // showConfirmButton: true,
                                             buttons: false,
                                         });
                                         setTimeout( function () {
                                             location.reload(); 
-                                        }, 6000);
+                                        }, 1500);
                                     },
                                     error: function(data){
                                         swal("Oops...", "Something went wrong.", "error");
