@@ -1,6 +1,6 @@
 <?php
-	session_start();
-
+  session_start();
+  
 	if(!isset($_SESSION['username'])){
 		header("Location:login.php");
 	}
@@ -10,7 +10,7 @@
     $ddate = $_GET["date"];
     $ddate2 = $_GET["date2"];
     set_time_limit(120);
-    
+		
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-              <h3><b><i class="fa fa-globe"></i> Online</b></h3>
+              <h3><b><i class="fa fa-suitcase"></i> Walk-in</b></h3>
               </div>
 
             </div>
@@ -41,18 +41,18 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Requests</h2>
+                    <h2>Finished Requests</h2>
                     <center>
-                      <form class="form-inline" method='GET' action='index.php'>
+                      <form class="form-inline" method='GET' action='index2.php'>
                       <?php
                         echo'
                             <div class="form-group">
                               <label>Start Time From:</label>
-                              <input type="date" id="d1" class="form-control" name="date" value="'.$ddate.'">
+                              <input type="date" class="form-control" name="date" value="'.$ddate.'">
                             </div>
                             <div class="form-group">
                               <label>To:</label>
-                              <input type="date" id="d2" class="form-control" name="date2" value="'.$ddate2.'">
+                              <input type="date" class="form-control" name="date2" value="'.$ddate2.'">
                             </div>
                             <button type="submit" class="btn btn-primary">Go</button>
                         ';
@@ -83,7 +83,33 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        
+                        <!-- <?php
+                          foreach($result as $row){
+                            $persno = $row["persno"];
+                            $start_time = $row["start_time"];
+                            echo '
+                            <tr>
+                            <td>' . $row["start_time2"] . '</td>
+                            <td>' . $row["persno"] . '</td>
+                            <td>' . $row["email"] . '</td>
+                            <td>' . $row["emp_name"] . '</td>
+                            <td>' . $row["type_of_coe"] . '</td>
+                            <td>' . $row["purpose"] . '</td>
+                            <td>' . $row["_salary"] . '</td>
+                            <td>' . $row["question1"] . '</td>
+                            <td>' . $row["statement"] . '</td>
+                            <td>' . $row["reqt_for"] . '</td>
+                            <td>' . $row["reqt_for_name"] . '</td>
+                            <td>' . $row["position_title"] . '</td>
+                            <td>' . $row["MMProv"] . '</td>
+                            <td>' . $row["other_instructions"] . '</td>
+                            <td><a href="request.php?emp_id='.$persno.'&start_time='.$start_time.'"><button type="button" class="btn btn-info">View</button></a></td>
+
+                            
+                          </tr>
+                          ';
+                          }
+                        ?> -->
                       </table>
                     </div>
                   </div>
@@ -127,17 +153,15 @@
     });
 
     var table = $('#mydatatable').DataTable( {
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         "bDeferRender":  true,
 				"bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": "template/customscripts/index_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
+        "sAjaxSource": "template/customscripts/index2_w_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
         "bFilter": true,
-        // "fixedHeader":true,
-        order: [0, 'desc'],
+        order: [0, 'desc']
     } );
-  });
-
+	});
 </script>
 
 <?php

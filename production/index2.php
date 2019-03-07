@@ -30,7 +30,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <!-- <h3>Certification</h3> -->
+                <h3><b><i class="fa fa-globe"></i> Online</b></h3>
               </div>
 
             </div>

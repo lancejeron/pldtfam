@@ -11,11 +11,11 @@
 		$persno= $_GET['emp_id'];
 		$start_time= $_GET['start_time'];
 
-		$request_query = $conn->prepare("SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request WHERE persno = '$persno' AND start_time = '$start_time'");
+		$request_query = $conn->prepare("SELECT *, CONVERT(VARCHAR(19), start_time, 120) AS start_time2 FROM view_coe_request_walkin WHERE persno = '$persno' AND start_time = '$start_time'");
 		$request_query->execute();
 		$request_query_res = $request_query->fetchAll();
 		
-		$request_query2 = $conn->prepare("SELECT * FROM view_coe_request INNER JOIN (SELECT req_date, req_status FROM prepared_certificates group by req_date, req_status) as tbl2 ON tbl2.req_date = start_time WHERE start_time = '$start_time'");
+		$request_query2 = $conn->prepare("SELECT * FROM view_coe_request_walkin INNER JOIN (SELECT req_date, req_status FROM prepared_certificates group by req_date, req_status) as tbl2 ON tbl2.req_date = start_time WHERE start_time = '$start_time'");
 		$request_query2->execute();
 		$request_query_res2 = $request_query2->fetchAll();
 
@@ -84,7 +84,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-			  	<h3><b><i class="fa fa-globe"></i> Online</b></h3>
+			  	<h3><b><i class="fa fa-suitcase"></i> Walk-in</b></h3>
               </div>
 			  
 				<!-- <a href="index.php"><button type='button' class='btn btn-secondary pull-right btn-md'><i class="fa fa-chevron-left"></i> Back</button></a> -->

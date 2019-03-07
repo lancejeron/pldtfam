@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
     <div class="navbar nav_title">
-        <a class="site_title"><i class="fa fa-user"></i> <span>PLDT-HRIS </span></a>
+        <a class="site_title"><i class="fa fa-user"></i> <span><?php echo $_SESSION['username'];?> </span></a>
     </div>
 
     <div class="clearfix"></div>
@@ -12,8 +12,7 @@
         <!-- <img src="images/img.jpg" alt="..." class="img-circle profile_img"> -->
         </div>
         <div class="profile_info">
-        <span>Welcome,</span>
-        <h2><?php echo $_SESSION['username'];?></h2>
+        <span>Welcome</span>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -26,19 +25,32 @@
         <div class="menu_section">
         <h3>Menu</h3>
         <ul class="nav side-menu">
-            <li><a><i class="fa fa-edit"></i> Certification<span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu">
-                <?php
-                    echo '
-                        <li><a href="index.php?date='.$last.'&date2='.$today.'">Requests</a></li>
-                        <li><a href="index2.php?date='.$last.'&date2='.$today.'">Finished Requests</a></li>
-                        <li><a href="index3.php?date='.$last.'&date2='.$today.'">Certificates</a></li>
-                        <li><a href="user_coe_request.php">Create Request</a></li>
-                    ';
+            <li><a><i class="fa fa-globe"></i> Online<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <?php
+                        echo '
+                            <li><a href="index.php?date='.$last.'&date2='.$today.'">Requests</a></li>
+                            <li><a href="index2.php?date='.$last.'&date2='.$today.'">Finished Requests</a></li>
+                            <li><a href="index3.php?date='.$last.'&date2='.$today.'">Certificates</a></li>
+                        ';
 
-                ?>
+                    ?>
 
-            </ul>
+                </ul>
+            </li>
+            <li><a><i class="fa fa-suitcase"></i> Walk-in<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                    <?php
+                        echo '
+                            <li><a href="index_w.php?date='.$last.'&date2='.$today.'">Requests</a></li>
+                            <li><a href="index2_w.php?date='.$last.'&date2='.$today.'">Finished Requests</a></li>
+                            <li><a href="index3_w.php?date='.$last.'&date2='.$today.'">Certificates</a></li>
+                            <li><a href="user_coe_request.php">Create Request</a></li>
+                        ';
+
+                    ?>
+
+                </ul>
             </li>
             <li><a><i class="fa fa-wrench"></i> Maintenance <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">

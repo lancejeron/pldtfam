@@ -76,7 +76,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-			  	<h3><b><i class="fa fa-globe"></i> Online</b></h3>
+              <h3><b><i class="fa fa-suitcase"></i> Walk-in</b></h3>
               </div>
 
             </div>
@@ -332,7 +332,7 @@
       		"bDeferRender":  true,
 			"bProcessing": true,
         	"bServerSide": true,
-        	"sAjaxSource": "template/customscripts/index3_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
+        	"sAjaxSource": "template/customscripts/index3_w_svr.php?ddate=<?php echo $ddate; ?>&ddate2=<?php echo $ddate2; ?>",
         	"bFilter": true,
 			// "fixedHeader":true,
 			order: [0, 'desc'],
